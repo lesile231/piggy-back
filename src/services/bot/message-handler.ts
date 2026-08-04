@@ -5,6 +5,7 @@ import type { MenuService } from "./menu.service";
 import type { FlowEngine } from "./flow/flow-engine";
 import type { ChatService } from "@/services/ai/chat.service";
 import type { LanguageService } from "@/services/ai/language.service";
+import type { ActionRegistry } from "./action-registry";
 
 const MENU_COMMANDS = new Set(["menu", "/menu", "/start", "메뉴"]);
 
@@ -15,6 +16,7 @@ export class MessageHandler {
     private flowEngine: FlowEngine,
     private chatService: ChatService,
     private languageService: LanguageService,
+    private actionRegistry?: ActionRegistry,
   ) {}
 
   async handle(adapter: BotAdapter, incoming: IncomingMessage): Promise<void> {
@@ -144,17 +146,25 @@ export class MessageHandler {
       return;
     }
 
-    // TODO[MVP]: Handle apiAction by dispatching to service action registry (SP3)
     if (result.apiAction) {
       await this.sessionRepo.updateSessionMode(session.id, "flow", {
         currentStepId: result.nextStepId ?? undefined,
         flowContext: result.flowContext,
       });
-      // For now, send a placeholder message
-      await this.sendMessages(adapter, incoming.chatId, [{
-        type: "text",
-        text: `[API Action: ${result.apiAction}] — This feature will be available in a future update.`,
-      }]);
+
+      if (this.actionRegistry?.has(result.apiAction)) {
+        const actionMessages = await this.actionRegistry.execute(
+          result.apiAction,
+          result.flowContext as Record<string, unknown>,
+          language,
+        );
+        await this.sendMessages(adapter, incoming.chatId, actionMessages);
+      } else {
+        await this.sendMessages(adapter, incoming.chatId, [{
+          type: "text",
+          text: `[API Action: ${result.apiAction}] — This feature will be available in a future update.`,
+        }]);
+      }
       return;
     }
 

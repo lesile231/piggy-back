@@ -7,6 +7,7 @@ import type { FlowEngine } from "./flow/flow-engine";
 import type { ChatService } from "@/services/ai/chat.service";
 import type { LanguageService } from "@/services/ai/language.service";
 import type { IncomingMessage, OutgoingMessage } from "./types";
+import type { ActionRegistry } from "./action-registry";
 
 function createMockAdapter(): BotAdapter {
   return {
@@ -72,6 +73,16 @@ function createMockLanguageService(): LanguageService {
     detect: vi.fn().mockReturnValue({ language: "en", confidence: 0.9 }),
     resolveLanguage: vi.fn().mockReturnValue("en"),
   } as unknown as LanguageService;
+}
+
+function createMockActionRegistry(): ActionRegistry {
+  return {
+    has: vi.fn().mockReturnValue(true),
+    execute: vi.fn().mockResolvedValue([
+      { type: "text", text: "Route found: Bus 1003 → Metro Line 1" },
+    ]),
+    register: vi.fn(),
+  } as unknown as ActionRegistry;
 }
 
 function createIncomingText(text: string): IncomingMessage {
@@ -186,5 +197,37 @@ describe("MessageHandler", () => {
 
     expect(sessionRepo.resetSessionToMenu).toHaveBeenCalledWith("s1");
     expect(menuService.getMainMenu).toHaveBeenCalled();
+  });
+
+  it("dispatches apiAction through ActionRegistry instead of placeholder", async () => {
+    const session: SessionRecord = {
+      id: "s1", userId: "user-1", mode: "flow",
+      activeFlowId: "f1", currentStepId: "step-1", flowContext: { step_1: "Haeundae" }, isActive: true,
+    };
+    sessionRepo = createMockSessionRepo(session);
+
+    const apiFlowEngine = {
+      startFlow: vi.fn(),
+      handleInput: vi.fn().mockResolvedValue({
+        messages: [],
+        nextStepId: "step-3",
+        flowContext: { step_1: "Haeundae", step_2: "Gamcheon" },
+        completed: false,
+        apiAction: "search_transit_route",
+      }),
+    } as unknown as FlowEngine;
+
+    const actionRegistry = createMockActionRegistry();
+    handler = new MessageHandler(sessionRepo, menuService, apiFlowEngine, chatService, langService, actionRegistry);
+
+    await handler.handle(adapter, createIncomingText("Gamcheon"));
+
+    expect(actionRegistry.execute).toHaveBeenCalledWith(
+      "search_transit_route",
+      expect.objectContaining({ step_1: "Haeundae", step_2: "Gamcheon" }),
+      "en",
+    );
+    const sentMsg = (adapter.sendMessage as ReturnType<typeof vi.fn>).mock.calls[0]?.[1] as OutgoingMessage;
+    expect(sentMsg.text).toContain("Route found");
   });
 });
