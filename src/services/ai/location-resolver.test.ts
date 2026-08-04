@@ -86,7 +86,7 @@ describe("LocationResolver", () => {
       { id: "spot-2", nameKo: "부산공동어시장", names: { en: "Busan Cooperative Fish Market" } },
     ]);
     const router = createMockRouter(JSON.stringify({
-      spotId: "spot-1",
+      matchIndex: 1,
       confidence: 0.9,
       reasoning: "Jagalchi is the famous fish market",
     }));
@@ -101,7 +101,7 @@ describe("LocationResolver", () => {
   it("returns null when LLM cannot resolve", async () => {
     const mockDb = createMockDb([], []);
     const router = createMockRouter(JSON.stringify({
-      spotId: null,
+      matchIndex: null,
       confidence: 0.1,
     }));
     const resolver = new LocationResolver(mockDb, router);

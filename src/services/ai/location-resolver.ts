@@ -5,6 +5,8 @@ import type { ChatMessage, ResolvedLocation } from "@/types/ai";
 import { locationAliases, tourismSpots } from "@/lib/db/schema";
 
 const MIN_CONFIDENCE = 0.5;
+// TODO[MVP]: When spots exceed this limit, implement category-based filtering or embedding pre-filter
+const MAX_LLM_CANDIDATES = 50;
 
 export class LocationResolver {
   constructor(
@@ -83,7 +85,7 @@ export class LocationResolver {
         })
         .from(tourismSpots)
         .where(eq(tourismSpots.isActive, true))
-        .limit(50);
+        .limit(MAX_LLM_CANDIDATES);
     } catch {
       return null;
     }
@@ -98,8 +100,8 @@ export class LocationResolver {
       {
         role: "system",
         content: `You are a Busan location resolver. Match the user's query to one of the candidate locations.
-Respond with JSON: {"spotId": "uuid-or-null", "confidence": 0.0-1.0, "reasoning": "..."}
-If no match, set spotId to null.`,
+Respond with JSON: {"matchIndex": <number-or-null>, "confidence": 0.0-1.0, "reasoning": "..."}
+matchIndex is the 1-based index from the candidate list, or null if no match.`,
       },
       {
         role: "user",
@@ -117,22 +119,12 @@ Match the query to the best candidate. Use the candidate's array index to identi
       const response = await this.router.lightweightJson(messages);
       const parsed = JSON.parse(response.content);
 
-      if (!parsed.spotId || parsed.confidence < MIN_CONFIDENCE) return null;
+      if (parsed.matchIndex === null || parsed.confidence < MIN_CONFIDENCE) return null;
 
-      // Find the matching candidate
-      const matchIndex = parseInt(parsed.spotId, 10) - 1;
+      // Find the matching candidate (1-based index)
+      const matchIndex = parseInt(String(parsed.matchIndex), 10) - 1;
       const match = candidates[matchIndex];
-      if (!match) {
-        // Try direct UUID match
-        const directMatch = candidates.find((c) => c.id === parsed.spotId);
-        if (!directMatch) return null;
-        return {
-          spotId: directMatch.id,
-          spotName: directMatch.nameKo,
-          confidence: parsed.confidence,
-          source: "gpt",
-        };
-      }
+      if (!match) return null;
 
       return {
         spotId: match.id,

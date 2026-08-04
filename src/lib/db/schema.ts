@@ -124,7 +124,7 @@ export const spotCategories = pgTable("spot_categories", {
 
 export const locationAliases = pgTable("location_aliases", {
   id: uuid("id").primaryKey().defaultRandom(),
-  spotId: uuid("spot_id").references(() => tourismSpots.id, { onDelete: "cascade" }),
+  spotId: uuid("spot_id").notNull().references(() => tourismSpots.id, { onDelete: "cascade" }),
   alias: varchar("alias", { length: 255 }).notNull(),
   language: varchar("language", { length: 10 }).notNull(),
   source: varchar("source", { length: 20 }).notNull(),

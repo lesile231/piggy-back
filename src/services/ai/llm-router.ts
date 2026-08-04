@@ -51,8 +51,11 @@ export class LLMRouter {
       try {
         return await this.fallback.chat(params);
       } catch (fallbackError) {
+        const primaryMsg = primaryError instanceof Error ? primaryError.message : String(primaryError);
+        const fallbackMsg = fallbackError instanceof Error ? fallbackError.message : String(fallbackError);
         throw new Error(
-          `Both LLM providers failed. Primary: ${primaryError}. Fallback: ${fallbackError}`
+          `Both LLM providers failed. Primary: ${primaryMsg}. Fallback: ${fallbackMsg}`,
+          { cause: { primaryError, fallbackError } }
         );
       }
     }

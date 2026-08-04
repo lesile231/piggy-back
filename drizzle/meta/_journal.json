@@ -8,6 +8,13 @@
       "when": 1785814864574,
       "tag": "0000_grey_screwball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1785814964574,
+      "tag": "0001_add_pgvector",
+      "breakpoints": true
     }
   ]
 }
