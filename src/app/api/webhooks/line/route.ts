@@ -24,14 +24,28 @@ export async function POST(request: NextRequest): Promise<Response> {
     channelSecret: env.LINE_CHANNEL_SECRET,
   });
 
-  // Verify signature
-  const isValid = await adapter.verifyWebhook(request);
+  // Read body once as text
+  const bodyText = await request.text();
+
+  // Verify signature using the raw text
+  const signature = request.headers.get("x-line-signature");
+  if (!signature) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+  const { createHmac, timingSafeEqual } = await import("node:crypto");
+  const expected = createHmac("sha256", env.LINE_CHANNEL_SECRET)
+    .update(bodyText, "utf8")
+    .digest("base64");
+  const expectedBuf = Buffer.from(expected);
+  const signatureBuf = Buffer.from(signature);
+  const isValid = expectedBuf.length === signatureBuf.length &&
+    (() => { try { return timingSafeEqual(expectedBuf, signatureBuf); } catch { return false; } })();
   if (!isValid) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  // Parse body
-  const body = await request.json();
+  // Parse the same text as JSON
+  const body = JSON.parse(bodyText);
   const messages = adapter.parseIncoming(body);
 
   if (messages.length === 0) {

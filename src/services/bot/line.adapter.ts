@@ -1,4 +1,4 @@
-import { createHmac } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import type { BotAdapter } from "./adapter";
 import type { IncomingMessage, OutgoingMessage, PlatformConstraints } from "./types";
 
@@ -23,7 +23,15 @@ export class LineAdapter implements BotAdapter {
       .update(body, "utf8")
       .digest("base64");
 
-    return signature === expected;
+    const expectedBuf = Buffer.from(expected);
+    const signatureBuf = Buffer.from(signature);
+    if (expectedBuf.length !== signatureBuf.length) return false;
+
+    try {
+      return timingSafeEqual(expectedBuf, signatureBuf);
+    } catch {
+      return false;
+    }
   }
 
   parseIncoming(body: unknown): IncomingMessage[] {

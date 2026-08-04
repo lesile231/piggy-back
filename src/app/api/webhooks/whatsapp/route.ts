@@ -39,14 +39,23 @@ export async function POST(request: NextRequest): Promise<Response> {
     appSecret: env.WHATSAPP_APP_SECRET,
   });
 
-  // Verify signature
-  const isValid = await adapter.verifyWebhook(request);
+  // Read body once as text
+  const bodyText = await request.text();
+
+  // Verify signature using the raw text
+  const signature = request.headers.get("x-hub-signature-256");
+  if (!signature) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+  const sig = signature.replace("sha256=", "");
+  const { verifyHmacSignature } = await import("@/lib/utils/crypto");
+  const isValid = verifyHmacSignature(bodyText, sig, env.WHATSAPP_APP_SECRET, "sha256");
   if (!isValid) {
     return new Response("Unauthorized", { status: 401 });
   }
 
-  // Parse body
-  const body = await request.json();
+  // Parse the same text as JSON
+  const body = JSON.parse(bodyText);
   const messages = adapter.parseIncoming(body);
 
   if (messages.length === 0) {

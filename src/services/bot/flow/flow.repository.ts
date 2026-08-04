@@ -1,4 +1,4 @@
-import { eq, asc } from "drizzle-orm";
+import { eq, asc, gt, and } from "drizzle-orm";
 import type { Database } from "@/lib/db/client";
 import { flows, flowSteps, flowOptions } from "@/lib/db/schema";
 
@@ -94,12 +94,11 @@ export class FlowRepository {
         config: flowSteps.config,
       })
       .from(flowSteps)
-      .where(eq(flowSteps.flowId, flowId))
+      .where(and(eq(flowSteps.flowId, flowId), gt(flowSteps.stepOrder, currentOrder)))
       .orderBy(asc(flowSteps.stepOrder))
-      .limit(100);
+      .limit(1);
 
-    const next = results.find((s) => s.stepOrder > currentOrder);
-    return (next as FlowStepRecord | undefined) ?? null;
+    return (results[0] as FlowStepRecord | undefined) ?? null;
   }
 
   async getStepOptions(stepId: string): Promise<FlowOptionRecord[]> {
