@@ -22,3 +22,8 @@ export function localize(
 ): string {
   return data[lang] ?? data[fallback] ?? Object.values(data)[0] ?? "";
 }
+
+export interface LatLng {
+  latitude: number;
+  longitude: number;
+}

@@ -15,6 +15,14 @@ const envSchema = z.object({
   WHATSAPP_APP_SECRET: z.string().default(""),
   LINE_CHANNEL_ACCESS_TOKEN: z.string().default(""),
   LINE_CHANNEL_SECRET: z.string().default(""),
+  // Transit APIs
+  GOOGLE_MAPS_API_KEY: z.string().default(""),
+  NAVER_CLIENT_ID: z.string().default(""),
+  NAVER_CLIENT_SECRET: z.string().default(""),
+  TAGO_API_KEY: z.string().default(""),
+  // Tourism APIs
+  TOUR_API_KEY: z.string().default(""),
+  GOOGLE_PLACES_API_KEY: z.string().default(""),
   NEXT_PUBLIC_APP_URL: z.string().default("http://localhost:3000"),
 });
 

@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { ok, err, localize } from "./common";
+import type { LatLng } from "./common";
 
 describe("Result", () => {
   it("ok wraps data", () => {
@@ -30,5 +31,13 @@ describe("localize", () => {
 
   it("returns empty string for empty object", () => {
     expect(localize({}, "en")).toBe("");
+  });
+});
+
+describe("LatLng", () => {
+  it("satisfies the LatLng interface", () => {
+    const point: LatLng = { latitude: 35.1586, longitude: 129.1604 };
+    expect(point.latitude).toBe(35.1586);
+    expect(point.longitude).toBe(129.1604);
   });
 });
