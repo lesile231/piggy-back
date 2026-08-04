@@ -1,4 +1,4 @@
-import { eq, ilike, or, sql } from "drizzle-orm";
+import { and, eq, ilike, or, sql } from "drizzle-orm";
 import type { Database } from "@/lib/db/client";
 import { tourismSpots } from "@/lib/db/schema";
 import type { TourismSpotExternal } from "@/lib/external/tourism/types";
@@ -15,9 +15,12 @@ export class SpotRepository {
         .select()
         .from(tourismSpots)
         .where(
-          or(
-            ilike(tourismSpots.nameKo, pattern),
-            sql`${tourismSpots.names}::text ILIKE ${pattern}`,
+          and(
+            eq(tourismSpots.isActive, true),
+            or(
+              ilike(tourismSpots.nameKo, pattern),
+              sql`${tourismSpots.names}::text ILIKE ${pattern}`,
+            ),
           ),
         )
         .limit(limit);
@@ -33,16 +36,15 @@ export class SpotRepository {
       const rows = await this.db
         .select()
         .from(tourismSpots)
-        .where(eq(tourismSpots.isActive, true))
+        .where(
+          and(
+            eq(tourismSpots.isActive, true),
+            sql`${tourismSpots.tags} @> ${JSON.stringify([category])}::jsonb`,
+          ),
+        )
         .limit(limit);
 
-      // Filter by category from tags JSONB
-      return rows
-        .filter((r) => {
-          const tags = (r.tags ?? []) as string[];
-          return tags.includes(category);
-        })
-        .map(this.toSpotRecord);
+      return rows.map(this.toSpotRecord);
     } catch {
       return [];
     }
@@ -98,28 +100,50 @@ export class SpotRepository {
   ): Promise<SpotRecord> {
     const nameKo = spot.names.ko ?? spot.names.en ?? Object.values(spot.names)[0] ?? "";
     const addressKo = spot.address.ko ?? spot.address.en ?? null;
+    const data = {
+      googlePlaceId: spot.externalId,
+      nameKo,
+      names: spot.names as Record<string, unknown>,
+      description: spot.description as Record<string, unknown>,
+      addressKo,
+      addresses: spot.address as Record<string, unknown>,
+      latitude: spot.latitude.toString(),
+      longitude: spot.longitude.toString(),
+      phone: spot.phone ?? null,
+      website: spot.website ?? null,
+      images: spot.images as unknown[],
+      rating: spot.rating?.toString() ?? null,
+      source,
+      isActive: true,
+    };
 
-    const rows = await this.db
-      .insert(tourismSpots)
-      .values({
-        googlePlaceId: spot.externalId,
-        nameKo,
-        names: spot.names as Record<string, unknown>,
-        description: spot.description as Record<string, unknown>,
-        addressKo,
-        addresses: spot.address as Record<string, unknown>,
-        latitude: spot.latitude.toString(),
-        longitude: spot.longitude.toString(),
-        phone: spot.phone ?? null,
-        website: spot.website ?? null,
-        images: spot.images as unknown[],
-        rating: spot.rating?.toString() ?? null,
-        source,
-        isActive: true,
-      })
-      .returning();
+    try {
+      // Check if spot with same externalId already exists
+      if (spot.externalId) {
+        const existing = await this.db
+          .select({ id: tourismSpots.id })
+          .from(tourismSpots)
+          .where(eq(tourismSpots.googlePlaceId, spot.externalId))
+          .limit(1);
 
-    return this.toSpotRecord(rows[0]!);
+        if (existing.length > 0 && existing[0]) {
+          // Update existing
+          const updated = await this.db
+            .update(tourismSpots)
+            .set({ ...data, updatedAt: new Date() })
+            .where(eq(tourismSpots.id, existing[0].id))
+            .returning();
+          return this.toSpotRecord(updated[0]!);
+        }
+      }
+
+      // Insert new
+      const rows = await this.db.insert(tourismSpots).values(data).returning();
+      return this.toSpotRecord(rows[0]!);
+    } catch {
+      // Fallback: return a minimal record
+      return { id: "", nameKo, names: spot.names as LocalizedText, description: spot.description as LocalizedText, addressKo, addresses: spot.address as LocalizedText, latitude: spot.latitude, longitude: spot.longitude, phone: spot.phone ?? null, website: spot.website ?? null, images: spot.images, rating: spot.rating ?? null, source, isActive: true };
+    }
   }
 
   private toSpotRecord(row: typeof tourismSpots.$inferSelect): SpotRecord {

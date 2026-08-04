@@ -81,6 +81,7 @@ export async function POST(request: NextRequest): Promise<Response> {
   const classifier = new IntentClassifier(router);
   const chatService = new ChatService(router, classifier);
 
+  // TODO[MVP]: Wire ActionRegistry with SP3 services (TransitService, TourismService, EventService, TaxiService) when providers are configured
   const handler = new MessageHandler(
     sessionRepo, menuService, flowEngine, chatService, languageService,
   );
