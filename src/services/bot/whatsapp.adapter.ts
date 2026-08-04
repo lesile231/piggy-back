@@ -72,10 +72,12 @@ export class WhatsAppAdapter implements BotAdapter {
       }
       case "location": {
         const loc = msg.location as Record<string, number> | undefined;
+        const lat = loc?.latitude;
+        const lng = loc?.longitude;
         return {
           ...base,
           type: "location",
-          location: loc ? { latitude: loc.latitude, longitude: loc.longitude } : undefined,
+          location: (lat !== undefined && lng !== undefined) ? { latitude: lat, longitude: lng } : undefined,
         };
       }
       case "interactive": {
