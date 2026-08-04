@@ -9,6 +9,13 @@ const envSchema = z.object({
   LLM_LIGHT_MODEL: z.string().default("llama-3.1-8b-instant"),
   LLM_CHAT_PROVIDER: z.enum(["groq", "together"]).default("groq"),
   LLM_CHAT_MODEL: z.string().default("llama-3.3-70b-versatile"),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().default(""),
+  WHATSAPP_ACCESS_TOKEN: z.string().default(""),
+  WHATSAPP_VERIFY_TOKEN: z.string().default(""),
+  WHATSAPP_APP_SECRET: z.string().default(""),
+  LINE_CHANNEL_ACCESS_TOKEN: z.string().default(""),
+  LINE_CHANNEL_SECRET: z.string().default(""),
+  NEXT_PUBLIC_APP_URL: z.string().default("http://localhost:3000"),
 });
 
 export type Env = z.infer<typeof envSchema>;
