@@ -3,6 +3,8 @@ import { LocationResolver } from "./location-resolver";
 import type { LLMRouter } from "./llm-router";
 import type { Database } from "@/lib/db/client";
 import type { LLMResponse } from "@/types/ai";
+import type { EmbeddingProvider } from "@/lib/external/embedding/types";
+import type { SpotRepository } from "@/services/tourism/spot.repository";
 
 function createMockRouter(responseContent: string): LLMRouter {
   return {
@@ -64,6 +66,23 @@ function createMockDb(aliasResult: unknown[] = [], spotResults: unknown[] = []):
   } as unknown as Database;
 }
 
+function createMockEmbeddingProvider(): EmbeddingProvider {
+  return {
+    embed: vi.fn().mockResolvedValue([[0.1, 0.2, 0.3]]),
+    dimensions: 3,
+  };
+}
+
+function createMockSpotRepo(similarResults: unknown[] = []): SpotRepository {
+  return {
+    searchBySimilarity: vi.fn().mockResolvedValue(similarResults),
+    searchByName: vi.fn().mockResolvedValue([]),
+    searchByCategory: vi.fn().mockResolvedValue([]),
+    getById: vi.fn().mockResolvedValue(null),
+    upsertFromExternal: vi.fn(),
+  } as unknown as SpotRepository;
+}
+
 describe("LocationResolver", () => {
   it("Stage 1: returns result from alias DB match", async () => {
     const mockDb = createMockDb([
@@ -108,5 +127,50 @@ describe("LocationResolver", () => {
 
     const result = await resolver.resolve("xyznonexistent", "en");
     expect(result).toBeNull();
+  });
+
+  it("Stage 2: returns result from embedding similarity search", async () => {
+    const mockDb = createMockDb([]); // No alias match
+    const router = createMockRouter("{}");
+    const embeddingProvider = createMockEmbeddingProvider();
+    const spotRepo = createMockSpotRepo([
+      {
+        id: "spot-1",
+        nameKo: "해운대해수욕장",
+        names: { en: "Haeundae Beach" },
+        similarity: 0.92,
+        description: {}, addressKo: null, addresses: {},
+        latitude: 35.1586, longitude: 129.1604,
+        phone: null, website: null, images: [], rating: null,
+        source: "manual", isActive: true,
+      },
+    ]);
+
+    const resolver = new LocationResolver(mockDb, router, embeddingProvider, spotRepo);
+    const result = await resolver.resolve("haeundae beach", "en");
+
+    expect(result).not.toBeNull();
+    expect(result!.source).toBe("embedding");
+    expect(result!.spotId).toBe("spot-1");
+    expect(result!.confidence).toBe(0.92);
+    // LLM should NOT have been called
+    expect(router.lightweightJson).not.toHaveBeenCalled();
+  });
+
+  it("Stage 2: skips to Stage 3 when embedding has no results", async () => {
+    const mockDb = createMockDb([], [
+      { id: "spot-1", nameKo: "자갈치시장", names: { en: "Jagalchi Market" } },
+    ]);
+    const router = createMockRouter(JSON.stringify({
+      matchIndex: 1, confidence: 0.9, reasoning: "match",
+    }));
+    const embeddingProvider = createMockEmbeddingProvider();
+    const spotRepo = createMockSpotRepo([]); // No embedding match
+
+    const resolver = new LocationResolver(mockDb, router, embeddingProvider, spotRepo);
+    const result = await resolver.resolve("fish market", "en");
+
+    expect(result).not.toBeNull();
+    expect(result!.source).toBe("gpt"); // Fell through to Stage 3
   });
 });

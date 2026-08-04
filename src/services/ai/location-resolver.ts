@@ -3,6 +3,8 @@ import type { Database } from "@/lib/db/client";
 import type { LLMRouter } from "./llm-router";
 import type { ChatMessage, ResolvedLocation } from "@/types/ai";
 import { locationAliases, tourismSpots } from "@/lib/db/schema";
+import type { EmbeddingProvider } from "@/lib/external/embedding/types";
+import type { SpotRepository } from "@/services/tourism/spot.repository";
 
 const MIN_CONFIDENCE = 0.5;
 // TODO[MVP]: When spots exceed this limit, implement category-based filtering or embedding pre-filter
@@ -12,6 +14,8 @@ export class LocationResolver {
   constructor(
     private db: Database,
     private router: LLMRouter,
+    private embeddingProvider?: EmbeddingProvider,
+    private spotRepo?: SpotRepository,
   ) {}
 
   async resolve(
@@ -23,8 +27,11 @@ export class LocationResolver {
     const aliasResult = await this.searchByAlias(query, language);
     if (aliasResult) return aliasResult;
 
-    // Stage 2: Embedding search (TODO[MVP]: implement in SP3 when embedding pipeline is ready)
-    // For now, skip to Stage 3
+    // Stage 2: Embedding similarity search
+    if (this.embeddingProvider && this.spotRepo) {
+      const embeddingResult = await this.searchByEmbedding(query);
+      if (embeddingResult) return embeddingResult;
+    }
 
     // Stage 3: LLM inference
     const llmResult = await this.resolveWithLLM(query, language, context);
@@ -131,6 +138,29 @@ Match the query to the best candidate. Use the candidate's array index to identi
         spotName: match.nameKo,
         confidence: parsed.confidence,
         source: "gpt",
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  private async searchByEmbedding(
+    query: string,
+  ): Promise<ResolvedLocation | null> {
+    if (!this.embeddingProvider || !this.spotRepo) return null;
+
+    try {
+      const [queryVector] = await this.embeddingProvider.embed([query]);
+      if (!queryVector || queryVector.length === 0) return null;
+
+      const matches = await this.spotRepo.searchBySimilarity(queryVector, 0.8, 1);
+      if (matches.length === 0 || !matches[0]) return null;
+
+      return {
+        spotId: matches[0].id,
+        spotName: matches[0].nameKo,
+        confidence: matches[0].similarity,
+        source: "embedding",
       };
     } catch {
       return null;
