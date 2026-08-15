@@ -40,3 +40,68 @@ body {
     animation: none;
   }
 }
+
+/* ── Decode Board: FlapSlot animations ── */
+
+@keyframes flap-flip {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+@keyframes flap-lock-pulse {
+  0% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes decode-expand {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
+
+@keyframes result-slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.flap-slot {
+  perspective: 300px;
+}
+
+.flap-char-flip {
+  animation: flap-flip 50ms ease-in-out;
+}
+
+.flap-slot.locked .flap-char {
+  animation: flap-lock-pulse 150ms ease-out;
+  color: #FF4D14;
+}
+
+.decode-board-expand {
+  animation: decode-expand 300ms ease-out forwards;
+  overflow: hidden;
+}
+
+.decode-result-enter {
+  animation: result-slide-in 400ms ease-out forwards;
+}
+
+/* §5.4 prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .flap-char-flip,
+  .flap-slot.locked .flap-char {
+    animation: none;
+  }
+
+  .decode-board-expand {
+    animation: none;
+    max-height: 500px;
+    opacity: 1;
+  }
+
+  .decode-result-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
