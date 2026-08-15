@@ -1,10 +1,19 @@
-import { eq, and, ilike } from "drizzle-orm";
+import { eq, and, ilike, sql } from "drizzle-orm";
 import type { Database } from "@/lib/db/client";
 import type { LLMRouter } from "./llm-router";
-import type { ChatMessage, ResolvedLocation } from "@/types/ai";
-import { locationAliases, tourismSpots } from "@/lib/db/schema";
+import type {
+  ChatMessage,
+  ResolvedLocation,
+  Resolution,
+  ResolutionMatch,
+} from "@/types/ai";
+import { locationAliases, tourismSpots, resolutionLogs } from "@/lib/db/schema";
 import type { EmbeddingProvider } from "@/lib/external/embedding/types";
 import type { SpotRepository } from "@/services/tourism/spot.repository";
+import { normalize } from "@/lib/utils/normalizer";
+import { romanizeToHangul } from "@/lib/utils/romanize-to-hangul";
+import { findClosestByJamo } from "@/lib/utils/jamo-match";
+import { determineAction } from "./resolve-action";
 
 const MIN_CONFIDENCE = 0.5;
 // TODO[MVP]: When spots exceed this limit, implement category-based filtering or embedding pre-filter
@@ -18,61 +27,207 @@ export class LocationResolver {
     private spotRepo?: SpotRepository,
   ) {}
 
+  /**
+   * Full resolution pipeline returning §4.2 Resolution type.
+   * Stage 1: Normalization (applied to query before all stages)
+   * Stage 2: Alias dictionary lookup
+   * Stage 3: Romanization reverse-conversion
+   * Stage 4: Phonetic approximate matching
+   * Stage 5: Semantic search fallback (embedding + LLM)
+   */
   async resolve(
     query: string,
     language: string,
     context?: { category?: string },
-  ): Promise<ResolvedLocation | null> {
-    // Stage 1: DB alias search
-    const aliasResult = await this.searchByAlias(query, language);
-    if (aliasResult) return aliasResult;
+  ): Promise<Resolution> {
+    const normalizedQuery = normalize(query);
 
-    // Stage 2: Embedding similarity search
+    const resolution: Resolution = {
+      query,
+      normalizedQuery,
+      detectedLang: language,
+      stage: null,
+      action: "empty",
+      matches: [],
+    };
+
+    if (!normalizedQuery) return resolution;
+
+    // Stage 2: Alias dictionary lookup (Stage 1 normalization applied inline)
+    const aliasMatches = await this.searchByAlias(normalizedQuery);
+    if (aliasMatches.length > 0) {
+      resolution.stage = 2;
+      resolution.matches = aliasMatches;
+      resolution.action = determineAction(aliasMatches);
+      return resolution;
+    }
+
+    // Stage 3: Romanization reverse-conversion
+    const hangulFromRoman = romanizeToHangul(normalizedQuery);
+    if (hangulFromRoman) {
+      // Try alias lookup with the converted Hangul
+      const stage3Aliases = await this.searchByAlias(
+        normalize(hangulFromRoman),
+      );
+      if (stage3Aliases.length > 0) {
+        resolution.stage = 3;
+        resolution.matches = stage3Aliases;
+        resolution.action = determineAction(stage3Aliases);
+        return resolution;
+      }
+    }
+
+    // Stage 4: Phonetic approximate matching (jamo Levenshtein)
+    const jamoQuery = hangulFromRoman || normalizedQuery;
+    if (jamoQuery) {
+      const jamoMatches = await this.searchByJamo(jamoQuery);
+      if (jamoMatches.length > 0) {
+        resolution.stage = 4;
+        resolution.matches = jamoMatches;
+        resolution.action = determineAction(jamoMatches);
+        return resolution;
+      }
+    }
+
+    // Stage 5: Semantic search fallback (embedding + LLM)
     if (this.embeddingProvider && this.spotRepo) {
-      const embeddingResult = await this.searchByEmbedding(query);
-      if (embeddingResult) return embeddingResult;
+      const embeddingMatches = await this.searchByEmbedding(query);
+      if (embeddingMatches.length > 0) {
+        resolution.stage = 5;
+        resolution.matches = embeddingMatches;
+        resolution.action = determineAction(embeddingMatches);
+        await this.logResolution(query, normalizedQuery, language, resolution);
+        return resolution;
+      }
     }
 
-    // Stage 3: LLM inference
-    const llmResult = await this.resolveWithLLM(query, language, context);
-    if (llmResult) {
-      // Self-learning: cache successful resolution as alias
-      await this.cacheAsAlias(query, language, llmResult.spotId);
+    const llmMatches = await this.resolveWithLLM(query, language, context);
+    if (llmMatches.length > 0) {
+      resolution.stage = 5;
+      resolution.matches = llmMatches;
+      resolution.action = determineAction(llmMatches);
+      // Self-learning: cache high-confidence resolution as alias
+      const topLlm = llmMatches[0];
+      if (topLlm && topLlm.confidence >= 0.6) {
+        await this.cacheAsAlias(normalizedQuery, language, topLlm.placeId);
+      }
+      await this.logResolution(query, normalizedQuery, language, resolution);
+      return resolution;
     }
-    return llmResult;
+
+    // All stages failed — log for manual review queue
+    await this.logResolution(query, normalizedQuery, language, resolution);
+    return resolution;
   }
 
-  private async searchByAlias(
+  /**
+   * Legacy resolve method for backward compatibility with bot services.
+   */
+  async resolveLegacy(
     query: string,
     language: string,
+    context?: { category?: string },
   ): Promise<ResolvedLocation | null> {
+    const result = await this.resolve(query, language, context);
+    const match = result.matches[0];
+    if (!match) return null;
+    const sourceMap: Record<number, ResolvedLocation["source"]> = {
+      2: "alias",
+      3: "alias",
+      4: "alias",
+      5: "gpt",
+    };
+    return {
+      spotId: match.placeId,
+      spotName: match.nameKo,
+      confidence: match.confidence,
+      source: sourceMap[result.stage ?? 5] ?? "gpt",
+    };
+  }
+
+  /**
+   * Stage 2: Search alias dictionary with normalized query.
+   * Searches across ALL languages — the alias text itself determines language.
+   * Normalization is applied to both the query (caller) and aliases (SQL-side).
+   */
+  private async searchByAlias(
+    normalizedQuery: string,
+  ): Promise<ResolutionMatch[]> {
     try {
       const results = await this.db
         .select({
-          spotId: locationAliases.spotId,
-          alias: locationAliases.alias,
-          spotName: tourismSpots.nameKo,
+          spotId: tourismSpots.id,
+          nameKo: tourismSpots.nameKo,
+          names: tourismSpots.names,
         })
         .from(locationAliases)
         .innerJoin(tourismSpots, eq(locationAliases.spotId, tourismSpots.id))
         .where(
-          and(
-            ilike(locationAliases.alias, query),
-            eq(locationAliases.language, language),
-          ),
+          sql`lower(regexp_replace(${locationAliases.alias}, '[\\s\\-''\\._·]', '', 'g')) = ${normalizedQuery}`,
         )
-        .limit(1);
+        .limit(5);
 
-      if (results.length === 0 || !results[0]) return null;
+      if (results.length === 0) return [];
 
-      return {
-        spotId: results[0].spotId!,
-        spotName: results[0].spotName,
-        confidence: 1.0,
-        source: "alias",
-      };
+      // Deduplicate by placeId (multiple alias rows may match the same spot)
+      const seen = new Set<string>();
+      const matches: ResolutionMatch[] = [];
+      for (const r of results) {
+        if (seen.has(r.spotId)) continue;
+        seen.add(r.spotId);
+        const names = (r.names ?? {}) as Record<string, string>;
+        matches.push({
+          placeId: r.spotId,
+          nameKo: r.nameKo,
+          nameLocalized: names["en"] ?? r.nameKo,
+          romanized: names["en"] ?? "",
+          confidence: 1.0,
+        });
+      }
+      return matches;
     } catch {
-      return null;
+      return [];
+    }
+  }
+
+  /**
+   * Stage 4: Jamo-based approximate matching.
+   * Fetches all active spots and ranks by jamo Levenshtein similarity.
+   */
+  private async searchByJamo(
+    hangulQuery: string,
+  ): Promise<ResolutionMatch[]> {
+    try {
+      const spots = await this.db
+        .select({
+          id: tourismSpots.id,
+          nameKo: tourismSpots.nameKo,
+          names: tourismSpots.names,
+        })
+        .from(tourismSpots)
+        .where(eq(tourismSpots.isActive, true))
+        .limit(MAX_LLM_CANDIDATES);
+
+      const candidates = findClosestByJamo(
+        hangulQuery,
+        spots,
+        MIN_CONFIDENCE,
+        3,
+      );
+
+      return candidates.map((c) => {
+        const spot = spots.find((s) => s.id === c.id);
+        const names = (spot?.names ?? {}) as Record<string, string>;
+        return {
+          placeId: c.id,
+          nameKo: c.nameKo,
+          nameLocalized: names["en"] ?? c.nameKo,
+          romanized: names["en"] ?? "",
+          confidence: c.similarity,
+        };
+      });
+    } catch {
+      return [];
     }
   }
 
@@ -80,8 +235,7 @@ export class LocationResolver {
     query: string,
     language: string,
     context?: { category?: string },
-  ): Promise<ResolvedLocation | null> {
-    // Fetch candidate spots from DB
+  ): Promise<ResolutionMatch[]> {
     let candidates: { id: string; nameKo: string; names: unknown }[];
     try {
       candidates = await this.db
@@ -94,10 +248,10 @@ export class LocationResolver {
         .where(eq(tourismSpots.isActive, true))
         .limit(MAX_LLM_CANDIDATES);
     } catch {
-      return null;
+      return [];
     }
 
-    if (candidates.length === 0) return null;
+    if (candidates.length === 0) return [];
 
     const candidateList = candidates
       .map((c, i) => `${i + 1}. ${c.nameKo} (${JSON.stringify(c.names)})`)
@@ -106,9 +260,10 @@ export class LocationResolver {
     const messages: ChatMessage[] = [
       {
         role: "system",
-        content: `You are a Busan location resolver. Match the user's query to one of the candidate locations.
-Respond with JSON: {"matchIndex": <number-or-null>, "confidence": 0.0-1.0, "reasoning": "..."}
-matchIndex is the 1-based index from the candidate list, or null if no match.`,
+        content: `You are a Busan location resolver. Match the user's query to candidate locations.
+Respond with JSON: {"matches": [{"matchIndex": <1-based>, "confidence": 0.0-1.0}], "reasoning": "..."}
+Return up to 3 matches sorted by confidence. If no match, return {"matches": [], "reasoning": "..."}.
+matchIndex is the 1-based index from the candidate list.`,
       },
       {
         role: "user",
@@ -118,7 +273,7 @@ ${context?.category ? `Category hint: ${context.category}` : ""}
 Candidates:
 ${candidateList}
 
-Match the query to the best candidate. Use the candidate's array index to identify it.`,
+Match the query to the best candidate(s).`,
       },
     ];
 
@@ -126,49 +281,96 @@ Match the query to the best candidate. Use the candidate's array index to identi
       const response = await this.router.lightweightJson(messages);
       const parsed = JSON.parse(response.content);
 
-      if (parsed.matchIndex === null || parsed.confidence < MIN_CONFIDENCE) return null;
+      // Support both old single-match and new multi-match format
+      const rawMatches: { matchIndex: number | null; confidence: number }[] =
+        Array.isArray(parsed.matches)
+          ? parsed.matches
+          : parsed.matchIndex != null
+            ? [{ matchIndex: parsed.matchIndex, confidence: parsed.confidence }]
+            : [];
 
-      // Find the matching candidate (1-based index)
-      const matchIndex = parseInt(String(parsed.matchIndex), 10) - 1;
-      const match = candidates[matchIndex];
-      if (!match) return null;
+      const results: ResolutionMatch[] = [];
+      for (const m of rawMatches) {
+        if (m.matchIndex === null || m.confidence < MIN_CONFIDENCE) continue;
+        const idx = parseInt(String(m.matchIndex), 10) - 1;
+        const candidate = candidates[idx];
+        if (!candidate) continue;
 
-      return {
-        spotId: match.id,
-        spotName: match.nameKo,
-        confidence: parsed.confidence,
-        source: "gpt",
-      };
+        const names = (candidate.names ?? {}) as Record<string, string>;
+        results.push({
+          placeId: candidate.id,
+          nameKo: candidate.nameKo,
+          nameLocalized: names["en"] ?? candidate.nameKo,
+          romanized: names["en"] ?? "",
+          confidence: m.confidence,
+        });
+      }
+
+      return results;
     } catch {
-      return null;
+      return [];
     }
   }
 
   private async searchByEmbedding(
     query: string,
-  ): Promise<ResolvedLocation | null> {
-    if (!this.embeddingProvider || !this.spotRepo) return null;
+  ): Promise<ResolutionMatch[]> {
+    if (!this.embeddingProvider || !this.spotRepo) return [];
 
     try {
       const [queryVector] = await this.embeddingProvider.embed([query]);
-      if (!queryVector || queryVector.length === 0) return null;
+      if (!queryVector || queryVector.length === 0) return [];
 
-      const matches = await this.spotRepo.searchBySimilarity(queryVector, 0.8, 1);
-      if (matches.length === 0 || !matches[0]) return null;
+      const matches = await this.spotRepo.searchBySimilarity(
+        queryVector,
+        0.5,
+        3,
+      );
+      if (matches.length === 0) return [];
 
-      return {
-        spotId: matches[0].id,
-        spotName: matches[0].nameKo,
-        confidence: matches[0].similarity,
-        source: "embedding",
-      };
+      return matches.map((m) => ({
+        placeId: m.id,
+        nameKo: m.nameKo,
+        nameLocalized:
+          (m.names as Record<string, string>)["en"] ?? m.nameKo,
+        romanized:
+          (m.names as Record<string, string>)["en"] ?? "",
+        confidence: m.similarity,
+      }));
     } catch {
-      return null;
+      return [];
+    }
+  }
+
+  /**
+   * §4.1 Stage 5 logging: record queries that reach Stage 5 or fail entirely.
+   * Successful Stage 5 resolutions become alias dictionary candidates.
+   * Failed queries enter the manual review queue.
+   */
+  private async logResolution(
+    query: string,
+    normalizedQuery: string,
+    language: string,
+    resolution: Resolution,
+  ): Promise<void> {
+    try {
+      const top = resolution.matches[0];
+      await this.db.insert(resolutionLogs).values({
+        query,
+        normalizedQuery,
+        language,
+        resolvedStage: resolution.stage,
+        resolvedSpotId: top?.placeId ?? null,
+        confidence: top?.confidence?.toString() ?? null,
+        success: resolution.matches.length > 0,
+      });
+    } catch {
+      // Non-critical: silently fail if logging fails
     }
   }
 
   private async cacheAsAlias(
-    query: string,
+    normalizedQuery: string,
     language: string,
     spotId: string,
   ): Promise<void> {
@@ -177,7 +379,7 @@ Match the query to the best candidate. Use the candidate's array index to identi
         .insert(locationAliases)
         .values({
           spotId,
-          alias: query.toLowerCase(),
+          alias: normalizedQuery,
           language,
           source: "ai_generated",
         })

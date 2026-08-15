@@ -4,7 +4,26 @@ import { getEnv } from "@/lib/env";
 import { SpotRepository } from "@/services/tourism/spot.repository";
 import { getDictionary } from "../dictionaries";
 import { SpotCard } from "@/components/user/SpotCard";
-import { SearchInput } from "@/components/user/SearchInput";
+import { TransshipmentStrip } from "@/components/user/TransshipmentStrip";
+import { CategoryFilter } from "@/components/user/CategoryFilter";
+
+const POPULAR_CHIPS: { label: string; query: string }[] = [
+  { label: "감천", query: "gamcheon" },
+  { label: "Jagalchi", query: "jagalchi" },
+  { label: "광안리", query: "gwangalli" },
+  { label: "海雲台", query: "haeundae" },
+  { label: "Taejongdae", query: "taejongdae" },
+  { label: "BIFF広場", query: "biff square" },
+  { label: "용두산", query: "yongdusan" },
+  { label: "Songdo", query: "songdo" },
+];
+
+const SPOT_CATEGORIES = [
+  { slug: "nature", label: "Nature" },
+  { slug: "culture", label: "Culture" },
+  { slug: "food", label: "Food" },
+  { slug: "shopping", label: "Shopping" },
+];
 
 export async function generateMetadata() {
   const dict = await getDictionary();
@@ -34,10 +53,14 @@ export default async function SpotsPage({
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-bold">{dict.spots.title}</h1>
       <div className="mt-4">
-        <SearchInput
-          placeholder={dict.spots.searchPlaceholder}
-          action={`/${locale}/spots`}
-          defaultValue={query}
+        <TransshipmentStrip locale={locale} dict={dict.strip} popularChips={POPULAR_CHIPS} />
+      </div>
+      <div className="mt-4">
+        <CategoryFilter
+          categories={SPOT_CATEGORIES}
+          current={category || undefined}
+          basePath={`/${locale}/spots`}
+          allLabel={dict.spots.allCategories}
         />
       </div>
       {spots.length === 0 ? (

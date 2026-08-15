@@ -4,7 +4,18 @@ import { getEnv } from "@/lib/env";
 import { SpotRepository } from "@/services/tourism/spot.repository";
 import { getDictionary } from "../dictionaries";
 import { SpotCard } from "@/components/user/SpotCard";
-import { SearchInput } from "@/components/user/SearchInput";
+import { TransshipmentStrip } from "@/components/user/TransshipmentStrip";
+
+const POPULAR_CHIPS: { label: string; query: string }[] = [
+  { label: "감천", query: "gamcheon" },
+  { label: "Jagalchi", query: "jagalchi" },
+  { label: "광안리", query: "gwangalli" },
+  { label: "海雲台", query: "haeundae" },
+  { label: "Taejongdae", query: "taejongdae" },
+  { label: "BIFF広場", query: "biff square" },
+  { label: "용두산", query: "yongdusan" },
+  { label: "Songdo", query: "songdo" },
+];
 
 export async function generateMetadata() {
   const dict = await getDictionary();
@@ -30,11 +41,7 @@ export default async function SearchPage({
     <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-bold">{dict.search.title}</h1>
       <div className="mt-4">
-        <SearchInput
-          placeholder={dict.search.placeholder}
-          action={`/${locale}/search`}
-          defaultValue={query}
-        />
+        <TransshipmentStrip locale={locale} dict={dict.strip} popularChips={POPULAR_CHIPS} />
       </div>
 
       {query && spots.length > 0 && (

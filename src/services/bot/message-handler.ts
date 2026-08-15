@@ -103,9 +103,7 @@ export class MessageHandler {
         incoming.text ?? "Hello",
         language,
       );
-      await this.sendMessages(adapter, incoming.chatId, [
-        { type: "text", text: response.response },
-      ]);
+      await this.sendMessages(adapter, incoming.chatId, response.messages);
       return;
     }
 
@@ -186,11 +184,11 @@ export class MessageHandler {
     const response = await this.chatService.generateResponse(
       incoming.text ?? "",
       language,
+      undefined,
+      incoming.location,
     );
 
-    await this.sendMessages(adapter, incoming.chatId, [
-      { type: "text", text: response.response },
-    ]);
+    await this.sendMessages(adapter, incoming.chatId, response.messages);
   }
 
   private async sendMessages(

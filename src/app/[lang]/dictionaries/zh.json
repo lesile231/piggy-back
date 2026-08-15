@@ -43,5 +43,23 @@
     "placeholder": "搜索景点和活动...",
     "spotsSection": "旅游景点",
     "eventsSection": "活动"
+  },
+  "strip": {
+    "tagline": "随便怎么输入都行。",
+    "emptyState": "这个地方还没有收录。",
+    "networkError": "无法连接服务器。",
+    "retry": "重试",
+    "othersLookingFor": "大家都在找",
+    "didYouMean": "您是不是在找…"
+  },
+  "place": {
+    "showToDriver": "出租车司机看这里",
+    "directions": "如何到达",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "这里的活动",
+    "noUpcomingEvents": "暂无即将举行的活动",
+    "description": "介绍"
   }
 }

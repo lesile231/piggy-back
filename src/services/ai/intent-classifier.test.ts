@@ -15,16 +15,16 @@ function createMockRouter(responseContent: string): LLMRouter {
 }
 
 describe("IntentClassifier", () => {
-  it("classifies tourism intent", async () => {
+  it("classifies resolve_place intent", async () => {
     const router = createMockRouter(JSON.stringify({
-      intent: "tourism",
+      intent: "resolve_place",
       confidence: 0.95,
       entities: { location: "Haeundae" },
     }));
     const classifier = new IntentClassifier(router);
 
     const result = await classifier.classify("Best restaurant near Haeundae?", "en");
-    expect(result.intent).toBe("tourism");
+    expect(result.intent).toBe("resolve_place");
     expect(result.extractedEntities?.location).toBe("Haeundae");
   });
 
@@ -40,12 +40,12 @@ describe("IntentClassifier", () => {
     expect(result.intent).toBe("off_topic");
   });
 
-  it("defaults to off_topic on malformed JSON", async () => {
+  it("defaults to fallback on malformed JSON", async () => {
     const router = createMockRouter("not json");
     const classifier = new IntentClassifier(router);
 
     const result = await classifier.classify("test", "en");
-    expect(result.intent).toBe("off_topic");
+    expect(result.intent).toBe("fallback");
     expect(result.confidence).toBe(0);
   });
 });

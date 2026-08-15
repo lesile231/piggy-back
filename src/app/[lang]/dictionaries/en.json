@@ -43,5 +43,23 @@
     "placeholder": "Search spots and events...",
     "spotsSection": "Tourism Spots",
     "eventsSection": "Events"
+  },
+  "strip": {
+    "tagline": "Type it however you heard it.",
+    "emptyState": "That one's not in our yard yet.",
+    "networkError": "Couldn't reach the server.",
+    "retry": "Tap to retry",
+    "othersLookingFor": "Others are looking for",
+    "didYouMean": "Did you mean…"
+  },
+  "place": {
+    "showToDriver": "Show this to your taxi driver",
+    "directions": "How to get there",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "Events here",
+    "noUpcomingEvents": "No upcoming events",
+    "description": "About this place"
   }
 }

@@ -43,5 +43,23 @@
     "placeholder": "명소와 이벤트 검색...",
     "spotsSection": "관광명소",
     "eventsSection": "이벤트"
+  },
+  "strip": {
+    "tagline": "들은 대로 입력하세요.",
+    "emptyState": "아직 등록되지 않은 장소입니다.",
+    "networkError": "서버에 연결할 수 없습니다.",
+    "retry": "다시 시도",
+    "othersLookingFor": "다른 사람들이 찾고 있는 곳",
+    "didYouMean": "혹시 이곳을 찾으셨나요?"
+  },
+  "place": {
+    "showToDriver": "택시 기사에게 보여주세요",
+    "directions": "가는 법",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "네이버 지도",
+    "openInKakaoMap": "카카오맵",
+    "relatedEvents": "여기서 열리는 이벤트",
+    "noUpcomingEvents": "예정된 이벤트 없음",
+    "description": "소개"
   }
 }

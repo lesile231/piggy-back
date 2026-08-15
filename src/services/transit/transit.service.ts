@@ -19,10 +19,10 @@ export class TransitService {
     to: string,
     language: string,
   ): Promise<OutgoingMessage[]> {
-    // 1. Resolve locations
+    // 1. Resolve locations (use legacy format for backward compatibility)
     const [fromResolved, toResolved] = await Promise.all([
-      this.locationResolver.resolve(from, language),
-      this.locationResolver.resolve(to, language),
+      this.locationResolver.resolveLegacy(from, language),
+      this.locationResolver.resolveLegacy(to, language),
     ]);
 
     if (!fromResolved || !toResolved) {

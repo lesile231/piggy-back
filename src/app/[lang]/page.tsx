@@ -1,5 +1,4 @@
 import { lang } from "next/root-params";
-import Link from "next/link";
 import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { SpotRepository } from "@/services/tourism/spot.repository";
@@ -7,7 +6,8 @@ import { EventRepository } from "@/services/tourism/event.repository";
 import { getDictionary } from "./dictionaries";
 import { SpotCard } from "@/components/user/SpotCard";
 import { EventCard } from "@/components/user/EventCard";
-import { SearchInput } from "@/components/user/SearchInput";
+import { TransshipmentStrip } from "@/components/user/TransshipmentStrip";
+import { Button } from "@/components/ui/Button";
 
 export async function generateMetadata() {
   const dict = await getDictionary();
@@ -16,6 +16,23 @@ export async function generateMetadata() {
     description: dict.home.subtitle,
   };
 }
+
+/**
+ * §3.1 wireframe — popular search chips.
+ * 8 fixed, mixed-language labels to teach users
+ * "you can type it however you heard it."
+ * Server-injected, not dynamic.
+ */
+const POPULAR_CHIPS: { label: string; query: string }[] = [
+  { label: "감천", query: "gamcheon" },
+  { label: "Jagalchi", query: "jagalchi" },
+  { label: "광안리", query: "gwangalli" },
+  { label: "海雲台", query: "haeundae" },
+  { label: "Taejongdae", query: "taejongdae" },
+  { label: "BIFF広場", query: "biff square" },
+  { label: "용두산", query: "yongdusan" },
+  { label: "Songdo", query: "songdo" },
+];
 
 export default async function HomePage() {
   const locale = (await lang()) ?? "en";
@@ -33,29 +50,51 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      <section className="text-center">
-        <h1 className="text-4xl font-bold">{dict.home.title}</h1>
-        <p className="mt-3 text-lg text-zinc-600 dark:text-zinc-400">
-          {dict.home.subtitle}
+      {/* §3.1 Hero — search + transshipment strip */}
+      <section className="flex flex-col items-center text-center">
+        <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+          PiggyBack
+        </h1>
+        <p className="mt-3 text-lg text-zinc-500 dark:text-zinc-400">
+          {dict.strip.tagline}
         </p>
-        <div className="mt-6 flex justify-center">
-          <SearchInput
-            placeholder={dict.search.placeholder}
-            action={`/${locale}/search`}
+
+        {/* §5.4 Transshipment strip */}
+        <div className="mt-8 w-full">
+          <TransshipmentStrip
+            locale={locale}
+            dict={dict.strip}
+            popularChips={POPULAR_CHIPS}
           />
+        </div>
+
+        {/* §3.1 Popular search chips — mixed language */}
+        <div className="mt-6">
+          <p className="text-xs text-zinc-400 dark:text-zinc-500">
+            {dict.strip.othersLookingFor}
+          </p>
+          <div className="mt-2 flex flex-wrap justify-center gap-2">
+            {POPULAR_CHIPS.map((chip) => (
+              <span
+                key={chip.query}
+                className="rounded-full border border-zinc-200 px-3 py-1 text-sm
+                           text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
+              >
+                {chip.label}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
+      {/* Popular spots */}
       {spots.length > 0 && (
-        <section className="mt-12">
+        <section className="mt-16">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">{dict.home.popularSpots}</h2>
-            <Link
-              href={`/${locale}/spots`}
-              className="text-sm text-blue-600 hover:underline"
-            >
+            <Button variant="ghost" size="sm" asChild href={`/${locale}/spots`}>
               {dict.common.viewMore}
-            </Link>
+            </Button>
           </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {spots.map((spot) => (
@@ -65,16 +104,14 @@ export default async function HomePage() {
         </section>
       )}
 
+      {/* Upcoming events */}
       {events.length > 0 && (
         <section className="mt-12">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">{dict.home.upcomingEvents}</h2>
-            <Link
-              href={`/${locale}/events`}
-              className="text-sm text-blue-600 hover:underline"
-            >
+            <Button variant="ghost" size="sm" asChild href={`/${locale}/events`}>
               {dict.common.viewMore}
-            </Link>
+            </Button>
           </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {events.map((event) => (

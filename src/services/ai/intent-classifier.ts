@@ -2,19 +2,20 @@ import type { LLMRouter } from "./llm-router";
 import type { ChatMessage, ClassificationResult, Intent } from "@/types/ai";
 
 const VALID_INTENTS: Intent[] = [
-  "tourism", "transit", "booking", "general_info", "greeting", "off_topic",
+  "resolve_place", "how_to_get", "whats_on", "nearby",
+  "fallback", "greeting", "off_topic",
 ];
 
 const SYSTEM_PROMPT = `You are a Busan tourism intent classifier.
 Classify the user's message into one of these intents:
-- tourism: questions about tourist spots, restaurants, cafes, attractions
-- transit: questions about transportation, directions, routes
-- booking: questions about reservations, tickets, activities
-- general_info: general Busan travel info (weather, currency, tips)
-- greeting: greetings, thanks, goodbyes
+- resolve_place: asking about a specific place, tourist spot, restaurant, temple, market, beach (includes any place name in any language)
+- how_to_get: asking for directions, transportation, how to get somewhere
+- whats_on: asking about events, festivals, what's happening, things to do today
+- nearby: asking for nearby places, "near me", around here, what's close
+- greeting: greetings, thanks, goodbyes, "hello", "hi"
 - off_topic: anything unrelated to Busan tourism/travel
 
-Extract entities if present: location, category, date.
+Extract entities if present: location name, category, date.
 
 Respond with JSON only:
 {"intent": "...", "confidence": 0.0-1.0, "entities": {"location": "...", "category": "...", "date": "..."}}`;
@@ -50,7 +51,7 @@ export class IntentClassifier {
 
       const intent: Intent = VALID_INTENTS.includes(parsed.intent)
         ? parsed.intent
-        : "off_topic";
+        : "fallback";
 
       return {
         intent,
@@ -64,7 +65,7 @@ export class IntentClassifier {
           : undefined,
       };
     } catch {
-      return { intent: "off_topic", confidence: 0 };
+      return { intent: "fallback", confidence: 0 };
     }
   }
 }

@@ -158,6 +158,23 @@ export const events = pgTable("events", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// ── Resolution Logs (§4.1 Stage 5 logging) ──
+
+export const resolutionLogs = pgTable("resolution_logs", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  query: varchar("query", { length: 500 }).notNull(),
+  normalizedQuery: varchar("normalized_query", { length: 500 }).notNull(),
+  language: varchar("language", { length: 10 }).notNull(),
+  resolvedStage: integer("resolved_stage"),
+  resolvedSpotId: uuid("resolved_spot_id").references(() => tourismSpots.id),
+  confidence: decimal("confidence", { precision: 3, scale: 2 }),
+  success: boolean("success").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [
+  index("idx_resolution_logs_query").on(t.normalizedQuery),
+  index("idx_resolution_logs_created").on(t.createdAt),
+]);
+
 // ── Ads & Revenue ──
 
 export const advertisers = pgTable("advertisers", {

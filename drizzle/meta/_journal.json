@@ -15,6 +15,13 @@
       "when": 1785814964574,
       "tag": "0001_add_pgvector",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1786790757866,
+      "tag": "0002_concerned_brother_voodoo",
+      "breakpoints": true
     }
   ]
 }

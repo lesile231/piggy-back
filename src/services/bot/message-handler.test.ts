@@ -62,9 +62,10 @@ function createMockFlowEngine(): FlowEngine {
 function createMockChatService(): ChatService {
   return {
     generateResponse: vi.fn().mockResolvedValue({
-      response: "Haeundae is a famous beach!",
+      messages: [{ type: "text", text: "Haeundae is a famous beach!" }],
       tokensUsed: 100,
     }),
+    setIntentRouter: vi.fn(),
   } as unknown as ChatService;
 }
 

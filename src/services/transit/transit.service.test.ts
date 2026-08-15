@@ -44,7 +44,7 @@ function createMockLocationResolver(
   },
 ): LocationResolver {
   return {
-    resolve: vi.fn().mockResolvedValue(result),
+    resolveLegacy: vi.fn().mockResolvedValue(result),
   } as unknown as LocationResolver;
 }
 

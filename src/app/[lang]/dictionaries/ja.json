@@ -43,5 +43,23 @@
     "placeholder": "スポットとイベントを検索...",
     "spotsSection": "観光スポット",
     "eventsSection": "イベント"
+  },
+  "strip": {
+    "tagline": "聞いたままに入力してください。",
+    "emptyState": "まだ登録されていない場所です。",
+    "networkError": "サーバーに接続できませんでした。",
+    "retry": "再試行",
+    "othersLookingFor": "みんなが探している場所",
+    "didYouMean": "もしかして…"
+  },
+  "place": {
+    "showToDriver": "タクシー運転手に見せてください",
+    "directions": "行き方",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "ここで開催されるイベント",
+    "noUpcomingEvents": "予定されているイベントはありません",
+    "description": "紹介"
   }
 }

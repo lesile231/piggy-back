@@ -13,6 +13,10 @@ import { LLMRouter } from "@/services/ai/llm-router";
 import { GroqProvider } from "@/services/ai/providers/groq.provider";
 import { TogetherProvider } from "@/services/ai/providers/together.provider";
 import { IntentClassifier } from "@/services/ai/intent-classifier";
+import { IntentRouter } from "@/services/ai/intent-router";
+import { LocationResolver } from "@/services/ai/location-resolver";
+import { EventRepository } from "@/services/tourism/event.repository";
+import { SpotRepository } from "@/services/tourism/spot.repository";
 
 export const dynamic = "force-dynamic";
 
@@ -81,7 +85,18 @@ export async function POST(request: NextRequest): Promise<Response> {
   const classifier = new IntentClassifier(router);
   const chatService = new ChatService(router, classifier);
 
-  // TODO[MVP]: Wire ActionRegistry with SP3 services (TransitService, TourismService, EventService, TaxiService) when providers are configured
+  // §6.1: Wire IntentRouter with resolved services
+  const locationResolver = new LocationResolver(db, router);
+  const eventRepo = new EventRepository(db);
+  const spotRepo = new SpotRepository(db);
+  const intentRouter = new IntentRouter({
+    locationResolver,
+    eventRepo,
+    spotRepo,
+    appUrl: env.NEXT_PUBLIC_APP_URL,
+  });
+  chatService.setIntentRouter(intentRouter);
+
   const handler = new MessageHandler(
     sessionRepo, menuService, flowEngine, chatService, languageService,
   );

@@ -94,6 +94,36 @@ export class SpotRepository {
     }
   }
 
+  async searchNearby(
+    lat: number,
+    lng: number,
+    limit = 5,
+  ): Promise<SpotRecord[]> {
+    try {
+      const rows = await this.db.execute(sql`
+        SELECT *,
+          (6371 * acos(
+            cos(radians(${lat})) * cos(radians(latitude)) *
+            cos(radians(longitude) - radians(${lng})) +
+            sin(radians(${lat})) * sin(radians(latitude))
+          )) AS distance_km
+        FROM tourism_spots
+        WHERE is_active = true
+          AND latitude IS NOT NULL
+          AND longitude IS NOT NULL
+        ORDER BY distance_km
+        LIMIT ${limit}
+      `);
+
+      return (rows.rows as unknown[]).map((row: unknown) => {
+        const r = row as Record<string, unknown>;
+        return this.toSpotRecordFromRaw(r);
+      });
+    } catch {
+      return [];
+    }
+  }
+
   async upsertFromExternal(
     spot: TourismSpotExternal,
     source: string,
