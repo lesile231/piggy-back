@@ -50,7 +50,8 @@
     "networkError": "서버에 연결할 수 없습니다.",
     "retry": "다시 시도",
     "othersLookingFor": "다른 사람들이 찾고 있는 곳",
-    "didYouMean": "혹시 이곳을 찾으셨나요?"
+    "didYouMean": "혹시 이곳을 찾으셨나요?",
+    "searchAgain": "다시 검색"
   },
   "place": {
     "showToDriver": "택시 기사에게 보여주세요",

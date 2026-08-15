@@ -50,7 +50,8 @@
     "networkError": "サーバーに接続できませんでした。",
     "retry": "再試行",
     "othersLookingFor": "みんなが探している場所",
-    "didYouMean": "もしかして…"
+    "didYouMean": "もしかして…",
+    "searchAgain": "再検索"
   },
   "place": {
     "showToDriver": "タクシー運転手に見せてください",

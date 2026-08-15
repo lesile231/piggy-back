@@ -15,6 +15,7 @@ interface DecodeBoardProps {
     retry: string;
     didYouMean: string;
     othersLookingFor: string;
+    searchAgain: string;
   };
   popularChips: { label: string; query: string }[];
 }
@@ -24,6 +25,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
   const [submittedQuery, setSubmittedQuery] = useState("");
   const [showResult, setShowResult] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const resultTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const { phase, resolution, error, targetChars, start, reset } =
@@ -43,12 +45,16 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
 
   const handleAllLocked = useCallback(() => {
     // Show result card after delay
-    setTimeout(() => {
+    resultTimerRef.current = setTimeout(() => {
       setShowResult(true);
     }, TIMING.RESULT_DELAY_MS);
   }, []);
 
   const handleNewSearch = useCallback(() => {
+    if (resultTimerRef.current) {
+      clearTimeout(resultTimerRef.current);
+      resultTimerRef.current = null;
+    }
     reset();
     setQuery("");
     setSubmittedQuery("");
@@ -58,6 +64,10 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
 
   const handleRetry = useCallback(() => {
     if (submittedQuery) {
+      if (resultTimerRef.current) {
+        clearTimeout(resultTimerRef.current);
+        resultTimerRef.current = null;
+      }
       setShowResult(false);
       start(submittedQuery);
     }
@@ -65,6 +75,15 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
 
   const inputChars = submittedQuery.split("");
   const isActive = phase !== "idle";
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (resultTimerRef.current) {
+        clearTimeout(resultTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -139,7 +158,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
                 onClick={handleNewSearch}
                 className="text-xs text-[#5A5F63] transition-colors hover:text-[#C8CCD0]"
               >
-                Search again
+                {dict.searchAgain}
               </button>
             </div>
           )}

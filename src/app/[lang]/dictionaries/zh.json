@@ -50,7 +50,8 @@
     "networkError": "无法连接服务器。",
     "retry": "重试",
     "othersLookingFor": "大家都在找",
-    "didYouMean": "您是不是在找…"
+    "didYouMean": "您是不是在找…",
+    "searchAgain": "重新搜索"
   },
   "place": {
     "showToDriver": "出租车司机看这里",

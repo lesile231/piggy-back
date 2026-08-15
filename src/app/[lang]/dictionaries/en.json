@@ -50,7 +50,8 @@
     "networkError": "Couldn't reach the server.",
     "retry": "Tap to retry",
     "othersLookingFor": "Others are looking for",
-    "didYouMean": "Did you mean…"
+    "didYouMean": "Did you mean…",
+    "searchAgain": "Search again"
   },
   "place": {
     "showToDriver": "Show this to your taxi driver",

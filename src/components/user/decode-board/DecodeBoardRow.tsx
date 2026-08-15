@@ -89,16 +89,29 @@ export function DecodeBoardRow({
       return next;
     });
 
-    // Stagger the deceleration → lock for each slot
+    // Stagger the cycling → decelerating → locked transition for each slot
+    const DECELERATION_DURATION_MS = 450; // 100 + 150 + 200 ms
+
     for (let i = 0; i < actualCount; i++) {
-      const timer = setTimeout(() => {
+      // First, transition to decelerating
+      const decelTimer = setTimeout(() => {
+        setSlotPhases((prev) => {
+          const next = [...prev];
+          next[i] = "decelerating";
+          return next;
+        });
+      }, i * TIMING.SLOT_STAGGER_MS);
+      staggerTimersRef.current.push(decelTimer);
+
+      // Then, after deceleration duration, transition to locked
+      const lockTimer = setTimeout(() => {
         setSlotPhases((prev) => {
           const next = [...prev];
           next[i] = "locked";
           return next;
         });
-      }, i * TIMING.SLOT_STAGGER_MS);
-      staggerTimersRef.current.push(timer);
+      }, i * TIMING.SLOT_STAGGER_MS + DECELERATION_DURATION_MS);
+      staggerTimersRef.current.push(lockTimer);
     }
   }, [isResolved, decodePhase, isOutRow, characters.length, clearTimers]);
 
@@ -139,6 +152,7 @@ export function DecodeBoardRow({
             targetChar={char}
             onLocked={isOutRow ? handleSlotLocked : undefined}
             prefersReducedMotion={prefersReducedMotion}
+            isOutput={isOutRow}
           />
         ))}
       </div>

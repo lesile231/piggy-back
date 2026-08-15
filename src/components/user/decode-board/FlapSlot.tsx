@@ -9,12 +9,13 @@ interface FlapSlotProps {
   targetChar: string;
   onLocked?: () => void;
   prefersReducedMotion?: boolean;
+  isOutput?: boolean;
 }
 
 const cycleSequence = buildCycleSequence();
 const NBSP = "\u00A0";
 
-export function FlapSlot({ phase, targetChar, onLocked, prefersReducedMotion = false }: FlapSlotProps) {
+export function FlapSlot({ phase, targetChar, onLocked, prefersReducedMotion = false, isOutput = false }: FlapSlotProps) {
   const [displayChar, setDisplayChar] = useState(NBSP);
   const [isFlipping, setIsFlipping] = useState(false);
   const cycleIndexRef = useRef(0);
@@ -126,7 +127,7 @@ export function FlapSlot({ phase, targetChar, onLocked, prefersReducedMotion = f
         className={`flap-char select-none font-mono text-xl leading-none
                     sm:text-2xl md:text-4xl
                     ${isFlipping ? "flap-char-flip" : ""}
-                    ${isLocked ? "text-[#FF4D14]" : "text-[#C8CCD0]"}`}
+                    ${isLocked && isOutput ? "text-[#FF4D14]" : "text-[#C8CCD0]"}`}
       >
         {displayChar}
       </span>
