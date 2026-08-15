@@ -6,7 +6,7 @@ import { EventRepository } from "@/services/tourism/event.repository";
 import { getDictionary } from "./dictionaries";
 import { SpotCard } from "@/components/user/SpotCard";
 import { EventCard } from "@/components/user/EventCard";
-import { TransshipmentStrip } from "@/components/user/TransshipmentStrip";
+import { DecodeBoard } from "@/components/user/decode-board";
 import { Button } from "@/components/ui/Button";
 
 export async function generateMetadata() {
@@ -50,7 +50,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      {/* §3.1 Hero — search + transshipment strip */}
+      {/* §3.1 Hero */}
       <section className="flex flex-col items-center text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           PiggyBack
@@ -59,31 +59,13 @@ export default async function HomePage() {
           {dict.strip.tagline}
         </p>
 
-        {/* §5.4 Transshipment strip */}
+        {/* Decode Board — replaces TransshipmentStrip */}
         <div className="mt-8 w-full">
-          <TransshipmentStrip
+          <DecodeBoard
             locale={locale}
             dict={dict.strip}
             popularChips={POPULAR_CHIPS}
           />
-        </div>
-
-        {/* §3.1 Popular search chips — mixed language */}
-        <div className="mt-6">
-          <p className="text-xs text-zinc-400 dark:text-zinc-500">
-            {dict.strip.othersLookingFor}
-          </p>
-          <div className="mt-2 flex flex-wrap justify-center gap-2">
-            {POPULAR_CHIPS.map((chip) => (
-              <span
-                key={chip.query}
-                className="rounded-full border border-zinc-200 px-3 py-1 text-sm
-                           text-zinc-600 dark:border-zinc-700 dark:text-zinc-400"
-              >
-                {chip.label}
-              </span>
-            ))}
-          </div>
         </div>
       </section>
 
