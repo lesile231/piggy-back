@@ -24,6 +24,7 @@ const envSchema = z.object({
   TOUR_API_KEY: z.string().default(""),
   GOOGLE_PLACES_API_KEY: z.string().default(""),
   NEXT_PUBLIC_APP_URL: z.string().default("http://localhost:3000"),
+  ADMIN_JWT_SECRET: z.string().default("dev-jwt-secret-change-in-production"),
 });
 
 export type Env = z.infer<typeof envSchema>;
