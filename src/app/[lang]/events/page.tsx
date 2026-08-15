@@ -13,7 +13,7 @@ export async function generateMetadata() {
 export default async function EventsPage({
   searchParams,
 }: PageProps<"/[lang]/events">) {
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const params = await searchParams;
   const category = typeof params.category === "string" ? params.category : undefined;
 

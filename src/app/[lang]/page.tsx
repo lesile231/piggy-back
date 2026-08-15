@@ -18,7 +18,7 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const dict = await getDictionary();
   const env = getEnv();
   const db = createDb(env.DATABASE_URL);

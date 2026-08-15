@@ -12,8 +12,8 @@ export type Locale = keyof typeof dictionaries;
 
 export const LOCALES: Locale[] = ["en", "ja", "zh", "ko"];
 
-export const hasLocale = (locale: string): locale is Locale =>
-  locale in dictionaries;
+export const hasLocale = (locale: string | undefined): locale is Locale =>
+  typeof locale === "string" && locale in dictionaries;
 
 export type Dictionary = Awaited<ReturnType<(typeof dictionaries)["en"]>>;
 

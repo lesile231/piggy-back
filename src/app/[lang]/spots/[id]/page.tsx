@@ -17,7 +17,7 @@ export async function generateMetadata({
   const spot = await new SpotRepository(db).getById(id);
   if (!spot) return { title: "Not Found" };
 
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const name = localize(spot.names, locale) || spot.nameKo;
   return { title: `${name} | PiggyBack` };
 }
@@ -26,7 +26,7 @@ export default async function SpotDetailPage({
   params,
 }: PageProps<"/[lang]/spots/[id]">) {
   const { id } = await params;
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const dict = await getDictionary();
   const env = getEnv();
   const db = createDb(env.DATABASE_URL);

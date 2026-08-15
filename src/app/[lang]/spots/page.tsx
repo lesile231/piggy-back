@@ -14,7 +14,7 @@ export async function generateMetadata() {
 export default async function SpotsPage({
   searchParams,
 }: PageProps<"/[lang]/spots">) {
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const params = await searchParams;
   const query = typeof params.q === "string" ? params.q : "";
   const category = typeof params.category === "string" ? params.category : "";

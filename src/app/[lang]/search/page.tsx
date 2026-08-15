@@ -14,7 +14,7 @@ export async function generateMetadata() {
 export default async function SearchPage({
   searchParams,
 }: PageProps<"/[lang]/search">) {
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const params = await searchParams;
   const query = typeof params.q === "string" ? params.q : "";
   const dict = await getDictionary();

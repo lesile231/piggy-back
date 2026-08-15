@@ -17,7 +17,7 @@ export async function generateMetadata({
   const event = await new EventRepository(db).getById(id);
   if (!event) return { title: "Not Found" };
 
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const name = localize(event.names, locale) || event.nameKo;
   return { title: `${name} | PiggyBack` };
 }
@@ -26,7 +26,7 @@ export default async function EventDetailPage({
   params,
 }: PageProps<"/[lang]/events/[id]">) {
   const { id } = await params;
-  const locale = await lang();
+  const locale = (await lang()) ?? "en";
   const dict = await getDictionary();
   const env = getEnv();
   const db = createDb(env.DATABASE_URL);
