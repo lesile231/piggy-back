@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "홈",
+    "spots": "관광명소",
+    "events": "이벤트",
+    "search": "검색",
+    "noResults": "결과를 찾을 수 없습니다",
+    "tryBot": "챗봇을 사용해보세요",
+    "viewMore": "더 보기",
+    "back": "뒤로"
+  },
+  "home": {
+    "title": "부산 탐험",
+    "subtitle": "부산 여행 완벽 가이드",
+    "popularSpots": "인기 명소",
+    "upcomingEvents": "현재 진행 중",
+    "startChat": "PiggyBack과 채팅"
+  },
+  "spots": {
+    "title": "관광명소",
+    "searchPlaceholder": "명소 검색...",
+    "allCategories": "전체",
+    "rating": "평점",
+    "address": "주소",
+    "hours": "영업시간",
+    "phone": "전화",
+    "website": "웹사이트",
+    "getDirections": "봇으로 길찾기"
+  },
+  "events": {
+    "title": "이벤트 & 축제",
+    "ongoing": "진행 중",
+    "upcoming": "예정",
+    "all": "전체",
+    "period": "기간",
+    "venue": "장소",
+    "price": "가격",
+    "bookNow": "예약하기",
+    "free": "무료"
+  },
+  "search": {
+    "title": "검색 결과",
+    "placeholder": "명소와 이벤트 검색...",
+    "spotsSection": "관광명소",
+    "eventsSection": "이벤트"
+  }
+}

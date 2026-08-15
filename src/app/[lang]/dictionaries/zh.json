@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "首页",
+    "spots": "旅游景点",
+    "events": "活动",
+    "search": "搜索",
+    "noResults": "未找到结果",
+    "tryBot": "尝试我们的聊天机器人",
+    "viewMore": "查看更多",
+    "back": "返回"
+  },
+  "home": {
+    "title": "探索釜山",
+    "subtitle": "釜山旅游完整指南",
+    "popularSpots": "热门景点",
+    "upcomingEvents": "正在发生",
+    "startChat": "与PiggyBack聊天"
+  },
+  "spots": {
+    "title": "旅游景点",
+    "searchPlaceholder": "搜索景点...",
+    "allCategories": "全部",
+    "rating": "评分",
+    "address": "地址",
+    "hours": "营业时间",
+    "phone": "电话",
+    "website": "网站",
+    "getDirections": "通过机器人获取路线"
+  },
+  "events": {
+    "title": "活动与节日",
+    "ongoing": "进行中",
+    "upcoming": "即将举行",
+    "all": "全部",
+    "period": "时期",
+    "venue": "地点",
+    "price": "价格",
+    "bookNow": "立即预订",
+    "free": "免费"
+  },
+  "search": {
+    "title": "搜索结果",
+    "placeholder": "搜索景点和活动...",
+    "spotsSection": "旅游景点",
+    "eventsSection": "活动"
+  }
+}

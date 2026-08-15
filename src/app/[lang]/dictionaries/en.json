@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "Home",
+    "spots": "Tourism Spots",
+    "events": "Events",
+    "search": "Search",
+    "noResults": "No results found",
+    "tryBot": "Try our chatbot for more help",
+    "viewMore": "View More",
+    "back": "Back"
+  },
+  "home": {
+    "title": "Discover Busan",
+    "subtitle": "Your complete guide to Busan travel",
+    "popularSpots": "Popular Spots",
+    "upcomingEvents": "What's Happening",
+    "startChat": "Chat with PiggyBack"
+  },
+  "spots": {
+    "title": "Tourism Spots",
+    "searchPlaceholder": "Search spots...",
+    "allCategories": "All",
+    "rating": "Rating",
+    "address": "Address",
+    "hours": "Opening Hours",
+    "phone": "Phone",
+    "website": "Website",
+    "getDirections": "Get Directions via Bot"
+  },
+  "events": {
+    "title": "Events & Festivals",
+    "ongoing": "Ongoing",
+    "upcoming": "Upcoming",
+    "all": "All",
+    "period": "Period",
+    "venue": "Venue",
+    "price": "Price",
+    "bookNow": "Book Now",
+    "free": "Free"
+  },
+  "search": {
+    "title": "Search Results",
+    "placeholder": "Search spots and events...",
+    "spotsSection": "Tourism Spots",
+    "eventsSection": "Events"
+  }
+}

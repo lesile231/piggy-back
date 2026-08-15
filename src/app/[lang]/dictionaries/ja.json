@@ -1,0 +1,47 @@
+{
+  "common": {
+    "home": "ホーム",
+    "spots": "観光スポット",
+    "events": "イベント",
+    "search": "検索",
+    "noResults": "結果が見つかりません",
+    "tryBot": "チャットボットをお試しください",
+    "viewMore": "もっと見る",
+    "back": "戻る"
+  },
+  "home": {
+    "title": "釜山を発見",
+    "subtitle": "釜山旅行の完全ガイド",
+    "popularSpots": "人気スポット",
+    "upcomingEvents": "開催中のイベント",
+    "startChat": "PiggyBackとチャット"
+  },
+  "spots": {
+    "title": "観光スポット",
+    "searchPlaceholder": "スポットを検索...",
+    "allCategories": "すべて",
+    "rating": "評価",
+    "address": "住所",
+    "hours": "営業時間",
+    "phone": "電話",
+    "website": "ウェブサイト",
+    "getDirections": "ボットで道案内"
+  },
+  "events": {
+    "title": "イベント＆フェスティバル",
+    "ongoing": "開催中",
+    "upcoming": "開催予定",
+    "all": "すべて",
+    "period": "期間",
+    "venue": "会場",
+    "price": "料金",
+    "bookNow": "予約する",
+    "free": "無料"
+  },
+  "search": {
+    "title": "検索結果",
+    "placeholder": "スポットとイベントを検索...",
+    "spotsSection": "観光スポット",
+    "eventsSection": "イベント"
+  }
+}
