@@ -3,6 +3,7 @@ import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { events } from "@/lib/db/schema";
 import { deleteEventAction } from "@/actions/event.actions";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -58,10 +59,9 @@ export default async function AdminEventsPage() {
               </td>
               <td className="flex gap-2 py-2">
                 <Link href={`/admin/events/${evt.id}/edit`} className="text-blue-600 hover:underline">수정</Link>
-                <form action={deleteEventAction}>
-                  <input type="hidden" name="id" value={evt.id} />
-                  <button type="submit" className="text-red-600 hover:underline" onClick={(e) => { if (!confirm("정말 삭제하시겠습니까?")) e.preventDefault(); }}>삭제</button>
-                </form>
+                <DeleteButton action={deleteEventAction} id={evt.id}>
+                  삭제
+                </DeleteButton>
               </td>
             </tr>
           ))}

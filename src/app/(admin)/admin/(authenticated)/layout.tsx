@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { verifyAdminSession } from "@/lib/auth/admin-auth";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import "../../../globals.css";
 
 export default async function AuthenticatedAdminLayout({
   children,

@@ -1,3 +1,5 @@
+import "../../../globals.css";
+
 export default function LoginLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" className="h-full">

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { eq, asc } from "drizzle-orm";
+import { eq, asc, inArray } from "drizzle-orm";
 import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { flows, flowSteps, flowOptions } from "@/lib/db/schema";
@@ -33,14 +33,23 @@ export default async function FlowEditPage({
     .where(eq(flowSteps.flowId, id))
     .orderBy(asc(flowSteps.stepOrder));
 
-  // Load options per step
+  // Load all options in one query to avoid N+1
+  const stepIds = steps.map((s) => s.id);
+  const allOptions =
+    stepIds.length > 0
+      ? await db
+          .select()
+          .from(flowOptions)
+          .where(inArray(flowOptions.stepId, stepIds))
+          .orderBy(asc(flowOptions.sortOrder))
+      : [];
+
   const optionsByStep: Record<string, typeof flowOptions.$inferSelect[]> = {};
-  for (const step of steps) {
-    optionsByStep[step.id] = await db
-      .select()
-      .from(flowOptions)
-      .where(eq(flowOptions.stepId, step.id))
-      .orderBy(asc(flowOptions.sortOrder));
+  for (const opt of allOptions) {
+    if (!optionsByStep[opt.stepId]) {
+      optionsByStep[opt.stepId] = [];
+    }
+    optionsByStep[opt.stepId]!.push(opt);
   }
 
   const displayNames = flow.displayNames as LocalizedText;

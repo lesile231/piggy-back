@@ -7,15 +7,7 @@ import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { tourismSpots } from "@/lib/db/schema";
 import { verifyAdminSession } from "@/lib/auth/admin-auth";
-
-function extractLocalized(formData: FormData, prefix: string): Record<string, string> {
-  const result: Record<string, string> = {};
-  for (const locale of ["ko", "en", "ja", "zh"]) {
-    const value = formData.get(`${prefix}.${locale}`) as string | null;
-    if (value) result[locale] = value;
-  }
-  return result;
-}
+import { extractLocalized } from "@/lib/form-utils";
 
 function extractSpotData(formData: FormData) {
   const nameKo = formData.get("nameKo") as string;

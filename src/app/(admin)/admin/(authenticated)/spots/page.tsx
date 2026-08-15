@@ -3,6 +3,7 @@ import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { tourismSpots } from "@/lib/db/schema";
 import { deleteSpotAction } from "@/actions/spot.actions";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export const dynamic = "force-dynamic";
 
@@ -61,18 +62,9 @@ export default async function AdminSpotsPage() {
                 >
                   수정
                 </Link>
-                <form action={deleteSpotAction}>
-                  <input type="hidden" name="id" value={spot.id} />
-                  <button
-                    type="submit"
-                    className="text-red-600 hover:underline"
-                    onClick={(e) => {
-                      if (!confirm("정말 삭제하시겠습니까?")) e.preventDefault();
-                    }}
-                  >
-                    삭제
-                  </button>
-                </form>
+                <DeleteButton action={deleteSpotAction} id={spot.id}>
+                  삭제
+                </DeleteButton>
               </td>
             </tr>
           ))}
