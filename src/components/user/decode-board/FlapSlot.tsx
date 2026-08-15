@@ -8,12 +8,13 @@ interface FlapSlotProps {
   phase: SlotPhase;
   targetChar: string;
   onLocked?: () => void;
+  prefersReducedMotion?: boolean;
 }
 
 const cycleSequence = buildCycleSequence();
 const NBSP = "\u00A0";
 
-export function FlapSlot({ phase, targetChar, onLocked }: FlapSlotProps) {
+export function FlapSlot({ phase, targetChar, onLocked, prefersReducedMotion = false }: FlapSlotProps) {
   const [displayChar, setDisplayChar] = useState(NBSP);
   const [isFlipping, setIsFlipping] = useState(false);
   const cycleIndexRef = useRef(0);
@@ -40,6 +41,14 @@ export function FlapSlot({ phase, targetChar, onLocked }: FlapSlotProps) {
 
     if (phase === "cycling") {
       clearCycling();
+
+      // If reduced motion, skip to locked immediately
+      if (prefersReducedMotion) {
+        setDisplayChar(targetChar);
+        setIsFlipping(false);
+        return;
+      }
+
       const interval = TIMING.FLIP_INTERVAL_FAST_MS;
       intervalRef.current = setInterval(() => {
         cycleIndexRef.current =
@@ -89,7 +98,7 @@ export function FlapSlot({ phase, targetChar, onLocked }: FlapSlotProps) {
       }
       return;
     }
-  }, [phase, targetChar, clearCycling, onLocked]);
+  }, [phase, targetChar, clearCycling, onLocked, prefersReducedMotion]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -11,6 +11,7 @@ interface DecodeBoardRowProps {
   decodePhase: DecodePhase;
   isResolved: boolean;
   onAllLocked?: () => void;
+  prefersReducedMotion?: boolean;
 }
 
 export function DecodeBoardRow({
@@ -19,6 +20,7 @@ export function DecodeBoardRow({
   decodePhase,
   isResolved,
   onAllLocked,
+  prefersReducedMotion = false,
 }: DecodeBoardRowProps) {
   const isOutRow = label.toUpperCase() === "OUT";
   const slotCount = characters.length || 6; // default 6 slots when no chars yet
@@ -129,13 +131,14 @@ export function DecodeBoardRow({
       </span>
 
       {/* Flap slots */}
-      <div className="flex gap-1">
+      <div className={`flex gap-1 ${characters.length > 8 ? "flex-wrap" : ""}`}>
         {chars.map((char, i) => (
           <FlapSlot
             key={`${label}-${i}`}
             phase={isOutRow ? (slotPhases[i] ?? "waiting") : (inRowPhases[i] ?? "locked")}
             targetChar={char}
             onLocked={isOutRow ? handleSlotLocked : undefined}
+            prefersReducedMotion={prefersReducedMotion}
           />
         ))}
       </div>

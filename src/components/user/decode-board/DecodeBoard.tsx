@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useDecodeAnimation } from "./use-decode-animation";
 import { DecodeBoardRow } from "./DecodeBoardRow";
 import { DecodeResult } from "./DecodeResult";
@@ -24,6 +24,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
   const [submittedQuery, setSubmittedQuery] = useState("");
   const [showResult, setShowResult] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   const { phase, resolution, error, targetChars, start, reset } =
     useDecodeAnimation({ lang: locale });
@@ -115,6 +116,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
             decodePhase={phase}
             isResolved={phase === "resolved"}
             onAllLocked={handleAllLocked}
+            prefersReducedMotion={prefersReducedMotion}
           />
 
           {/* Result card */}
@@ -173,4 +175,18 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
       )}
     </div>
   );
+}
+
+function usePrefersReducedMotion(): boolean {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReduced(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setPrefersReduced(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  return prefersReduced;
 }
