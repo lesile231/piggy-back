@@ -34,6 +34,9 @@ export function LocalizedInput({
   return (
     <div>
       <label className="block text-sm font-medium">{label}</label>
+      <p className="mt-0.5 text-xs text-zinc-400">
+        한국어만 입력해도 저장 시 나머지 언어가 자동 번역됩니다.
+      </p>
       <div className="mt-1 flex gap-1 border-b border-zinc-200">
         {LOCALES.map((locale) => (
           <button
