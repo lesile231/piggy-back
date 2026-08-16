@@ -55,7 +55,7 @@ export default async function HomePage() {
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
           PiggyBack
         </h1>
-        <p className="mt-3 text-lg text-zinc-500 dark:text-zinc-400">
+        <p className="mt-3 text-lg text-[#6B8FA3]">
           {dict.strip.tagline}
         </p>
 

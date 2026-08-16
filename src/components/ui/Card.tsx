@@ -5,7 +5,7 @@ interface CardProps {
 
 export function Card({ children, className }: CardProps) {
   const classes = [
-    "overflow-hidden rounded-xl border border-zinc-200 bg-white transition-shadow hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950",
+    "overflow-hidden rounded-xl border border-[rgba(0,119,182,0.12)] bg-white transition-shadow hover:shadow-md",
     className,
   ]
     .filter(Boolean)

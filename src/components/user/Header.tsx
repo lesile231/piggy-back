@@ -14,7 +14,7 @@ export function Header({ dict, locale }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="relative border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+    <header className="relative border-b border-zinc-200 bg-white dark:border-[rgba(0,119,182,0.12)] dark:bg-[#F5FAFE]">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link href={`/${locale}`} className="text-lg font-bold">
           PiggyBack
@@ -24,19 +24,19 @@ export function Header({ dict, locale }: HeaderProps) {
         <nav className="hidden items-center gap-6 sm:flex">
           <Link
             href={`/${locale}/spots`}
-            className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-[#5A8296] dark:hover:text-[#0077B6]"
           >
             {dict.common.spots}
           </Link>
           <Link
             href={`/${locale}/events`}
-            className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-[#5A8296] dark:hover:text-[#0077B6]"
           >
             {dict.common.events}
           </Link>
           <Link
             href={`/${locale}/spots`}
-            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            className="text-zinc-600 hover:text-zinc-900 dark:text-[#5A8296] dark:hover:text-[#0077B6]"
             aria-label="Search"
           >
             <svg
@@ -61,7 +61,7 @@ export function Header({ dict, locale }: HeaderProps) {
         <div className="flex items-center gap-4 sm:hidden">
           <Link
             href={`/${locale}/spots`}
-            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            className="text-zinc-600 hover:text-zinc-900 dark:text-[#5A8296] dark:hover:text-[#0077B6]"
             aria-label="Search"
           >
             <svg
@@ -82,7 +82,7 @@ export function Header({ dict, locale }: HeaderProps) {
           <button
             type="button"
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            className="text-zinc-600 hover:text-zinc-900 dark:text-[#5A8296] dark:hover:text-[#0077B6]"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
             {menuOpen ? (
@@ -123,19 +123,19 @@ export function Header({ dict, locale }: HeaderProps) {
 
       {/* Mobile dropdown menu */}
       {menuOpen && (
-        <div className="absolute left-0 right-0 top-14 z-50 border-b border-zinc-200 bg-white shadow-md sm:hidden dark:border-zinc-800 dark:bg-zinc-950">
+        <div className="absolute left-0 right-0 top-14 z-50 border-b border-zinc-200 bg-white shadow-md sm:hidden dark:border-[rgba(0,119,182,0.12)] dark:bg-[#F5FAFE]">
           <nav className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-3">
             <Link
               href={`/${locale}/spots`}
               onClick={() => setMenuOpen(false)}
-              className="rounded px-2 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+              className="rounded px-2 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-[rgba(0,119,182,0.08)] dark:hover:text-zinc-100"
             >
               {dict.common.spots}
             </Link>
             <Link
               href={`/${locale}/events`}
               onClick={() => setMenuOpen(false)}
-              className="rounded px-2 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100"
+              className="rounded px-2 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-[rgba(0,119,182,0.08)] dark:hover:text-zinc-100"
             >
               {dict.common.events}
             </Link>

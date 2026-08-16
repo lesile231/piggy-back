@@ -95,17 +95,17 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="hey oon day"
-          className="w-full rounded-xl border border-zinc-300 bg-white px-5 py-4 text-lg
-                     focus:border-zinc-500 focus:outline-none
-                     dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100
+          className="w-full rounded-xl border border-[rgba(0,119,182,0.2)] bg-white px-5 py-4 text-lg
+                     text-[#1B3A4B] placeholder:text-[#9BB8C9]
+                     focus:border-[#0077B6] focus:outline-none
                      pr-14"
         />
         <button
           type="submit"
           disabled={!query.trim() || phase === "expanding" || phase === "decoding"}
           className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg
-                     bg-[#FF4D14] px-3 py-1.5 text-sm font-medium text-white
-                     transition-colors hover:bg-[#e54512]
+                     bg-[#0077B6] px-3 py-1.5 text-sm font-medium text-white
+                     transition-colors hover:bg-[#005F92]
                      disabled:opacity-40 disabled:cursor-not-allowed"
         >
           ⌕
@@ -114,8 +114,8 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
 
       {/* Decode board */}
       {isActive && (
-        <div className="decode-board-expand mt-4 rounded-xl bg-[#1A1D1F] px-4 py-6
-                        shadow-[0_1px_0_rgba(255,255,255,0.03)_inset,0_20px_60px_rgba(0,0,0,0.3)]
+        <div className="decode-board-expand mt-4 rounded-xl bg-[#EBF4FA] px-4 py-6
+                        shadow-[0_1px_0_rgba(0,119,182,0.05)_inset,0_8px_30px_rgba(0,50,80,0.1)]
                         sm:px-6 sm:py-8">
           {/* IN row */}
           <DecodeBoardRow
@@ -126,7 +126,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
           />
 
           {/* Divider */}
-          <div className="my-3 border-t border-dashed border-[rgba(255,255,255,0.08)] sm:my-4" />
+          <div className="my-3 border-t border-dashed border-[rgba(0,50,80,0.12)] sm:my-4" />
 
           {/* OUT row */}
           <DecodeBoardRow
@@ -156,7 +156,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
             <div className="mt-4 text-center">
               <button
                 onClick={handleNewSearch}
-                className="text-xs text-[#5A5F63] transition-colors hover:text-[#C8CCD0]"
+                className="text-xs text-[#6B8FA3] transition-colors hover:text-[#0077B6]"
               >
                 {dict.searchAgain}
               </button>
@@ -168,7 +168,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
       {/* Popular chips (visible when idle) */}
       {!isActive && (
         <div className="mt-6 text-center">
-          <p className="text-xs text-zinc-400 dark:text-zinc-500">
+          <p className="text-xs text-[#6B8FA3]">
             {dict.othersLookingFor}
           </p>
           <div className="mt-2 flex flex-wrap justify-center gap-2">
@@ -181,10 +181,9 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
                   setShowResult(false);
                   start(chip.label);
                 }}
-                className="rounded-full border border-zinc-200 px-3 py-1 text-sm
-                           text-zinc-600 transition-colors hover:border-[#FF4D14]
-                           hover:text-[#FF4D14]
-                           dark:border-zinc-700 dark:text-zinc-400"
+                className="rounded-full border border-[rgba(0,119,182,0.2)] px-3 py-1 text-sm
+                           text-[#5A8296] transition-colors hover:border-[#0077B6]
+                           hover:text-[#0077B6]"
               >
                 {chip.label}
               </button>

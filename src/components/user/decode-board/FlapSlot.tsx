@@ -114,12 +114,12 @@ export function FlapSlot({ phase, targetChar, onLocked, prefersReducedMotion = f
       className={`flap-slot relative flex items-center justify-center
                   rounded-sm border
                   ${isLocked
-                    ? "locked border-[rgba(255,77,20,0.3)] bg-[#2A2D30]"
-                    : "border-[rgba(255,255,255,0.06)] bg-[#2A2D30]"}
+                    ? "locked border-[rgba(0,119,182,0.3)] bg-white"
+                    : "border-[rgba(0,50,80,0.1)] bg-white"}
                   h-10 w-8 sm:h-12 sm:w-10 md:h-[4.5rem] md:w-14`}
     >
       {/* Crease line */}
-      <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-[rgba(0,0,0,0.4)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-1/2 h-px bg-[rgba(0,50,80,0.08)]" />
 
       {/* Character */}
       <span
@@ -127,7 +127,7 @@ export function FlapSlot({ phase, targetChar, onLocked, prefersReducedMotion = f
         className={`flap-char select-none font-mono text-xl leading-none
                     sm:text-2xl md:text-4xl
                     ${isFlipping ? "flap-char-flip" : ""}
-                    ${isLocked && isOutput ? "text-[#FF4D14]" : "text-[#C8CCD0]"}`}
+                    ${isLocked && isOutput ? "text-[#0077B6]" : "text-[#1B3A4B]"}`}
       >
         {displayChar}
       </span>

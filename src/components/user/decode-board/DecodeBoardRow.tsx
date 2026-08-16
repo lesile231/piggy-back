@@ -138,7 +138,7 @@ export function DecodeBoardRow({
       <span
         className={`w-20 shrink-0 text-right font-mono text-xs font-semibold
                     uppercase tracking-[0.15em]
-                    ${resolvedLabel ? "text-[#FF4D14]" : "text-[#5A5F63]"}`}
+                    ${resolvedLabel ? "text-[#0077B6]" : "text-[#6B8FA3]"}`}
       >
         {resolvedLabel ? "resolved" : label}
       </span>

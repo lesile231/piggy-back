@@ -26,7 +26,7 @@ export function LangSwitcher({ currentLocale }: { currentLocale: string }) {
       onChange={(e) => {
         window.location.href = buildLocalePath(e.target.value);
       }}
-      className="rounded border border-zinc-300 bg-white px-2 py-1 text-sm dark:border-zinc-700 dark:bg-zinc-900"
+      className="rounded border border-[rgba(0,119,182,0.2)] bg-white px-2 py-1 text-sm text-[#1B3A4B]"
     >
       {LOCALES.map((locale) => (
         <option key={locale} value={locale}>

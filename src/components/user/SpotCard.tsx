@@ -19,7 +19,7 @@ export function SpotCard({ spot, locale }: SpotCardProps) {
       className="group block"
     >
       <Card>
-        <div className="relative aspect-[4/3] bg-zinc-100 dark:bg-zinc-900">
+        <div className="relative aspect-[4/3] bg-[#EBF4FA]">
           {firstImage ? (
             <Image
               src={firstImage}
@@ -35,7 +35,7 @@ export function SpotCard({ spot, locale }: SpotCardProps) {
           )}
         </div>
         <div className="p-3">
-          <h3 className="font-medium text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100">
+          <h3 className="font-medium text-[#1B3A4B] group-hover:text-[#0077B6]">
             {name}
           </h3>
           {spot.rating && (

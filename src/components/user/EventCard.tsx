@@ -100,7 +100,7 @@ export function EventCard({ event, locale, featured = false }: EventCardProps) {
       className="group block"
     >
       <Card>
-        <div className="relative aspect-[16/9] overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+        <div className="relative aspect-[16/9] overflow-hidden bg-[#EBF4FA]">
           {firstImage ? (
             <Image
               src={firstImage}
@@ -117,7 +117,7 @@ export function EventCard({ event, locale, featured = false }: EventCardProps) {
           </Badge>
         </div>
         <div className="p-3">
-          <h3 className="font-medium text-zinc-900 group-hover:text-blue-600 dark:text-zinc-100">
+          <h3 className="font-medium text-[#1B3A4B] group-hover:text-[#0077B6]">
             {name}
           </h3>
           {venue && <p className="mt-1 text-sm text-zinc-500">{venue}</p>}

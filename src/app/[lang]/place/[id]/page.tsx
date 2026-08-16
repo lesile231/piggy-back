@@ -103,7 +103,7 @@ export default async function PlacePage({
       {/* Back navigation */}
       <Link
         href={`/${locale}`}
-        className="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200"
+        className="inline-flex items-center gap-1 text-sm text-[#6B8FA3] hover:text-[#0077B6]"
       >
         <span aria-hidden="true">&larr;</span> {dict.common.back}
       </Link>
@@ -115,7 +115,7 @@ export default async function PlacePage({
 
       {/* §3.2: Korean name — large, selectable, for showing taxi drivers */}
       {locale !== "ko" && (
-        <div className="mt-2 rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-800/50">
+        <div className="mt-2 rounded-lg border border-[rgba(0,119,182,0.15)] bg-[#EBF4FA] px-4 py-3">
           <p
             className="select-all text-2xl font-semibold tracking-wide sm:text-3xl"
             lang="ko"
@@ -137,7 +137,7 @@ export default async function PlacePage({
 
       {/* Hero image */}
       {spot.images.length > 0 && spot.images[0] && (
-        <div className="mt-4 relative aspect-[16/9] overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
+        <div className="mt-4 relative aspect-[16/9] overflow-hidden rounded-xl bg-[#EBF4FA]">
           <Image
             src={spot.images[0]}
             alt={name}
@@ -164,7 +164,7 @@ export default async function PlacePage({
           <SectionLabel>{dict.place.directions}</SectionLabel>
 
           {address && (
-            <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300">
+            <p className="mt-2 text-sm text-[#1B3A4B]">
               {address}
             </p>
           )}
@@ -179,7 +179,7 @@ export default async function PlacePage({
               href={googleMapsUrl(spot.latitude!, spot.longitude!, spot.nameKo)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="inline-flex items-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 hover:bg-[#EBF4FA]"
             >
               {dict.place.openInGoogleMaps}
             </a>
@@ -187,7 +187,7 @@ export default async function PlacePage({
               href={naverMapUrl(spot.latitude!, spot.longitude!, spot.nameKo)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="inline-flex items-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 hover:bg-[#EBF4FA]"
             >
               {dict.place.openInNaverMap}
             </a>
@@ -195,7 +195,7 @@ export default async function PlacePage({
               href={kakaoMapUrl(spot.latitude!, spot.longitude!)}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+              className="inline-flex items-center rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium hover:bg-zinc-50 hover:bg-[#EBF4FA]"
             >
               {dict.place.openInKakaoMap}
             </a>
@@ -207,7 +207,7 @@ export default async function PlacePage({
       {upcomingEvents.length > 0 && (
         <section className="mt-8">
           <SectionLabel>{dict.place.relatedEvents}</SectionLabel>
-          <ul className="mt-3 divide-y divide-zinc-100 dark:divide-zinc-800">
+          <ul className="mt-3 divide-y divide-[rgba(0,119,182,0.08)]">
             {upcomingEvents.map((event) => {
               const eventName = localize(event.names, locale) || event.nameKo;
               const startStr = event.startsAt.toLocaleDateString(locale, {
@@ -222,7 +222,7 @@ export default async function PlacePage({
                 <li key={event.id}>
                   <Link
                     href={`/${locale}/events/${event.id}`}
-                    className="flex items-center justify-between py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 -mx-2 px-2 rounded"
+                    className="flex items-center justify-between py-3 hover:bg-[#EBF4FA] -mx-2 px-2 rounded"
                   >
                     <span className="text-sm font-medium">{eventName}</span>
                     <span className="text-xs text-zinc-500 whitespace-nowrap ml-2">
@@ -240,7 +240,7 @@ export default async function PlacePage({
       {description && (
         <section className="mt-8">
           <SectionLabel>{dict.place.description}</SectionLabel>
-          <p className="mt-3 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
+          <p className="mt-3 text-sm leading-relaxed text-[#1B3A4B]">
             {description}
           </p>
         </section>
@@ -248,7 +248,7 @@ export default async function PlacePage({
 
       {/* Contact info */}
       {(spot.phone || spot.website) && (
-        <dl className="mt-6 space-y-2 border-t border-zinc-100 pt-4 text-sm dark:border-zinc-800">
+        <dl className="mt-6 space-y-2 border-t border-[rgba(0,119,182,0.08)] pt-4 text-sm">
           {spot.phone && (
             <div className="flex gap-2">
               <dt className="font-medium text-zinc-500">{dict.spots.phone}</dt>
@@ -267,7 +267,7 @@ export default async function PlacePage({
                   href={spot.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
+                  className="text-[#0077B6] hover:underline"
                 >
                   {new URL(spot.website).hostname}
                 </a>
