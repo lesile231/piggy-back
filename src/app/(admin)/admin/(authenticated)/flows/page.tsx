@@ -27,6 +27,7 @@ export default async function AdminFlowsPage() {
           코드 수정 없이 이 화면에서 대화 흐름을 만들고 관리할 수 있습니다.
         </p>
         <ul className="list-disc pl-5 space-y-1">
+          <li>플로우는 <strong>WhatsApp</strong>과 <strong>LINE</strong> 메신저 챗봇에 연결됩니다. 여기서 플로우를 만들면 챗봇 사용자에게 바로 반영됩니다.</li>
           <li>활성화된 플로우는 챗봇 메인 메뉴에 버튼으로 자동 노출됩니다.</li>
           <li>각 플로우는 여러 <strong>스텝</strong>(메시지 단계)으로 구성되며, 스텝마다 <strong>옵션</strong>(선택 버튼)을 추가할 수 있습니다.</li>
           <li>마지막 스텝을 <code className="rounded bg-zinc-200 px-1">api_call</code> 타입으로 설정하면, 누적된 사용자 입력을 바탕으로 백엔드 API를 호출합니다.</li>
