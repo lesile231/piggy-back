@@ -56,7 +56,7 @@ export default async function EventDetailPage({
 
       <h1 className="mt-6 text-3xl font-bold">{name}</h1>
 
-      {description && <p className="mt-4 text-zinc-700 dark:text-zinc-300">{description}</p>}
+      {description && <p className="mt-4 text-[#1B3A4B]">{description}</p>}
 
       <dl className="mt-6 space-y-2 text-sm">
         <div>

@@ -7,7 +7,7 @@ export default function AdminLoginPage() {
   const [state, formAction, isPending] = useActionState(loginAction, {});
 
   return (
-    <div className="w-full max-w-sm rounded-lg border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+    <div className="w-full max-w-sm rounded-lg border border-zinc-200 bg-white p-8 shadow-sm">
       <h1 className="text-center text-xl font-bold">PiggyBack Admin</h1>
       <form action={formAction} className="mt-6 space-y-4">
         <div>
@@ -19,7 +19,7 @@ export default function AdminLoginPage() {
             name="email"
             type="email"
             required
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none "
           />
         </div>
         <div>
@@ -31,7 +31,7 @@ export default function AdminLoginPage() {
             name="password"
             type="password"
             required
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none "
           />
         </div>
         {state.error && (
@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full rounded bg-zinc-900 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
+          className="w-full rounded bg-[#0077B6] py-2 text-sm font-medium text-white hover:bg-[#005F92] disabled:opacity-50"
         >
           {isPending ? "로그인 중..." : "로그인"}
         </button>

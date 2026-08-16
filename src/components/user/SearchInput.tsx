@@ -14,7 +14,7 @@ export function SearchInput({ placeholder, action, defaultValue }: SearchInputPr
         name="q"
         defaultValue={defaultValue}
         placeholder={placeholder}
-        className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-zinc-700 dark:bg-zinc-900"
+        className="w-full rounded-lg border border-zinc-300 px-4 py-2 text-sm focus:border-[#0077B6] focus:outline-none"
       />
     </form>
   );

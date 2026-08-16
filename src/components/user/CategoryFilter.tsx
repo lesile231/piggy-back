@@ -19,8 +19,8 @@ export function CategoryFilter({
         href={basePath}
         className={`rounded-full px-3 py-1 text-sm ${
           !current
-            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-            : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300"
+            ? "bg-[#0077B6] text-white"
+            : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
         }`}
       >
         {allLabel}
@@ -31,8 +31,8 @@ export function CategoryFilter({
           href={`${basePath}?category=${cat.slug}`}
           className={`rounded-full px-3 py-1 text-sm ${
             current === cat.slug
-              ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-              : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300"
+              ? "bg-[#0077B6] text-white"
+              : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
           }`}
         >
           {cat.label}

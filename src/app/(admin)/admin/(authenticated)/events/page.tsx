@@ -29,7 +29,7 @@ export default async function AdminEventsPage() {
         <h1 className="text-2xl font-bold">행사 관리</h1>
         <Link
           href="/admin/events/new"
-          className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900"
+          className="rounded bg-[#0077B6] px-4 py-2 text-sm font-medium text-white hover:bg-[#005F92]"
         >
           새로 만들기
         </Link>

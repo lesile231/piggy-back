@@ -37,7 +37,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
           name="nameKo"
           required
           defaultValue={defaultValues.nameKo ?? ""}
-          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
         />
       </div>
 
@@ -68,7 +68,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
             type="number"
             step="any"
             defaultValue={defaultValues.latitude ?? ""}
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
         <div>
@@ -78,7 +78,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
             type="number"
             step="any"
             defaultValue={defaultValues.longitude ?? ""}
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
       </div>
@@ -89,7 +89,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
           <input
             name="phone"
             defaultValue={defaultValues.phone ?? ""}
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
         <div>
@@ -97,7 +97,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
           <input
             name="website"
             defaultValue={defaultValues.website ?? ""}
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
       </div>
@@ -111,7 +111,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
           min="0"
           max="5"
           defaultValue={defaultValues.rating ?? ""}
-          className="mt-1 w-32 rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+          className="mt-1 w-32 rounded border border-zinc-300 px-3 py-2 text-sm"
         />
       </div>
 
@@ -121,7 +121,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
           name="images"
           rows={3}
           defaultValue={defaultValues.images?.join("\n") ?? ""}
-          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
         />
       </div>
 
@@ -141,7 +141,7 @@ export function SpotForm({ action, defaultValues = {} }: SpotFormProps) {
       <button
         type="submit"
         disabled={isPending}
-        className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
+        className="rounded bg-[#0077B6] px-4 py-2 text-sm font-medium text-white hover:bg-[#005F92] disabled:opacity-50"
       >
         {isPending ? "저장 중..." : "저장"}
       </button>

@@ -48,7 +48,7 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
           name="nameKo"
           required
           defaultValue={defaultValues.nameKo ?? ""}
-          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
         />
       </div>
 
@@ -61,7 +61,7 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
           name="category"
           required
           defaultValue={defaultValues.category ?? "festival"}
-          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
         >
           <option value="festival">Festival</option>
           <option value="concert">Concert</option>
@@ -80,7 +80,7 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
             type="datetime-local"
             required
             defaultValue={formatDatetime(defaultValues.startsAt)}
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
         <div>
@@ -90,7 +90,7 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
             type="datetime-local"
             required
             defaultValue={formatDatetime(defaultValues.endsAt)}
-            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+            className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
           />
         </div>
       </div>
@@ -100,7 +100,7 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
         <select
           name="recurrence"
           defaultValue={defaultValues.recurrence ?? ""}
-          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+          className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm"
         >
           <option value="">없음</option>
           <option value="daily">매일</option>
@@ -111,11 +111,11 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium">위도</label>
-          <input name="latitude" type="number" step="any" defaultValue={defaultValues.latitude ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800" />
+          <input name="latitude" type="number" step="any" defaultValue={defaultValues.latitude ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
         <div>
           <label className="block text-sm font-medium">경도</label>
-          <input name="longitude" type="number" step="any" defaultValue={defaultValues.longitude ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800" />
+          <input name="longitude" type="number" step="any" defaultValue={defaultValues.longitude ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
         </div>
       </div>
 
@@ -123,12 +123,12 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
 
       <div>
         <label className="block text-sm font-medium">예약 URL</label>
-        <input name="bookingUrl" defaultValue={defaultValues.bookingUrl ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800" />
+        <input name="bookingUrl" defaultValue={defaultValues.bookingUrl ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
       </div>
 
       <div>
         <label className="block text-sm font-medium">이미지 URL (줄바꿈으로 구분)</label>
-        <textarea name="images" rows={3} defaultValue={defaultValues.images?.join("\n") ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800" />
+        <textarea name="images" rows={3} defaultValue={defaultValues.images?.join("\n") ?? ""} className="mt-1 w-full rounded border border-zinc-300 px-3 py-2 text-sm" />
       </div>
 
       <div className="flex items-center gap-2">
@@ -138,7 +138,7 @@ export function EventForm({ action, defaultValues = {} }: EventFormProps) {
 
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
 
-      <button type="submit" disabled={isPending} className="rounded bg-zinc-900 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800 disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900">
+      <button type="submit" disabled={isPending} className="rounded bg-[#0077B6] px-4 py-2 text-sm font-medium text-white hover:bg-[#005F92] disabled:opacity-50">
         {isPending ? "저장 중..." : "저장"}
       </button>
     </form>

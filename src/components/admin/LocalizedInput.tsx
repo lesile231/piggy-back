@@ -28,7 +28,7 @@ export function LocalizedInput({
   return (
     <div>
       <label className="block text-sm font-medium">{label}</label>
-      <div className="mt-1 flex gap-1 border-b border-zinc-200 dark:border-zinc-700">
+      <div className="mt-1 flex gap-1 border-b border-zinc-200">
         {LOCALES.map((locale) => (
           <button
             key={locale}
@@ -54,14 +54,14 @@ export function LocalizedInput({
               name={`${name}.${locale}`}
               defaultValue={defaultValues[locale] ?? ""}
               rows={3}
-              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
             />
           ) : (
             <input
               type="text"
               name={`${name}.${locale}`}
               defaultValue={defaultValues[locale] ?? ""}
-              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-800"
+              className="w-full rounded border border-zinc-300 px-3 py-2 text-sm"
             />
           )}
         </div>

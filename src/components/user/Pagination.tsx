@@ -16,7 +16,7 @@ export function Pagination({ currentPage, totalPages, basePath }: PaginationProp
       {currentPage > 1 && (
         <Link
           href={`${basePath}${separator}page=${currentPage - 1}`}
-          className="rounded border border-zinc-300 px-3 py-1 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          className="rounded border border-zinc-300 px-3 py-1 text-sm hover:bg-zinc-100"
         >
           Prev
         </Link>
@@ -27,7 +27,7 @@ export function Pagination({ currentPage, totalPages, basePath }: PaginationProp
       {currentPage < totalPages && (
         <Link
           href={`${basePath}${separator}page=${currentPage + 1}`}
-          className="rounded border border-zinc-300 px-3 py-1 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-800"
+          className="rounded border border-zinc-300 px-3 py-1 text-sm hover:bg-zinc-100"
         >
           Next
         </Link>
