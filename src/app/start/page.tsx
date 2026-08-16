@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "PiggyBack - Your Busan Travel Assistant",
-  description: "Chat with PiggyBack on WhatsApp or LINE for Busan travel info",
+  title: "VIA BUSAN - Your Busan Travel Assistant",
+  description: "Chat with Via Busan on WhatsApp or LINE for Busan travel info",
 };
 
 interface StartPageProps {
@@ -39,7 +39,7 @@ export default async function StartPage({ searchParams }: StartPageProps) {
           textAlign: "center",
         }}
       >
-        <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>PiggyBack</h1>
+        <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>VIA BUSAN</h1>
         <p style={{ fontSize: "1.1rem", marginBottom: "2rem", opacity: 0.9 }}>
           Your Busan Travel Assistant
         </p>

@@ -256,10 +256,10 @@ export class IntentRouter {
     return [{
       type: "buttons",
       text: localize({
-        en: "I'm PiggyBack, your Busan travel assistant! What can I help with?",
-        ko: "저는 PiggyBack, 부산 여행 도우미입니다! 무엇을 도와드릴까요?",
-        ja: "PiggyBackです、釜山の旅行ガイドです！何をお手伝いしましょうか？",
-        zh: "我是PiggyBack，您的釜山旅行助手！有什么可以帮您的？",
+        en: "I'm Via Busan, your Busan travel assistant! What can I help with?",
+        ko: "저는 Via Busan, 부산 여행 도우미입니다! 무엇을 도와드릴까요?",
+        ja: "Via Busanです、釜山の旅行ガイドです！何をお手伝いしましょうか？",
+        zh: "我是Via Busan，您的釜山旅行助手！有什么可以帮您的？",
       }, language),
       buttons: [
         {

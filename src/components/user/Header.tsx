@@ -17,7 +17,7 @@ export function Header({ dict, locale }: HeaderProps) {
     <header className="relative border-b border-zinc-200 bg-white">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link href={`/${locale}`} className="text-lg font-bold">
-          PiggyBack
+          VIA BUSAN
         </Link>
 
         {/* Desktop nav */}

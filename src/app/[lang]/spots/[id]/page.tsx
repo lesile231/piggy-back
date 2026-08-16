@@ -22,7 +22,7 @@ export async function generateMetadata({
 
   const locale = (await lang()) ?? "en";
   const name = localize(spot.names, locale) || spot.nameKo;
-  return { title: `${name} | PiggyBack` };
+  return { title: `${name} | VIA BUSAN` };
 }
 
 export default async function SpotDetailPage({

@@ -27,7 +27,7 @@ const SPOT_CATEGORIES = [
 
 export async function generateMetadata() {
   const dict = await getDictionary();
-  return { title: `${dict.spots.title} | PiggyBack` };
+  return { title: `${dict.spots.title} | VIA BUSAN` };
 }
 
 export default async function SpotsPage({

@@ -7,7 +7,7 @@ interface AdminHeaderProps {
 export function AdminHeader({ adminName }: AdminHeaderProps) {
   return (
     <header className="flex h-14 items-center justify-between border-b border-zinc-200 bg-white px-4">
-      <span className="text-sm font-bold">PiggyBack Admin</span>
+      <span className="text-sm font-bold">VIA BUSAN Admin</span>
       <div className="flex items-center gap-4">
         <span className="text-sm text-zinc-600">
           {adminName}

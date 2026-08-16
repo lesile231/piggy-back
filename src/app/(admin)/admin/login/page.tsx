@@ -8,7 +8,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="w-full max-w-sm rounded-lg border border-zinc-200 bg-white p-8 shadow-sm">
-      <h1 className="text-center text-xl font-bold">PiggyBack Admin</h1>
+      <h1 className="text-center text-xl font-bold">VIA BUSAN Admin</h1>
       <form action={formAction} className="mt-6 space-y-4">
         <div>
           <label htmlFor="email" className="block text-sm font-medium">

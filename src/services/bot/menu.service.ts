@@ -3,10 +3,10 @@ import type { OutgoingMessage } from "./types";
 import { localize } from "@/types/common";
 
 const WELCOME_TEXT: Record<string, string> = {
-  en: "Welcome to PiggyBack! How can I help you today?",
-  ja: "PiggyBackへようこそ！何かお手伝いできますか？",
-  zh: "欢迎使用PiggyBack！我能为您做什么？",
-  ko: "PiggyBack에 오신 것을 환영합니다! 무엇을 도와드릴까요?",
+  en: "Welcome to Via Busan! How can I help you today?",
+  ja: "Via Busanへようこそ！何かお手伝いできますか？",
+  zh: "欢迎使用Via Busan！我能为您做什么？",
+  ko: "Via Busan에 오신 것을 환영합니다! 무엇을 도와드릴까요?",
 };
 
 const FREE_CHAT_LABEL: Record<string, string> = {

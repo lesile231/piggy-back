@@ -13,10 +13,10 @@ const OFF_TOPIC_MESSAGES: Record<string, string> = {
 };
 
 const GREETING_MESSAGES: Record<string, string> = {
-  en: "Hello! I'm PiggyBack, your Busan travel buddy. Ask me anything about Busan — tourist spots, food, transportation, or things to do!",
-  ja: "こんにちは！PiggyBackです、釜山の旅行ガイドです。観光地、グルメ、交通、アクティビティなど、何でも聞いてください！",
-  zh: "你好！我是PiggyBack，您的釜山旅行伙伴。关于釜山的旅游景点、美食、交通或活动，尽管问我！",
-  ko: "안녕하세요! PiggyBack입니다. 부산의 관광지, 맛집, 교통, 즐길 거리 등 무엇이든 물어보세요!",
+  en: "Hello! I'm Via Busan, your Busan travel buddy. Ask me anything about Busan — tourist spots, food, transportation, or things to do!",
+  ja: "こんにちは！Via Busanです、釜山の旅行ガイドです。観光地、グルメ、交通、アクティビティなど、何でも聞いてください！",
+  zh: "你好！我是Via Busan，您的釜山旅行伙伴。关于釜山的旅游景点、美食、交通或活动，尽管问我！",
+  ko: "안녕하세요! Via Busan입니다. 부산의 관광지, 맛집, 교통, 즐길 거리 등 무엇이든 물어보세요!",
 };
 
 export interface ChatResponse {
@@ -78,7 +78,7 @@ export class ChatService {
     const messages: ChatMessage[] = [
       {
         role: "system",
-        content: `You are PiggyBack, a friendly and knowledgeable Busan travel assistant chatbot.
+        content: `You are Via Busan, a friendly and knowledgeable Busan travel assistant chatbot.
 You help international tourists visiting Busan, South Korea.
 You can answer questions about: tourist spots, restaurants, cafes, beaches, temples, markets, transportation, directions, events, festivals, and general Busan travel tips.
 Always respond in the user's language. Be concise and helpful.

@@ -13,7 +13,7 @@ export const revalidate = 3600;
 
 export async function generateMetadata() {
   const dict = await getDictionary();
-  return { title: `${dict.events.title} | PiggyBack` };
+  return { title: `${dict.events.title} | VIA BUSAN` };
 }
 
 /**

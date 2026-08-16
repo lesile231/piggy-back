@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PiggyBack – Discover Busan",
+  title: "VIA BUSAN – Discover Busan",
   description: "Your complete guide to Busan travel",
 };
 

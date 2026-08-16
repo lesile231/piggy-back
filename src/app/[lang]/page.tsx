@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/Button";
 export async function generateMetadata() {
   const dict = await getDictionary();
   return {
-    title: `${dict.home.title} | PiggyBack`,
+    title: `${dict.home.title} | VIA BUSAN`,
     description: dict.home.subtitle,
   };
 }
@@ -53,7 +53,7 @@ export default async function HomePage() {
       {/* §3.1 Hero */}
       <section className="flex flex-col items-center text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-          PiggyBack
+          VIA BUSAN
         </h1>
         <p className="mt-3 text-lg text-[#6B8FA3]">
           {dict.strip.tagline}

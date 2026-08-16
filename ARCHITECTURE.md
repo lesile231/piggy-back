@@ -1,7 +1,7 @@
 # ARCHITECTURE.md
 
 ## System Overview
-PiggyBack — 부산 외국인 관광 통합 메신저 봇 플랫폼. Next.js 15 monolith on Vercel.
+VIA BUSAN — 부산 외국인 관광 통합 메신저 봇 플랫폼. Next.js 15 monolith on Vercel.
 
 ## Module Structure
 - `src/app/` — Next.js App Router (pages, API routes)

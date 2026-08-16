@@ -39,14 +39,14 @@ export async function generateMetadata({
   const image = spot.images[0] ?? "/og-default.png";
 
   return {
-    title: `${name} | PiggyBack`,
+    title: `${name} | VIA BUSAN`,
     description: description.slice(0, 160),
     openGraph: {
       title: `${name} — ${spot.nameKo}`,
       description: description.slice(0, 160),
       images: [{ url: image, width: 1200, height: 630, alt: name }],
       type: "article",
-      siteName: "PiggyBack",
+      siteName: "VIA BUSAN",
     },
     twitter: {
       card: "summary_large_image",
