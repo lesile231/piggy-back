@@ -1,0 +1,68 @@
+{
+  "common": {
+    "home": "Home",
+    "spots": "Luoghi turistici",
+    "events": "Eventi",
+    "search": "Cerca",
+    "noResults": "Nessun risultato trovato",
+    "tryBot": "Prova il nostro chatbot per ulteriore aiuto",
+    "viewMore": "Vedi di piu",
+    "back": "Indietro"
+  },
+  "home": {
+    "title": "Scopri Busan",
+    "subtitle": "La tua guida completa per viaggiare a Busan",
+    "popularSpots": "Luoghi popolari",
+    "upcomingEvents": "Cosa succede",
+    "startChat": "Chatta con Via Busan"
+  },
+  "spots": {
+    "title": "Luoghi turistici",
+    "searchPlaceholder": "Cerca luoghi...",
+    "allCategories": "Tutti",
+    "rating": "Valutazione",
+    "address": "Indirizzo",
+    "hours": "Orari",
+    "phone": "Telefono",
+    "website": "Sito web",
+    "getDirections": "Indicazioni stradali via Bot"
+  },
+  "events": {
+    "title": "Eventi e festival",
+    "ongoing": "In corso",
+    "upcoming": "In arrivo",
+    "all": "Tutti",
+    "period": "Periodo",
+    "venue": "Luogo",
+    "price": "Prezzo",
+    "bookNow": "Prenota ora",
+    "free": "Gratuito"
+  },
+  "search": {
+    "title": "Risultati della ricerca",
+    "placeholder": "Cerca luoghi ed eventi...",
+    "spotsSection": "Luoghi turistici",
+    "eventsSection": "Eventi"
+  },
+  "strip": {
+    "tagline": "Scrivilo come l'hai sentito.",
+    "emptyState": "Questo posto non e ancora nella nostra lista.",
+    "networkError": "Impossibile raggiungere il server.",
+    "retry": "Riprova",
+    "othersLookingFor": "Altri stanno cercando",
+    "didYouMean": "Intendevi...",
+    "nearbyPlaces": "Nelle vicinanze",
+    "searchAgain": "Cerca di nuovo"
+  },
+  "place": {
+    "showToDriver": "Mostra questo al tassista",
+    "directions": "Come arrivare",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "Eventi qui",
+    "noUpcomingEvents": "Nessun evento in programma",
+    "nearbySpots": "Nelle vicinanze",
+    "description": "Informazioni su questo luogo"
+  }
+}

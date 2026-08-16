@@ -51,6 +51,7 @@
     "retry": "Tap to retry",
     "othersLookingFor": "Others are looking for",
     "didYouMean": "Did you mean…",
+    "nearbyPlaces": "Also nearby",
     "searchAgain": "Search again"
   },
   "place": {
@@ -61,6 +62,7 @@
     "openInKakaoMap": "Kakao Map",
     "relatedEvents": "Events here",
     "noUpcomingEvents": "No upcoming events",
+    "nearbySpots": "Also nearby",
     "description": "About this place"
   }
 }

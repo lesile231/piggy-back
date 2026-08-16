@@ -64,8 +64,7 @@ export function TransshipmentStrip({
           onChange={handleInput}
           placeholder="hey oon day"
           className="w-full rounded-xl border border-zinc-300 bg-white px-5 py-4 text-lg
-                     focus:border-zinc-500 focus:outline-none
-                     dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100"
+                     focus:border-zinc-500 focus:outline-none"
         />
         {isLoading && (
           <div className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -77,8 +76,7 @@ export function TransshipmentStrip({
       {/* Strip area */}
       {showStrip && (
         <div
-          className="mt-3 rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-4
-                      dark:border-zinc-700 dark:bg-zinc-800/50"
+          className="mt-3 rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-4"
         >
           {error ? (
             <ErrorState
@@ -146,7 +144,7 @@ function StripResult({
           <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
             in
           </span>
-          <span className="text-sm text-zinc-600 dark:text-zinc-300">
+          <span className="text-sm text-zinc-600">
             {query}
           </span>
         </div>
@@ -154,7 +152,7 @@ function StripResult({
       </div>
 
       {/* Divider */}
-      <div className="my-2 border-t border-zinc-200 dark:border-zinc-700" />
+      <div className="my-2 border-t border-zinc-200" />
 
       {/* OUT row */}
       <div>
@@ -176,7 +174,7 @@ function StripResult({
 
       {/* Disambiguate: show candidates */}
       {action === "disambiguate" && matches.length > 1 && (
-        <div className="mt-3 border-t border-zinc-200 pt-3 dark:border-zinc-700">
+        <div className="mt-3 border-t border-zinc-200 pt-3">
           <p className="text-xs text-zinc-500">{dict.didYouMean}</p>
           <ul className="mt-2 space-y-1">
             {matches.map((m) => (
@@ -184,7 +182,7 @@ function StripResult({
                 <Link
                   href={`/${locale}/place/${m.placeId}`}
                   className="flex items-center justify-between rounded-lg px-3 py-2 text-sm
-                             hover:bg-zinc-100 dark:hover:bg-zinc-700/50"
+                             hover:bg-zinc-100"
                 >
                   <span>
                     <span className="font-medium">{m.nameLocalized || m.nameKo}</span>
@@ -248,7 +246,7 @@ function KoreanReveal({
   const hidden = text.slice(visibleCount);
 
   const content = (
-    <span className="text-xl font-semibold text-orange-500 dark:text-orange-400" lang="ko">
+    <span className="text-xl font-semibold text-orange-500" lang="ko">
       {revealed}
       {hidden && (
         <span className="invisible">{hidden}</span>
@@ -286,7 +284,7 @@ function MultiLocaleNames({
   if (parts.length === 0) return null;
 
   return (
-    <p className="ml-7 mt-0.5 text-sm text-zinc-400 dark:text-zinc-500">
+    <p className="ml-7 mt-0.5 text-sm text-zinc-400">
       {parts.join("   ")}
     </p>
   );
@@ -298,7 +296,7 @@ function LangBadge({ lang }: { lang: string }) {
   return (
     <span
       className="animate-fade-in rounded bg-zinc-200 px-2 py-0.5 text-xs font-mono
-                 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-300"
+                 text-zinc-600"
     >
       {lang}
     </span>
@@ -314,14 +312,14 @@ function StripPlaceholder() {
         <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
           in
         </span>
-        <div className="h-4 w-32 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
+        <div className="h-4 w-32 animate-pulse rounded bg-zinc-200" />
       </div>
-      <div className="border-t border-dashed border-zinc-300 dark:border-zinc-600" />
+      <div className="border-t border-dashed border-zinc-300" />
       <div className="flex items-center gap-2">
         <span className="text-xs font-semibold uppercase tracking-widest text-zinc-400">
           out
         </span>
-        <div className="h-5 w-24 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
+        <div className="h-5 w-24 animate-pulse rounded bg-zinc-200" />
       </div>
     </div>
   );
@@ -349,7 +347,7 @@ function EmptyState({
               href={`/${locale}/place/${chip.query}`}
               className="rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium
                          text-zinc-600 hover:bg-zinc-100
-                         dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                         "
             >
               {chip.label}
             </Link>

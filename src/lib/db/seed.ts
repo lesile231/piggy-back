@@ -33,6 +33,8 @@ async function seed() {
     { slug: "park", names: { en: "Park", ja: "公園", zh: "公园", ko: "공원" }, icon: "🌳", sortOrder: 6 },
     { slug: "culture", names: { en: "Culture", ja: "文化", zh: "文化", ko: "문화" }, icon: "🎭", sortOrder: 7 },
     { slug: "shopping", names: { en: "Shopping", ja: "ショッピング", zh: "购物", ko: "쇼핑" }, icon: "🛍", sortOrder: 8 },
+    { slug: "entertainment", names: { en: "Entertainment", ja: "エンタメ", zh: "娱乐", ko: "놀거리" }, icon: "🎢", sortOrder: 9 },
+    { slug: "resort", names: { en: "Resort", ja: "リゾート", zh: "度假村", ko: "리조트" }, icon: "🏨", sortOrder: 10 },
   ]).returning();
 
   const catMap = Object.fromEntries(cats.map((c) => [c.slug, c.id])) as Record<string, string>;
@@ -310,6 +312,82 @@ async function seed() {
       tags: ["park", "tower", "city-view", "landmark"],
       source: "curated",
     },
+    // ── [15] 기장시장 ──
+    {
+      nameKo: "기장시장",
+      names: { en: "Gijang Market", ja: "機張市場", zh: "机张市场", ko: "기장시장" },
+      description: {
+        en: "A traditional market in Gijang famous for fresh snow crab, seaweed, and local seafood. One of Busan's best spots for authentic, affordable seafood dining.",
+        ja: "新鮮なズワイガニ、ワカメ、地元の海産物で有名な機張の伝統市場。手頃な価格で本格的な海鮮が楽しめます。",
+        zh: "以新鲜雪蟹、海带和当地海鲜闻名的机张传统市场，是釜山品尝正宗实惠海鲜的好去处。",
+        ko: "대게, 미역, 해산물로 유명한 기장의 전통시장으로, 싱싱한 해산물을 저렴하게 즐길 수 있는 부산의 명소입니다.",
+      },
+      addressKo: "부산 기장군 기장읍 읍내로104번길 16",
+      addresses: { en: "16 Eupnae-ro 104beon-gil, Gijang-eup, Gijang-gun, Busan", ja: "釜山市機張郡機張邑邑内路104番ギル16", zh: "釜山机张郡机张邑邑内路104番街16号" },
+      latitude: "35.2448",
+      longitude: "129.2183",
+      rating: "4.4",
+      images: ["https://images.unsplash.com/photo-1590005354167-6da97870c757?w=1200&h=630&fit=crop"],
+      tags: ["market", "seafood", "local-food", "traditional"],
+      source: "curated",
+    },
+    // ── [16] 롯데월드 어드벤처 부산 ──
+    {
+      nameKo: "롯데월드 어드벤처 부산",
+      names: { en: "Lotte World Adventure Busan", ja: "ロッテワールド アドベンチャー釜山", zh: "乐天世界冒险釜山", ko: "롯데월드 어드벤처 부산" },
+      description: {
+        en: "A world-class indoor theme park in Busan's Osiria Tourist Complex, featuring thrilling rides, fairy-tale themed zones, parades, and entertainment for all ages.",
+        ja: "オシリア観光団地にある世界水準のテーマパーク。スリル満点のアトラクション、メルヘンゾーン、パレードが楽しめます。",
+        zh: "位于釜山奥西利亚旅游区的世界级室内主题公园，拥有刺激的游乐设施、童话主题区、花车巡游等老少皆宜的娱乐项目。",
+        ko: "오시리아 관광단지에 위치한 세계적 수준의 실내 테마파크로, 스릴 넘치는 놀이기구와 동화 테마존, 퍼레이드를 즐길 수 있습니다.",
+      },
+      addressKo: "부산 기장군 기장읍 동부산관광로 42",
+      addresses: { en: "42 Dongbusan Tourism-ro, Gijang-eup, Gijang-gun, Busan", ja: "釜山市機張郡機張邑東釜山観光路42番地", zh: "釜山机张郡机张邑东釜山观光路42号" },
+      latitude: "35.1964",
+      longitude: "129.2150",
+      rating: "4.3",
+      images: ["https://images.unsplash.com/photo-1569180880150-df4eed93c90b?w=1200&h=630&fit=crop"],
+      tags: ["theme-park", "family", "indoor", "entertainment"],
+      source: "curated",
+    },
+    // ── [17] 아난티 코브 ──
+    {
+      nameKo: "아난티 코브",
+      names: { en: "Ananti Cove", ja: "アナンティ コーブ", zh: "安纳迪海湾", ko: "아난티 코브" },
+      description: {
+        en: "A luxury seaside resort complex in Gijang featuring the Banyan Tree Club & Spa, Hilton Busan, premium dining, and a scenic coastal promenade with ocean views.",
+        ja: "バンヤンツリー クラブ&スパやヒルトン釜山を擁する機張の高級海辺リゾート。プレミアムダイニングと絶景の海岸散歩道が魅力です。",
+        zh: "位于机张的豪华海滨度假村，拥有悦榕庄俱乐部和水疗中心、釜山希尔顿酒店、高级餐饮以及风景优美的海岸步道。",
+        ko: "반얀트리 클럽 앤 스파, 힐튼 부산이 있는 기장의 럭셔리 해변 리조트 단지로, 프리미엄 다이닝과 오션뷰 해안 산책로가 매력적입니다.",
+      },
+      addressKo: "부산 기장군 기장읍 기장해안로 268-32",
+      addresses: { en: "268-32 Gijanghaeān-ro, Gijang-eup, Gijang-gun, Busan", ja: "釜山市機張郡機張邑機張海岸路268-32番地", zh: "釜山机张郡机张邑机张海岸路268-32号" },
+      latitude: "35.1888",
+      longitude: "129.2215",
+      rating: "4.5",
+      images: ["https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&h=630&fit=crop"],
+      tags: ["resort", "luxury", "ocean-view", "spa"],
+      source: "curated",
+    },
+    // ── [18] 스카이라인 루지 부산 ──
+    {
+      nameKo: "스카이라인 루지 부산",
+      names: { en: "Skyline Luge Busan", ja: "スカイラインリュージュ釜山", zh: "天际滑车釜山", ko: "스카이라인 루지 부산" },
+      description: {
+        en: "An exciting gravity-fueled luge ride down scenic tracks with ocean views. Take the skyride chairlift up and race down on fun, easy-to-control luge carts.",
+        ja: "海を見ながらスリル満点のリュージュを楽しめるアウトドア体験施設。スカイライドで上り、ルージュカートで爽快に下ります。",
+        zh: "一项刺激的重力滑车体验，沿着有海景的赛道滑行。乘坐空中缆车上山，驾驶操控简便的滑车一路飞驰而下。",
+        ko: "오션뷰를 배경으로 스릴 넘치는 루지 카트를 타고 내려오는 아웃도어 체험 시설입니다. 스카이라이드로 올라가 즐기는 짜릿한 질주!",
+      },
+      addressKo: "부산 기장군 기장읍 기장해안로 205",
+      addresses: { en: "205 Gijanghaeān-ro, Gijang-eup, Gijang-gun, Busan", ja: "釜山市機張郡機張邑機張海岸路205番地", zh: "釜山机张郡机张邑机张海岸路205号" },
+      latitude: "35.1921",
+      longitude: "129.2085",
+      rating: "4.4",
+      images: ["https://images.unsplash.com/photo-1595780821298-5c93e27dba0f?w=1200&h=630&fit=crop"],
+      tags: ["entertainment", "outdoor", "family", "ocean-view"],
+      source: "curated",
+    },
   ]).returning();
 
   // ── Spot ↔ Category junction ──
@@ -348,14 +426,22 @@ async function seed() {
     sc(13, "culture"),
     // Yongdusan → park
     sc(14, "park"),
+    // Gijang Market → market, restaurant
+    sc(15, "market"), sc(15, "restaurant"),
+    // Lotte World Adventure Busan → entertainment
+    sc(16, "entertainment"),
+    // Ananti Cove → resort
+    sc(17, "resort"),
+    // Skyline Luge Busan → entertainment
+    sc(18, "entertainment"),
   ];
   await db.insert(spotCategories).values(spotCatLinks);
 
   // ── Location Aliases (comprehensive coverage for §4.1 Stage 2) ──
   // Includes RR romanization, MR variants, common typos, phonetic approximations, CJK variants
   console.log("Seeding location aliases...");
-  const a = (spotIdx: number, alias: string, lang: string) => ({
-    spotId: spots[spotIdx]!.id, alias, language: lang, source: "manual" as const,
+  const a = (spotIdx: number, alias: string, lang: string, type: "place" | "area" = "place") => ({
+    spotId: spots[spotIdx]!.id, alias, language: lang, source: "manual" as const, type,
   });
   await db.insert(locationAliases).values([
     // ── [0] 해운대 해수욕장 ──
@@ -586,6 +672,405 @@ async function seed() {
     a(14, "부산타워", "ko"),
     a(14, "torre de busan", "es"),
     a(14, "parque yongdusan", "es"),
+
+    // ── [15] 기장시장 ──
+    // Area aliases — "기장" is a district, not just the market
+    a(15, "gijang", "en", "area"),
+    a(15, "gijang-gun", "en", "area"),
+    a(15, "kijang", "en", "area"),               // MR romanization
+    a(15, "jigang", "en", "area"),               // common typo / reversed syllable
+    a(15, "機張", "ja", "area"),
+    a(15, "キジャン", "ja", "area"),
+    a(15, "机张", "zh", "area"),
+    a(15, "기장", "ko", "area"),
+    // Place aliases — specific to 기장시장
+    a(15, "gijang market", "en"),
+    a(15, "kijang market", "en"),
+    a(15, "gijang crab market", "en"),
+    a(15, "snow crab market busan", "en"),
+    a(15, "機張市場", "ja"),
+    a(15, "机张市场", "zh"),
+    a(15, "기장시장", "ko"),
+    a(15, "기장대게", "ko"),
+    a(15, "mercado gijang", "es"),
+    a(15, "mercado de cangrejo busan", "es"),
+
+    // ── [16] 롯데월드 어드벤처 부산 ──
+    a(16, "lotte world", "en"),
+    a(16, "lotte world busan", "en"),
+    a(16, "lotte world adventure busan", "en"),
+    a(16, "lotteworld", "en"),
+    a(16, "lotteworld busan", "en"),
+    a(16, "lotte theme park", "en"),
+    a(16, "lotte theme park busan", "en"),
+    a(16, "busan theme park", "en"),
+    a(16, "ロッテワールド", "ja"),
+    a(16, "ロッテワールド釜山", "ja"),
+    a(16, "乐天世界", "zh"),
+    a(16, "乐天世界釜山", "zh"),
+    a(16, "롯데월드", "ko"),
+    a(16, "롯데월드부산", "ko"),
+    a(16, "롯데월드어드벤처부산", "ko"),
+    a(16, "parque lotte world", "es"),
+    a(16, "lotte world busan parque", "es"),
+
+    // ── [17] 아난티 코브 ──
+    a(17, "ananti", "en"),
+    a(17, "ananti cove", "en"),
+    a(17, "ananti cove busan", "en"),
+    a(17, "ananti resort", "en"),
+    a(17, "banyan tree busan", "en"),
+    a(17, "banyan tree club busan", "en"),
+    a(17, "banyantree busan", "en"),
+    a(17, "hilton busan", "en"),
+    a(17, "アナンティ", "ja"),
+    a(17, "アナンティコーブ", "ja"),
+    a(17, "バンヤンツリー釜山", "ja"),
+    a(17, "安纳迪", "zh"),
+    a(17, "安纳迪海湾", "zh"),
+    a(17, "悦榕庄釜山", "zh"),
+    a(17, "아난티", "ko"),
+    a(17, "아난티코브", "ko"),
+    a(17, "반얀트리", "ko"),
+    a(17, "반얀트리부산", "ko"),
+    a(17, "resort ananti", "es"),
+
+    // ── [18] 스카이라인 루지 부산 ──
+    a(18, "luge", "en"),
+    a(18, "luge busan", "en"),
+    a(18, "skyline luge", "en"),
+    a(18, "skyline luge busan", "en"),
+    a(18, "busan luge", "en"),
+    a(18, "リュージュ", "ja"),
+    a(18, "スカイラインリュージュ", "ja"),
+    a(18, "リュージュ釜山", "ja"),
+    a(18, "天际滑车", "zh"),
+    a(18, "滑车釜山", "zh"),
+    a(18, "루지", "ko"),
+    a(18, "루지부산", "ko"),
+    a(18, "스카이라인루지", "ko"),
+
+    // ── 오시리아 관광단지 → 롯데월드(대표) + 각 시설 alias ──
+    a(16, "osiria", "en"),
+    a(16, "osiria busan", "en"),
+    a(16, "osiria tourist complex", "en"),
+    a(16, "dongbusan tourist complex", "en"),
+    a(16, "オシリア", "ja"),
+    a(16, "奥西利亚", "zh"),
+    a(16, "오시리아", "ko"),
+    a(16, "오시리아관광단지", "ko"),
+    a(16, "동부산관광단지", "ko"),
+
+    // ══════════════════════════════════════════════════════════════
+    // Phonetic aliases for new languages (fr/de/it/es/id/th)
+    // Each language's speakers write Korean names differently
+    // ══════════════════════════════════════════════════════════════
+
+    // ── [0] 해운대 해수욕장 — phonetic variants ──
+    // French
+    a(0, "heoundé", "fr"),
+    a(0, "heunde", "fr"),
+    a(0, "heounde", "fr"),
+    a(0, "héoundé", "fr"),
+    a(0, "plage de haeundae", "fr"),
+    a(0, "plage haeundae", "fr"),
+    a(0, "plage celebre busan", "fr"),
+    // German
+    a(0, "häunde", "de"),
+    a(0, "heunde", "de"),
+    a(0, "haunde", "de"),
+    a(0, "häundä", "de"),
+    a(0, "strand haeundae", "de"),
+    a(0, "berühmter strand busan", "de"),
+    // Italian
+    a(0, "eunde", "it"),
+    a(0, "heunde", "it"),
+    a(0, "aiunde", "it"),
+    a(0, "spiaggia haeundae", "it"),
+    a(0, "spiaggia famosa busan", "it"),
+    // Spanish
+    a(0, "jeundae", "es"),
+    a(0, "heunde", "es"),
+    a(0, "jaeundae", "es"),
+    // Indonesian
+    a(0, "pantai haeundae", "id"),
+    a(0, "pantai terkenal busan", "id"),
+    a(0, "heunde", "id"),
+    // Thai
+    a(0, "แฮอุนแด", "th"),
+    a(0, "แฮอันเด", "th"),
+    a(0, "หาดแฮอุนแด", "th"),
+
+    // ── [1] 자갈치시장 — phonetic variants ──
+    // French
+    a(1, "djagaltchi", "fr"),
+    a(1, "tchagaltchi", "fr"),
+    a(1, "marché aux poissons", "fr"),
+    a(1, "marché jagalchi", "fr"),
+    a(1, "marché aux poissons busan", "fr"),
+    // German
+    a(1, "dschagaltschi", "de"),
+    a(1, "tschagaltschi", "de"),
+    a(1, "fischmarkt busan", "de"),
+    a(1, "fischmarkt jagalchi", "de"),
+    // Italian
+    a(1, "giagalci", "it"),
+    a(1, "ciagalci", "it"),
+    a(1, "mercato del pesce busan", "it"),
+    a(1, "mercato jagalchi", "it"),
+    // Indonesian
+    a(1, "pasar ikan busan", "id"),
+    a(1, "pasar jagalchi", "id"),
+    a(1, "pasar ikan jagalchi", "id"),
+    // Thai
+    a(1, "จากัลชี", "th"),
+    a(1, "ตลาดปลาจากัลชี", "th"),
+    a(1, "ตลาดปลาปูซาน", "th"),
+
+    // ── [2] 감천문화마을 — phonetic variants ──
+    // French
+    a(2, "gamtchon", "fr"),
+    a(2, "gamtchone", "fr"),
+    a(2, "gamtcheon", "fr"),
+    a(2, "village gamcheon", "fr"),
+    a(2, "village coloré busan", "fr"),
+    a(2, "village culturel gamcheon", "fr"),
+    a(2, "machu picchu de busan", "fr"),
+    // German
+    a(2, "gamtschon", "de"),
+    a(2, "gamtscheon", "de"),
+    a(2, "kulturdorf gamcheon", "de"),
+    a(2, "buntes dorf busan", "de"),
+    a(2, "machu picchu von busan", "de"),
+    // Italian
+    a(2, "gamcion", "it"),
+    a(2, "gamceon", "it"),
+    a(2, "villaggio gamcheon", "it"),
+    a(2, "villaggio colorato busan", "it"),
+    a(2, "machu picchu di busan", "it"),
+    // Spanish
+    a(2, "gamchon", "es"),
+    a(2, "pueblo colorido busan", "es"),
+    // Indonesian
+    a(2, "desa gamcheon", "id"),
+    a(2, "desa budaya gamcheon", "id"),
+    a(2, "desa warna-warni busan", "id"),
+    // Thai
+    a(2, "คัมชอน", "th"),
+    a(2, "หมู่บ้านวัฒนธรรมคัมชอน", "th"),
+    a(2, "หมู่บ้านสีสัน", "th"),
+
+    // ── [3] 광안리 해수욕장 — phonetic variants ──
+    // French
+    a(3, "kouangalli", "fr"),
+    a(3, "kouanalli", "fr"),
+    a(3, "gwangalli", "fr"),
+    a(3, "kwanganli", "fr"),
+    a(3, "plage gwangalli", "fr"),
+    a(3, "pont diamant busan", "fr"),
+    // German
+    a(3, "kwangalli", "de"),
+    a(3, "gwanganli", "de"),
+    a(3, "strand gwangalli", "de"),
+    a(3, "diamantbrücke strand", "de"),
+    // Italian
+    a(3, "guangalli", "it"),
+    a(3, "cuangalli", "it"),
+    a(3, "kwangalli", "it"),
+    a(3, "spiaggia gwangalli", "it"),
+    a(3, "ponte diamante busan", "it"),
+    // Spanish
+    a(3, "guangalli", "es"),
+    a(3, "kuangalli", "es"),
+    a(3, "puente diamante busan", "es"),
+    // Indonesian
+    a(3, "pantai gwangalli", "id"),
+    a(3, "kwangalli", "id"),
+    a(3, "jembatan berlian busan", "id"),
+    // Thai
+    a(3, "กวางอัลลี", "th"),
+    a(3, "หาดกวางอัลลี", "th"),
+    a(3, "สะพานเพชรปูซาน", "th"),
+
+    // ── [4] 태종대 — phonetic variants ──
+    // French
+    a(4, "tedjongdé", "fr"),
+    a(4, "parc taejongdae", "fr"),
+    a(4, "falaises busan", "fr"),
+    // German
+    a(4, "tädschongdä", "de"),
+    a(4, "klippen busan", "de"),
+    a(4, "park taejongdae", "de"),
+    // Italian
+    a(4, "tegionddè", "it"),
+    a(4, "parco taejongdae", "it"),
+    a(4, "scogliere busan", "it"),
+    // Indonesian
+    a(4, "taman taejongdae", "id"),
+    a(4, "tebing busan", "id"),
+    // Thai
+    a(4, "แทจงแด", "th"),
+    a(4, "อุทยานแทจงแด", "th"),
+
+    // ── [5] 해동용궁사 — phonetic variants ──
+    // French
+    a(5, "yonggounsa", "fr"),
+    a(5, "temple yonggungsa", "fr"),
+    a(5, "temple au bord de mer busan", "fr"),
+    // German
+    a(5, "yonggungsa tempel", "de"),
+    a(5, "meerestempel busan", "de"),
+    // Italian
+    a(5, "tempio yonggungsa", "it"),
+    a(5, "tempio sul mare busan", "it"),
+    // Indonesian
+    a(5, "kuil yonggungsa", "id"),
+    a(5, "kuil tepi laut busan", "id"),
+    // Thai
+    a(5, "วัดยงกุงซา", "th"),
+    a(5, "วัดริมทะเลปูซาน", "th"),
+
+    // ── [6] 국제시장 — phonetic variants ──
+    // French
+    a(6, "marché international", "fr"),
+    a(6, "marché gukje", "fr"),
+    a(6, "marché international busan", "fr"),
+    a(6, "koukdjé", "fr"),
+    // German
+    a(6, "internationaler markt", "de"),
+    a(6, "gukje markt", "de"),
+    a(6, "kukdsche", "de"),
+    // Italian
+    a(6, "mercato internazionale", "it"),
+    a(6, "mercato gukje", "it"),
+    a(6, "kukje", "it"),
+    // Indonesian
+    a(6, "pasar internasional", "id"),
+    a(6, "pasar gukje", "id"),
+    a(6, "pasar internasional busan", "id"),
+    // Thai
+    a(6, "กุกเจ", "th"),
+    a(6, "ตลาดกุกเจ", "th"),
+    a(6, "ตลาดนานาชาติปูซาน", "th"),
+
+    // ── [7] 범어사 — phonetic variants ──
+    // French
+    a(7, "temple beomeosa", "fr"),
+    a(7, "temple de montagne busan", "fr"),
+    a(7, "pomosa", "fr"),
+    // German
+    a(7, "beomeosa tempel", "de"),
+    a(7, "bergtempel busan", "de"),
+    // Italian
+    a(7, "tempio beomeosa", "it"),
+    a(7, "tempio di montagna busan", "it"),
+    // Indonesian
+    a(7, "kuil beomeosa", "id"),
+    a(7, "kuil gunung busan", "id"),
+    // Thai
+    a(7, "วัดบอมอซา", "th"),
+    a(7, "วัดบนเขาปูซาน", "th"),
+
+    // ── [15] 기장시장 — phonetic variants ──
+    // French — area (district name phonetics)
+    a(15, "guidjang", "fr", "area"),
+    a(15, "guijiang", "fr", "area"),
+    a(15, "kidjang", "fr", "area"),
+    a(15, "gidjang", "fr", "area"),
+    // French — place (market-specific)
+    a(15, "marché gijang", "fr"),
+    a(15, "marché au crabe busan", "fr"),
+    // German — area
+    a(15, "gidschang", "de", "area"),
+    a(15, "kidschang", "de", "area"),
+    // German — place
+    a(15, "gijang markt", "de"),
+    a(15, "krabbenmarkt busan", "de"),
+    // Italian — area
+    a(15, "ghigiang", "it", "area"),
+    // Italian — place
+    a(15, "mercato gijang", "it"),
+    a(15, "mercato del granchio busan", "it"),
+    // Indonesian — area
+    a(15, "kijang", "id", "area"),
+    // Indonesian — place
+    a(15, "pasar gijang", "id"),
+    a(15, "pasar kepiting busan", "id"),
+    // Thai — area
+    a(15, "กีจัง", "th", "area"),
+    // Thai — place
+    a(15, "ตลาดกีจัง", "th"),
+    a(15, "ตลาดปูหิมะปูซาน", "th"),
+
+    // ── [16] 롯데월드 어드벤처 부산 — phonetic variants ──
+    // French
+    a(16, "lotte world busan", "fr"),
+    a(16, "lotteu world", "fr"),
+    a(16, "lotteu worldeu", "fr"),
+    a(16, "parc lotte world", "fr"),
+    a(16, "parc d'attractions busan", "fr"),
+    // German
+    a(16, "lotte world busan", "de"),
+    a(16, "lotte welt busan", "de"),
+    a(16, "freizeitpark busan", "de"),
+    a(16, "vergnügungspark busan", "de"),
+    // Italian
+    a(16, "lotte world busan", "it"),
+    a(16, "lotte uorld busan", "it"),
+    a(16, "parco divertimenti busan", "it"),
+    // Spanish
+    a(16, "lotte world busan", "es"),
+    a(16, "parque lotte world", "es"),
+    a(16, "parque de atracciones busan", "es"),
+    // Indonesian
+    a(16, "lotte world busan", "id"),
+    a(16, "taman hiburan busan", "id"),
+    // Thai
+    a(16, "ล็อตเต้เวิลด์", "th"),
+    a(16, "ล็อตเต้เวิลด์ปูซาน", "th"),
+    a(16, "สวนสนุกปูซาน", "th"),
+
+    // ── [17] 아난티 코브 — phonetic variants ──
+    // French
+    a(17, "ananti cove", "fr"),
+    a(17, "banyan tree busan", "fr"),
+    a(17, "resort de luxe busan", "fr"),
+    // German
+    a(17, "ananti cove", "de"),
+    a(17, "banyan tree busan", "de"),
+    a(17, "luxusresort busan", "de"),
+    // Italian
+    a(17, "ananti cove", "it"),
+    a(17, "banyan tree busan", "it"),
+    a(17, "resort di lusso busan", "it"),
+    // Indonesian
+    a(17, "ananti cove", "id"),
+    a(17, "banyan tree busan", "id"),
+    a(17, "resor mewah busan", "id"),
+    // Thai
+    a(17, "อนันตี", "th"),
+    a(17, "อนันตีโคฟ", "th"),
+    a(17, "บันยันทรีปูซาน", "th"),
+
+    // ── [18] 스카이라인 루지 부산 — phonetic variants ──
+    // French
+    a(18, "luge busan", "fr"),
+    a(18, "skyline luge busan", "fr"),
+    // German
+    a(18, "luge busan", "de"),
+    a(18, "rodelbahn busan", "de"),
+    a(18, "skyline luge busan", "de"),
+    // Italian
+    a(18, "slittino busan", "it"),
+    a(18, "luge busan", "it"),
+    a(18, "skyline luge busan", "it"),
+    // Indonesian
+    a(18, "luge busan", "id"),
+    a(18, "skyline luge busan", "id"),
+    // Thai
+    a(18, "ลูจปูซาน", "th"),
+    a(18, "สกายไลน์ลูจ", "th"),
+    a(18, "สกายไลน์ลูจปูซาน", "th"),
   ]).onConflictDoNothing();
 
   // ── Events (future dates to appear as active) ──

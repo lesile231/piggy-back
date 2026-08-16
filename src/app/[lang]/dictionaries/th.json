@@ -1,0 +1,68 @@
+{
+  "common": {
+    "home": "หน้าแรก",
+    "spots": "สถานที่ท่องเที่ยว",
+    "events": "กิจกรรม",
+    "search": "ค้นหา",
+    "noResults": "ไม่พบผลลัพธ์",
+    "tryBot": "ลองใช้แชทบอทของเราเพื่อขอความช่วยเหลือเพิ่มเติม",
+    "viewMore": "ดูเพิ่มเติม",
+    "back": "กลับ"
+  },
+  "home": {
+    "title": "ค้นพบปูซาน",
+    "subtitle": "คู่มือครบวงจรสำหรับการท่องเที่ยวปูซาน",
+    "popularSpots": "สถานที่ยอดนิยม",
+    "upcomingEvents": "มีอะไรเกิดขึ้นบ้าง",
+    "startChat": "แชทกับ Via Busan"
+  },
+  "spots": {
+    "title": "สถานที่ท่องเที่ยว",
+    "searchPlaceholder": "ค้นหาสถานที่...",
+    "allCategories": "ทั้งหมด",
+    "rating": "คะแนน",
+    "address": "ที่อยู่",
+    "hours": "เวลาเปิด-ปิด",
+    "phone": "โทรศัพท์",
+    "website": "เว็บไซต์",
+    "getDirections": "ขอเส้นทางผ่านบอท"
+  },
+  "events": {
+    "title": "กิจกรรมและเทศกาล",
+    "ongoing": "กำลังจัด",
+    "upcoming": "เร็วๆ นี้",
+    "all": "ทั้งหมด",
+    "period": "ช่วงเวลา",
+    "venue": "สถานที่",
+    "price": "ราคา",
+    "bookNow": "จองเลย",
+    "free": "ฟรี"
+  },
+  "search": {
+    "title": "ผลการค้นหา",
+    "placeholder": "ค้นหาสถานที่และกิจกรรม...",
+    "spotsSection": "สถานที่ท่องเที่ยว",
+    "eventsSection": "กิจกรรม"
+  },
+  "strip": {
+    "tagline": "พิมพ์ตามที่คุณได้ยินเลย",
+    "emptyState": "สถานที่นี้ยังไม่อยู่ในรายการของเรา",
+    "networkError": "ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้",
+    "retry": "ลองอีกครั้ง",
+    "othersLookingFor": "คนอื่นกำลังค้นหา",
+    "didYouMean": "คุณหมายถึง...",
+    "nearbyPlaces": "สถานที่ใกล้เคียง",
+    "searchAgain": "ค้นหาอีกครั้ง"
+  },
+  "place": {
+    "showToDriver": "แสดงสิ่งนี้ให้คนขับแท็กซี่ดู",
+    "directions": "วิธีไปที่นั่น",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "กิจกรรมที่นี่",
+    "noUpcomingEvents": "ไม่มีกิจกรรมที่จะมาถึง",
+    "nearbySpots": "สถานที่ใกล้เคียง",
+    "description": "เกี่ยวกับสถานที่นี้"
+  }
+}

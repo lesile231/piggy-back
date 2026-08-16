@@ -1,0 +1,68 @@
+{
+  "common": {
+    "home": "Beranda",
+    "spots": "Tempat Wisata",
+    "events": "Acara",
+    "search": "Cari",
+    "noResults": "Tidak ada hasil ditemukan",
+    "tryBot": "Coba chatbot kami untuk bantuan lebih lanjut",
+    "viewMore": "Lihat Selengkapnya",
+    "back": "Kembali"
+  },
+  "home": {
+    "title": "Jelajahi Busan",
+    "subtitle": "Panduan lengkap perjalanan Anda ke Busan",
+    "popularSpots": "Tempat Populer",
+    "upcomingEvents": "Apa yang Terjadi",
+    "startChat": "Chat dengan Via Busan"
+  },
+  "spots": {
+    "title": "Tempat Wisata",
+    "searchPlaceholder": "Cari tempat...",
+    "allCategories": "Semua",
+    "rating": "Rating",
+    "address": "Alamat",
+    "hours": "Jam Buka",
+    "phone": "Telepon",
+    "website": "Situs Web",
+    "getDirections": "Petunjuk Arah via Bot"
+  },
+  "events": {
+    "title": "Acara dan Festival",
+    "ongoing": "Berlangsung",
+    "upcoming": "Akan Datang",
+    "all": "Semua",
+    "period": "Periode",
+    "venue": "Tempat",
+    "price": "Harga",
+    "bookNow": "Pesan Sekarang",
+    "free": "Gratis"
+  },
+  "search": {
+    "title": "Hasil Pencarian",
+    "placeholder": "Cari tempat dan acara...",
+    "spotsSection": "Tempat Wisata",
+    "eventsSection": "Acara"
+  },
+  "strip": {
+    "tagline": "Tulis seperti yang kamu dengar.",
+    "emptyState": "Tempat itu belum ada di daftar kami.",
+    "networkError": "Tidak dapat terhubung ke server.",
+    "retry": "Coba lagi",
+    "othersLookingFor": "Yang lain sedang mencari",
+    "didYouMean": "Maksud Anda...",
+    "nearbyPlaces": "Di sekitar sini",
+    "searchAgain": "Cari lagi"
+  },
+  "place": {
+    "showToDriver": "Tunjukkan ini kepada sopir taksi Anda",
+    "directions": "Cara ke sana",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "Acara di sini",
+    "noUpcomingEvents": "Tidak ada acara mendatang",
+    "nearbySpots": "Di sekitar sini",
+    "description": "Tentang tempat ini"
+  }
+}

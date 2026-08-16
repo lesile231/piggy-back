@@ -1,0 +1,68 @@
+{
+  "common": {
+    "home": "Accueil",
+    "spots": "Lieux touristiques",
+    "events": "Evenements",
+    "search": "Rechercher",
+    "noResults": "Aucun resultat trouve",
+    "tryBot": "Essayez notre chatbot pour plus d'aide",
+    "viewMore": "Voir plus",
+    "back": "Retour"
+  },
+  "home": {
+    "title": "Decouvrez Busan",
+    "subtitle": "Votre guide complet pour voyager a Busan",
+    "popularSpots": "Lieux populaires",
+    "upcomingEvents": "Que se passe-t-il",
+    "startChat": "Discutez avec Via Busan"
+  },
+  "spots": {
+    "title": "Lieux touristiques",
+    "searchPlaceholder": "Rechercher des lieux...",
+    "allCategories": "Tous",
+    "rating": "Note",
+    "address": "Adresse",
+    "hours": "Horaires",
+    "phone": "Telephone",
+    "website": "Site web",
+    "getDirections": "Itineraire via Bot"
+  },
+  "events": {
+    "title": "Evenements et festivals",
+    "ongoing": "En cours",
+    "upcoming": "A venir",
+    "all": "Tous",
+    "period": "Periode",
+    "venue": "Lieu",
+    "price": "Prix",
+    "bookNow": "Reserver maintenant",
+    "free": "Gratuit"
+  },
+  "search": {
+    "title": "Resultats de recherche",
+    "placeholder": "Rechercher des lieux et evenements...",
+    "spotsSection": "Lieux touristiques",
+    "eventsSection": "Evenements"
+  },
+  "strip": {
+    "tagline": "Ecrivez-le comme vous l'avez entendu.",
+    "emptyState": "Ce lieu n'est pas encore dans notre liste.",
+    "networkError": "Impossible de joindre le serveur.",
+    "retry": "Reessayer",
+    "othersLookingFor": "D'autres cherchent",
+    "didYouMean": "Vouliez-vous dire...",
+    "nearbyPlaces": "A proximite",
+    "searchAgain": "Rechercher a nouveau"
+  },
+  "place": {
+    "showToDriver": "Montrez ceci a votre chauffeur de taxi",
+    "directions": "Comment s'y rendre",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "Evenements ici",
+    "noUpcomingEvents": "Aucun evenement a venir",
+    "nearbySpots": "A proximite",
+    "description": "A propos de ce lieu"
+  }
+}

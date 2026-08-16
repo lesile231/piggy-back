@@ -14,6 +14,7 @@ interface DecodeBoardProps {
     networkError: string;
     retry: string;
     didYouMean: string;
+    nearbyPlaces: string;
     othersLookingFor: string;
     searchAgain: string;
   };

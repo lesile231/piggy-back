@@ -1,0 +1,1 @@
+ALTER TABLE "location_aliases" ADD COLUMN "type" varchar(10) DEFAULT 'place' NOT NULL;

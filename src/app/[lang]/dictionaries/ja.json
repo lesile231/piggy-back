@@ -51,6 +51,7 @@
     "retry": "再試行",
     "othersLookingFor": "みんなが探している場所",
     "didYouMean": "もしかして…",
+    "nearbyPlaces": "周辺スポット",
     "searchAgain": "再検索"
   },
   "place": {
@@ -61,6 +62,7 @@
     "openInKakaoMap": "Kakao Map",
     "relatedEvents": "ここで開催されるイベント",
     "noUpcomingEvents": "予定されているイベントはありません",
+    "nearbySpots": "周辺スポット",
     "description": "紹介"
   }
 }

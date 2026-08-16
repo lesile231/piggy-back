@@ -1,0 +1,68 @@
+{
+  "common": {
+    "home": "Inicio",
+    "spots": "Lugares turisticos",
+    "events": "Eventos",
+    "search": "Buscar",
+    "noResults": "No se encontraron resultados",
+    "tryBot": "Prueba nuestro chatbot para mas ayuda",
+    "viewMore": "Ver mas",
+    "back": "Volver"
+  },
+  "home": {
+    "title": "Descubre Busan",
+    "subtitle": "Tu guia completa para viajar a Busan",
+    "popularSpots": "Lugares populares",
+    "upcomingEvents": "Que esta pasando",
+    "startChat": "Chatea con Via Busan"
+  },
+  "spots": {
+    "title": "Lugares turisticos",
+    "searchPlaceholder": "Buscar lugares...",
+    "allCategories": "Todos",
+    "rating": "Calificacion",
+    "address": "Direccion",
+    "hours": "Horario",
+    "phone": "Telefono",
+    "website": "Sitio web",
+    "getDirections": "Obtener indicaciones via Bot"
+  },
+  "events": {
+    "title": "Eventos y festivales",
+    "ongoing": "En curso",
+    "upcoming": "Proximos",
+    "all": "Todos",
+    "period": "Periodo",
+    "venue": "Lugar",
+    "price": "Precio",
+    "bookNow": "Reservar ahora",
+    "free": "Gratis"
+  },
+  "search": {
+    "title": "Resultados de busqueda",
+    "placeholder": "Buscar lugares y eventos...",
+    "spotsSection": "Lugares turisticos",
+    "eventsSection": "Eventos"
+  },
+  "strip": {
+    "tagline": "Escribe como lo escuchaste.",
+    "emptyState": "Ese lugar aun no esta en nuestra lista.",
+    "networkError": "No se pudo conectar al servidor.",
+    "retry": "Reintentar",
+    "othersLookingFor": "Otros estan buscando",
+    "didYouMean": "Quisiste decir...",
+    "nearbyPlaces": "Lugares cercanos",
+    "searchAgain": "Buscar de nuevo"
+  },
+  "place": {
+    "showToDriver": "Muestra esto a tu taxista",
+    "directions": "Como llegar",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "Eventos aqui",
+    "noUpcomingEvents": "No hay eventos proximos",
+    "nearbySpots": "Lugares cercanos",
+    "description": "Sobre este lugar"
+  }
+}

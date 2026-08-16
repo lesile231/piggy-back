@@ -1,0 +1,68 @@
+{
+  "common": {
+    "home": "Startseite",
+    "spots": "Sehenswuerdigkeiten",
+    "events": "Veranstaltungen",
+    "search": "Suchen",
+    "noResults": "Keine Ergebnisse gefunden",
+    "tryBot": "Probieren Sie unseren Chatbot fuer weitere Hilfe",
+    "viewMore": "Mehr anzeigen",
+    "back": "Zurueck"
+  },
+  "home": {
+    "title": "Entdecke Busan",
+    "subtitle": "Ihr kompletter Reisefuehrer fuer Busan",
+    "popularSpots": "Beliebte Orte",
+    "upcomingEvents": "Was ist los",
+    "startChat": "Mit Via Busan chatten"
+  },
+  "spots": {
+    "title": "Sehenswuerdigkeiten",
+    "searchPlaceholder": "Orte suchen...",
+    "allCategories": "Alle",
+    "rating": "Bewertung",
+    "address": "Adresse",
+    "hours": "Oeffnungszeiten",
+    "phone": "Telefon",
+    "website": "Webseite",
+    "getDirections": "Wegbeschreibung via Bot"
+  },
+  "events": {
+    "title": "Veranstaltungen und Festivals",
+    "ongoing": "Laufend",
+    "upcoming": "Demnachst",
+    "all": "Alle",
+    "period": "Zeitraum",
+    "venue": "Veranstaltungsort",
+    "price": "Preis",
+    "bookNow": "Jetzt buchen",
+    "free": "Kostenlos"
+  },
+  "search": {
+    "title": "Suchergebnisse",
+    "placeholder": "Orte und Veranstaltungen suchen...",
+    "spotsSection": "Sehenswuerdigkeiten",
+    "eventsSection": "Veranstaltungen"
+  },
+  "strip": {
+    "tagline": "Schreib es so, wie du es gehoert hast.",
+    "emptyState": "Dieser Ort ist noch nicht in unserer Liste.",
+    "networkError": "Server nicht erreichbar.",
+    "retry": "Erneut versuchen",
+    "othersLookingFor": "Andere suchen nach",
+    "didYouMean": "Meinten Sie...",
+    "nearbyPlaces": "In der Naehe",
+    "searchAgain": "Erneut suchen"
+  },
+  "place": {
+    "showToDriver": "Zeigen Sie dies Ihrem Taxifahrer",
+    "directions": "So kommen Sie hin",
+    "openInGoogleMaps": "Google Maps",
+    "openInNaverMap": "Naver Map",
+    "openInKakaoMap": "Kakao Map",
+    "relatedEvents": "Veranstaltungen hier",
+    "noUpcomingEvents": "Keine anstehenden Veranstaltungen",
+    "nearbySpots": "In der Naehe",
+    "description": "Ueber diesen Ort"
+  }
+}

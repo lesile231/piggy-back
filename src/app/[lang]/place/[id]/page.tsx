@@ -88,6 +88,13 @@ export default async function PlacePage({
       ? await eventRepo.getNearbyUpcomingEvents(spot.latitude, spot.longitude, 3)
       : [];
 
+  const nearbySpots =
+    spot.latitude != null && spot.longitude != null
+      ? (await spotRepo.searchNearby(spot.latitude, spot.longitude, 5))
+          .filter((s) => s.id !== spot.id)
+          .slice(0, 4)
+      : [];
+
   const name = localize(spot.names, locale) || spot.nameKo;
   const description = localize(spot.description, locale);
   const address = localize(spot.addresses, locale) || spot.addressKo;
@@ -229,6 +236,34 @@ export default async function PlacePage({
                     <span className="text-xs text-zinc-500 whitespace-nowrap ml-2">
                       {startStr}–{endStr}
                     </span>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      {/* ── Nearby Spots ── */}
+      {nearbySpots.length > 0 && (
+        <section className="mt-8">
+          <SectionLabel>{dict.place.nearbySpots}</SectionLabel>
+          <ul className="mt-3 divide-y divide-[rgba(0,119,182,0.08)]">
+            {nearbySpots.map((ns) => {
+              const nsName = localize(ns.names, locale) || ns.nameKo;
+              return (
+                <li key={ns.id}>
+                  <Link
+                    href={`/${locale}/place/${ns.id}`}
+                    className="flex items-center justify-between py-3 hover:bg-[#EBF4FA] -mx-2 px-2 rounded"
+                  >
+                    <span>
+                      <span className="text-sm font-medium">{nsName}</span>
+                      {nsName !== ns.nameKo && (
+                        <span className="ml-2 text-xs text-zinc-500">{ns.nameKo}</span>
+                      )}
+                    </span>
+                    <span aria-hidden="true" className="text-zinc-400">&rarr;</span>
                   </Link>
                 </li>
               );

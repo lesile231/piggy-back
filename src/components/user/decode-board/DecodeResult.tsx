@@ -14,6 +14,7 @@ interface DecodeResultProps {
     networkError: string;
     retry: string;
     didYouMean: string;
+    nearbyPlaces: string;
   };
   popularChips: { label: string; query: string }[];
   onRetry?: () => void;
@@ -114,6 +115,35 @@ export function DecodeResult({
           </Link>
         )}
       </div>
+
+      {/* Nearby places: shown when confirm has additional matches */}
+      {action === "confirm" && matches.length > 1 && (
+        <div className="mt-3 border-t border-[rgba(0,50,80,0.1)] pt-3">
+          <p className="text-xs text-[#6B8FA3]">{dict.nearbyPlaces}</p>
+          <ul className="mt-2 space-y-1">
+            {matches.slice(1).map((m) => (
+              <li key={m.placeId}>
+                <Link
+                  href={`/${locale}/place/${m.placeId}`}
+                  className="flex items-center justify-between rounded-lg px-3 py-2
+                             text-sm text-[#1B3A4B] transition-colors
+                             hover:bg-[rgba(0,119,182,0.06)]"
+                >
+                  <span>
+                    <span className="font-medium text-[#0A2540]">
+                      {m.nameLocalized || m.nameKo}
+                    </span>
+                    {m.nameLocalized && m.nameLocalized !== m.nameKo && (
+                      <span className="ml-2 text-[#5A8296]">{m.nameKo}</span>
+                    )}
+                  </span>
+                  <span aria-hidden="true" className="text-[#6B8FA3]">&rarr;</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Disambiguate: multiple candidates */}
       {action === "disambiguate" && matches.length > 1 && (

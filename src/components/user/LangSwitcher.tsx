@@ -7,9 +7,15 @@ const LOCALE_LABELS: Record<string, string> = {
   ja: "日本語",
   zh: "中文",
   ko: "한국어",
+  es: "Espanol",
+  it: "Italiano",
+  fr: "Francais",
+  de: "Deutsch",
+  id: "Indonesia",
+  th: "ไทย",
 };
 
-const LOCALES = ["en", "ja", "zh", "ko"] as const;
+const LOCALES = ["en", "ko", "ja", "zh", "es", "fr", "de", "it", "id", "th"] as const;
 
 export function LangSwitcher({ currentLocale }: { currentLocale: string }) {
   const pathname = usePathname();

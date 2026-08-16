@@ -35,6 +35,9 @@ export interface ResolutionMatch {
   nameLocalized: string;
   romanized: string;
   confidence: number;
+  /** Coordinates (internal use for nearby enrichment, not serialized to client) */
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface Resolution {

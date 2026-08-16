@@ -128,6 +128,8 @@ export const locationAliases = pgTable("location_aliases", {
   alias: varchar("alias", { length: 255 }).notNull(),
   language: varchar("language", { length: 10 }).notNull(),
   source: varchar("source", { length: 20 }).notNull(),
+  /** 'place' = specific spot, 'area' = region search (returns all spots near this spot's coords) */
+  type: varchar("type", { length: 10 }).notNull().default("place"),
 }, (t) => [
   uniqueIndex("uq_alias_language").on(t.alias, t.language),
   index("idx_aliases_search").on(t.language, t.alias),

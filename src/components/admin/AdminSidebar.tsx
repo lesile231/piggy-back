@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { href: "/admin/spots", label: "관광지", icon: "🏖" },
   { href: "/admin/events", label: "행사", icon: "🎪" },
   { href: "/admin/flows", label: "플로우", icon: "🔀" },
+  { href: "/admin/aliases", label: "검색 사전", icon: "📖" },
+  { href: "/admin/missed", label: "미매칭 검색", icon: "🔍" },
 ];
 
 export function AdminSidebar() {

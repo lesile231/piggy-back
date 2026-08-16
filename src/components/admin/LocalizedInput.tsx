@@ -2,12 +2,18 @@
 
 import { useState } from "react";
 
-const LOCALES = ["ko", "en", "ja", "zh"] as const;
+const LOCALES = ["ko", "en", "ja", "zh", "es", "fr", "de", "it", "id", "th"] as const;
 const LOCALE_LABELS: Record<string, string> = {
   ko: "한국어",
   en: "English",
   ja: "日本語",
   zh: "中文",
+  es: "Espanol",
+  fr: "Francais",
+  de: "Deutsch",
+  it: "Italiano",
+  id: "Indonesia",
+  th: "ไทย",
 };
 
 interface LocalizedInputProps {

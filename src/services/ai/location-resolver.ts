@@ -1,4 +1,4 @@
-import { eq, and, ilike, sql } from "drizzle-orm";
+import { eq, and, ilike, sql, ne, notInArray } from "drizzle-orm";
 import type { Database } from "@/lib/db/client";
 import type { LLMRouter } from "./llm-router";
 import type {
@@ -18,6 +18,12 @@ import { determineAction } from "./resolve-action";
 const MIN_CONFIDENCE = 0.5;
 // TODO[MVP]: When spots exceed this limit, implement category-based filtering or embedding pre-filter
 const MAX_LLM_CANDIDATES = 50;
+const NEARBY_RADIUS_KM = 7;
+const NEARBY_LIMIT = 4;
+const NEARBY_CONFIDENCE = 0.85;
+/** Area search: wider radius, more results, all equal confidence */
+const AREA_RADIUS_KM = 10;
+const AREA_LIMIT = 8;
 
 export class LocationResolver {
   constructor(
@@ -53,12 +59,17 @@ export class LocationResolver {
 
     if (!normalizedQuery) return resolution;
 
+    // Skip overly generic queries (city names, common nouns)
+    if (LocationResolver.GENERIC_QUERIES.has(normalizedQuery)) return resolution;
+
     // Stage 2: Alias dictionary lookup (Stage 1 normalization applied inline)
-    const aliasMatches = await this.searchByAlias(normalizedQuery);
-    if (aliasMatches.length > 0) {
+    const aliasResult = await this.searchByAlias(normalizedQuery);
+    if (aliasResult.matches.length > 0) {
+      const enriched = await this.enrichWithNearby(aliasResult.matches, aliasResult.isArea);
       resolution.stage = 2;
-      resolution.matches = aliasMatches;
-      resolution.action = determineAction(aliasMatches);
+      resolution.matches = enriched;
+      // Area queries always disambiguate (show all spots equally)
+      resolution.action = aliasResult.isArea ? "disambiguate" : determineAction(enriched);
       return resolution;
     }
 
@@ -66,13 +77,14 @@ export class LocationResolver {
     const hangulFromRoman = romanizeToHangul(normalizedQuery);
     if (hangulFromRoman) {
       // Try alias lookup with the converted Hangul
-      const stage3Aliases = await this.searchByAlias(
+      const stage3Result = await this.searchByAlias(
         normalize(hangulFromRoman),
       );
-      if (stage3Aliases.length > 0) {
+      if (stage3Result.matches.length > 0) {
+        const enriched = await this.enrichWithNearby(stage3Result.matches, stage3Result.isArea);
         resolution.stage = 3;
-        resolution.matches = stage3Aliases;
-        resolution.action = determineAction(stage3Aliases);
+        resolution.matches = enriched;
+        resolution.action = stage3Result.isArea ? "disambiguate" : determineAction(enriched);
         return resolution;
       }
     }
@@ -152,22 +164,27 @@ export class LocationResolver {
    */
   private async searchByAlias(
     normalizedQuery: string,
-  ): Promise<ResolutionMatch[]> {
+  ): Promise<{ matches: ResolutionMatch[]; isArea: boolean }> {
     try {
       const results = await this.db
         .select({
           spotId: tourismSpots.id,
           nameKo: tourismSpots.nameKo,
           names: tourismSpots.names,
+          latitude: tourismSpots.latitude,
+          longitude: tourismSpots.longitude,
+          aliasType: locationAliases.type,
         })
         .from(locationAliases)
         .innerJoin(tourismSpots, eq(locationAliases.spotId, tourismSpots.id))
         .where(
-          sql`lower(regexp_replace(${locationAliases.alias}, '[\\s\\-''\\._·]', '', 'g')) = ${normalizedQuery}`,
+          sql`lower(regexp_replace(unaccent(${locationAliases.alias}), '[\\s\\-''\\._·]', '', 'g')) = ${normalizedQuery}`,
         )
         .limit(5);
 
-      if (results.length === 0) return [];
+      if (results.length === 0) return { matches: [], isArea: false };
+
+      const isArea = results.some((r) => r.aliasType === "area");
 
       // Deduplicate by placeId (multiple alias rows may match the same spot)
       const seen = new Set<string>();
@@ -182,11 +199,72 @@ export class LocationResolver {
           nameLocalized: names["en"] ?? r.nameKo,
           romanized: names["en"] ?? "",
           confidence: 1.0,
+          latitude: r.latitude ? Number(r.latitude) : undefined,
+          longitude: r.longitude ? Number(r.longitude) : undefined,
         });
       }
-      return matches;
+      return { matches, isArea };
     } catch {
-      return [];
+      return { matches: [], isArea: false };
+    }
+  }
+
+  /**
+   * Enrich a single alias match with nearby spots.
+   * - isArea=false: primary spot + nearby as secondary (lower confidence)
+   * - isArea=true: ALL spots in radius returned with equal confidence ("disambiguate")
+   */
+  private async enrichWithNearby(
+    matches: ResolutionMatch[],
+    isArea = false,
+  ): Promise<ResolutionMatch[]> {
+    // Only enrich when there's a single high-confidence match with coordinates
+    if (matches.length !== 1) return matches;
+    const top = matches[0];
+    if (!top || top.latitude == null || top.longitude == null) return matches;
+
+    const radiusKm = isArea ? AREA_RADIUS_KM : NEARBY_RADIUS_KM;
+    const limit = isArea ? AREA_LIMIT : NEARBY_LIMIT;
+
+    try {
+      const rows = await this.db.execute(sql`
+        SELECT id, name_ko, names, latitude, longitude,
+          (6371 * acos(
+            cos(radians(${top.latitude})) * cos(radians(latitude)) *
+            cos(radians(longitude) - radians(${top.longitude})) +
+            sin(radians(${top.latitude})) * sin(radians(latitude))
+          )) AS distance_km
+        FROM tourism_spots
+        WHERE is_active = true
+          AND latitude IS NOT NULL
+          AND longitude IS NOT NULL
+          AND id != ${top.placeId}
+          AND (6371 * acos(
+            cos(radians(${top.latitude})) * cos(radians(latitude)) *
+            cos(radians(longitude) - radians(${top.longitude})) +
+            sin(radians(${top.latitude})) * sin(radians(latitude))
+          )) <= ${radiusKm}
+        ORDER BY distance_km
+        LIMIT ${limit}
+      `);
+
+      if (!rows.rows || rows.rows.length === 0) return matches;
+
+      const nearbyConfidence = isArea ? 1.0 : NEARBY_CONFIDENCE;
+      const nearby: ResolutionMatch[] = (rows.rows as Record<string, unknown>[]).map((r) => {
+        const names = (r.names ?? {}) as Record<string, string>;
+        return {
+          placeId: r.id as string,
+          nameKo: r.name_ko as string,
+          nameLocalized: names["en"] ?? (r.name_ko as string),
+          romanized: names["en"] ?? "",
+          confidence: nearbyConfidence,
+        };
+      });
+
+      return [...matches, ...nearby];
+    } catch {
+      return matches;
     }
   }
 
@@ -369,11 +447,26 @@ Match the query to the best candidate(s).`,
     }
   }
 
+  /**
+   * Words too generic to resolve — city names, single common nouns.
+   * These bypass LLM and return empty so the UI can show popular chips instead.
+   */
+  private static readonly GENERIC_QUERIES = new Set([
+    "busan", "pusan", "seoul", "korea", "southkorea",
+    "beach", "temple", "market", "park", "food", "restaurant",
+    "hotel", "station", "airport", "bus", "taxi", "train",
+    "부산", "서울", "한국",
+  ]);
+
   private async cacheAsAlias(
     normalizedQuery: string,
     language: string,
     spotId: string,
   ): Promise<void> {
+    // Skip overly generic or short queries
+    if (normalizedQuery.length < 4) return;
+    if (LocationResolver.GENERIC_QUERIES.has(normalizedQuery)) return;
+
     try {
       await this.db
         .insert(locationAliases)
