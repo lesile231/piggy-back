@@ -1,3 +1,5 @@
+export const ALL_LOCALES = ["ko", "en", "ja", "zh", "es", "fr", "de", "it", "id", "th"] as const;
+
 /**
  * Extract localized values from FormData for a given field prefix
  * @param formData - FormData object from a form submission
@@ -6,7 +8,7 @@
  */
 export function extractLocalized(formData: FormData, prefix: string): Record<string, string> {
   const result: Record<string, string> = {};
-  for (const locale of ["ko", "en", "ja", "zh"]) {
+  for (const locale of ALL_LOCALES) {
     const value = formData.get(`${prefix}.${locale}`) as string | null;
     if (value) result[locale] = value;
   }

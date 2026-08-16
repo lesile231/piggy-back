@@ -41,6 +41,16 @@ export class LLMRouter {
     });
   }
 
+  async conversationJson(messages: ChatMessage[]): Promise<LLMResponse> {
+    return this.withFallback({
+      model: this.config.chatModel,
+      messages,
+      temperature: 0.3,
+      maxTokens: 4096,
+      responseFormat: "json",
+    });
+  }
+
   private async withFallback(
     params: Parameters<LLMProvider["chat"]>[0]
   ): Promise<LLMResponse> {

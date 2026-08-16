@@ -8,7 +8,9 @@ import { getEnv } from "@/lib/env";
 import { locationAliases, tourismSpots } from "@/lib/db/schema";
 import { verifyAdminSession } from "@/lib/auth/admin-auth";
 import { extractLocalized } from "@/lib/form-utils";
+import { ALL_LOCALES } from "@/lib/form-utils";
 import { AliasGenerator } from "@/services/ai/alias-generator";
+import { Translator } from "@/services/ai/translator";
 import { LLMRouter } from "@/services/ai/llm-router";
 import { GroqProvider } from "@/services/ai/providers/groq.provider";
 import { TogetherProvider } from "@/services/ai/providers/together.provider";
@@ -64,16 +66,41 @@ export async function createSpotAction(
     const rows = await db.insert(tourismSpots).values(data).returning({ id: tourismSpots.id });
     const inserted = rows[0];
 
-    if (inserted) try {
-      const generator = new AliasGenerator(db, createLLMRouter(env));
-      await generator.generateAndSave({
-        id: inserted.id,
-        nameKo: data.nameKo,
-        names: data.names as Record<string, string>,
-        addressKo: data.addressKo,
-      });
-    } catch {
-      // Non-critical: alias generation failure should not block spot creation
+    if (inserted) {
+      const router = createLLMRouter(env);
+
+      // Auto-translate missing languages
+      try {
+        const translator = new Translator(router);
+        const translated = await translator.translateFields(
+          {
+            names: data.names as Record<string, string>,
+            description: data.description as Record<string, string>,
+            addresses: data.addresses as Record<string, string>,
+          },
+          [...ALL_LOCALES],
+        );
+        await db.update(tourismSpots).set({
+          names: translated.names,
+          description: translated.description,
+          addresses: translated.addresses,
+        }).where(eq(tourismSpots.id, inserted.id));
+      } catch {
+        // Non-critical: translation failure should not block spot creation
+      }
+
+      // Generate aliases
+      try {
+        const generator = new AliasGenerator(db, router);
+        await generator.generateAndSave({
+          id: inserted.id,
+          nameKo: data.nameKo,
+          names: data.names as Record<string, string>,
+          addressKo: data.addressKo,
+        });
+      } catch {
+        // Non-critical: alias generation failure should not block spot creation
+      }
     }
   } catch (e) {
     return { error: e instanceof Error ? e.message : "저장에 실패했습니다." };
@@ -105,6 +132,28 @@ export async function updateSpotAction(
 
     await db.update(tourismSpots).set({ ...data, updatedAt: new Date() }).where(eq(tourismSpots.id, id));
 
+    const router = createLLMRouter(env);
+
+    // Auto-translate missing languages
+    try {
+      const translator = new Translator(router);
+      const translated = await translator.translateFields(
+        {
+          names: data.names as Record<string, string>,
+          description: data.description as Record<string, string>,
+          addresses: data.addresses as Record<string, string>,
+        },
+        [...ALL_LOCALES],
+      );
+      await db.update(tourismSpots).set({
+        names: translated.names,
+        description: translated.description,
+        addresses: translated.addresses,
+      }).where(eq(tourismSpots.id, id));
+    } catch {
+      // Non-critical: translation failure should not block spot update
+    }
+
     const nameChanged = !existing ||
       existing.nameKo !== data.nameKo ||
       JSON.stringify(existing.names) !== JSON.stringify(data.names);
@@ -119,7 +168,7 @@ export async function updateSpotAction(
               eq(locationAliases.source, "ai_generated"),
             ),
           );
-        const generator = new AliasGenerator(db, createLLMRouter(env));
+        const generator = new AliasGenerator(db, router);
         await generator.generateAndSave({
           id,
           nameKo: data.nameKo,

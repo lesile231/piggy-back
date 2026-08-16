@@ -7,7 +7,22 @@ import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { events } from "@/lib/db/schema";
 import { verifyAdminSession } from "@/lib/auth/admin-auth";
-import { extractLocalized } from "@/lib/form-utils";
+import { extractLocalized, ALL_LOCALES } from "@/lib/form-utils";
+import { Translator } from "@/services/ai/translator";
+import { LLMRouter } from "@/services/ai/llm-router";
+import { GroqProvider } from "@/services/ai/providers/groq.provider";
+import { TogetherProvider } from "@/services/ai/providers/together.provider";
+
+function createLLMRouter(env: ReturnType<typeof getEnv>): LLMRouter {
+  const primary = new GroqProvider(env.GROQ_API_KEY);
+  const fallback = env.TOGETHER_API_KEY
+    ? new TogetherProvider(env.TOGETHER_API_KEY)
+    : primary;
+  return new LLMRouter(primary, fallback, {
+    lightModel: env.LLM_LIGHT_MODEL,
+    chatModel: env.LLM_CHAT_MODEL,
+  });
+}
 
 function extractEventData(formData: FormData) {
   const nameKo = formData.get("nameKo") as string;
@@ -50,7 +65,31 @@ export async function createEventAction(
     const data = extractEventData(formData);
     const env = getEnv();
     const db = createDb(env.DATABASE_URL);
-    await db.insert(events).values(data);
+    const rows = await db.insert(events).values(data).returning({ id: events.id });
+    const inserted = rows[0];
+
+    if (inserted) {
+      try {
+        const translator = new Translator(createLLMRouter(env));
+        const translated = await translator.translateFields(
+          {
+            names: data.names as Record<string, string>,
+            description: data.description as Record<string, string>,
+            venueName: data.venueName as Record<string, string>,
+            priceInfo: data.priceInfo as Record<string, string>,
+          },
+          [...ALL_LOCALES],
+        );
+        await db.update(events).set({
+          names: translated.names,
+          description: translated.description,
+          venueName: translated.venueName,
+          priceInfo: translated.priceInfo,
+        }).where(eq(events.id, inserted.id));
+      } catch {
+        // Non-critical: translation failure should not block event creation
+      }
+    }
   } catch (e) {
     return { error: e instanceof Error ? e.message : "저장에 실패했습니다." };
   }
@@ -70,6 +109,28 @@ export async function updateEventAction(
     const env = getEnv();
     const db = createDb(env.DATABASE_URL);
     await db.update(events).set({ ...data, updatedAt: new Date() }).where(eq(events.id, id));
+
+    // Auto-translate missing languages
+    try {
+      const translator = new Translator(createLLMRouter(env));
+      const translated = await translator.translateFields(
+        {
+          names: data.names as Record<string, string>,
+          description: data.description as Record<string, string>,
+          venueName: data.venueName as Record<string, string>,
+          priceInfo: data.priceInfo as Record<string, string>,
+        },
+        [...ALL_LOCALES],
+      );
+      await db.update(events).set({
+        names: translated.names,
+        description: translated.description,
+        venueName: translated.venueName,
+        priceInfo: translated.priceInfo,
+      }).where(eq(events.id, id));
+    } catch {
+      // Non-critical: translation failure should not block event update
+    }
   } catch (e) {
     return { error: e instanceof Error ? e.message : "저장에 실패했습니다." };
   }
