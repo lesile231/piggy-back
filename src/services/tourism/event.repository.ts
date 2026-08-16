@@ -1,4 +1,4 @@
-import { eq, and, gte, gt, lte } from "drizzle-orm";
+import { eq, and, gte, gt, lte, between, sql } from "drizzle-orm";
 import type { Database } from "@/lib/db/client";
 import { events } from "@/lib/db/schema";
 import type { EventRecord } from "./types";
@@ -64,6 +64,37 @@ export class EventRepository {
         .select()
         .from(events)
         .where(and(eq(events.isActive, true), gt(events.startsAt, now)))
+        .orderBy(events.startsAt)
+        .limit(limit);
+
+      return rows.map(this.toEventRecord);
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Get upcoming events near a given coordinate (within ~2km radius).
+   */
+  async getNearbyUpcomingEvents(
+    lat: number,
+    lng: number,
+    limit = 3,
+  ): Promise<EventRecord[]> {
+    try {
+      const delta = 0.02; // ~2.2km at Korea's latitude
+      const now = new Date();
+      const rows = await this.db
+        .select()
+        .from(events)
+        .where(
+          and(
+            eq(events.isActive, true),
+            gt(events.endsAt, now),
+            between(events.latitude, String(lat - delta), String(lat + delta)),
+            between(events.longitude, String(lng - delta), String(lng + delta)),
+          ),
+        )
         .orderBy(events.startsAt)
         .limit(limit);
 

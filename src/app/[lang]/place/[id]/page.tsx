@@ -80,12 +80,13 @@ export default async function PlacePage({
   const spotRepo = new SpotRepository(db);
   const eventRepo = new EventRepository(db);
 
-  const [spot, upcomingEvents] = await Promise.all([
-    spotRepo.getById(id),
-    eventRepo.getUpcomingEvents(3),
-  ]);
-
+  const spot = await spotRepo.getById(id);
   if (!spot) notFound();
+
+  const upcomingEvents =
+    spot.latitude != null && spot.longitude != null
+      ? await eventRepo.getNearbyUpcomingEvents(spot.latitude, spot.longitude, 3)
+      : [];
 
   const name = localize(spot.names, locale) || spot.nameKo;
   const description = localize(spot.description, locale);
