@@ -12,6 +12,8 @@
 import type { LocationResolver } from "./location-resolver";
 import type { EventRepository } from "@/services/tourism/event.repository";
 import type { SpotRepository } from "@/services/tourism/spot.repository";
+import type { ReviewTokenService } from "@/services/review/review-token.service";
+import type { ReviewRepository } from "@/services/review/review.repository";
 import type { OutgoingMessage } from "@/services/bot/types";
 import type { ClassificationResult } from "@/types/ai";
 import { localize } from "@/types/common";
@@ -20,6 +22,8 @@ export interface IntentRouterDeps {
   locationResolver: LocationResolver;
   eventRepo: EventRepository;
   spotRepo: SpotRepository;
+  reviewTokenService: ReviewTokenService;
+  reviewRepo: ReviewRepository;
   appUrl: string;
 }
 
@@ -31,12 +35,14 @@ export class IntentRouter {
     message: string,
     language: string,
     userLocation?: { latitude: number; longitude: number },
+    userId?: string,
   ): Promise<OutgoingMessage[]> {
     switch (intent.intent) {
       case "resolve_place":
         return this.handleResolvePlace(
           intent.extractedEntities?.location ?? message,
           language,
+          userId,
         );
       case "how_to_get":
         return this.handleHowToGet(
@@ -56,6 +62,7 @@ export class IntentRouter {
   private async handleResolvePlace(
     query: string,
     language: string,
+    userId?: string,
   ): Promise<OutgoingMessage[]> {
     const resolution = await this.deps.locationResolver.resolve(
       query,
@@ -78,9 +85,16 @@ export class IntentRouter {
     const placeUrl = `${this.deps.appUrl}/${language}/place/${top.placeId}`;
 
     if (resolution.matches.length === 1 || top.confidence >= 0.9) {
+      // Build place info with review stats and review link
+      const reviewSuffix = await this.buildReviewSuffix(
+        top.placeId,
+        language,
+        userId,
+      );
+
       return [{
         type: "text",
-        text: `${top.nameLocalized} (${top.nameKo})\n\n${placeUrl}`,
+        text: `${top.nameLocalized} (${top.nameKo})\n\n${placeUrl}${reviewSuffix}`,
       }];
     }
 
@@ -98,6 +112,49 @@ export class IntentRouter {
         label: `${m.nameLocalized} (${m.nameKo})`,
       })),
     }];
+  }
+
+  /**
+   * Build review stats line + review link for a resolved place.
+   * Returns empty string if review token generation fails (non-blocking).
+   */
+  private async buildReviewSuffix(
+    spotId: string,
+    language: string,
+    userId?: string,
+  ): Promise<string> {
+    const parts: string[] = [];
+
+    try {
+      // Fetch review stats
+      const stats = await this.deps.reviewRepo.getStats(spotId);
+      if (stats.totalCount > 0 && stats.averageRating !== null) {
+        const stars = "★".repeat(Math.round(stats.averageRating))
+          + "☆".repeat(5 - Math.round(stats.averageRating));
+        parts.push(
+          `\n${stars} ${stats.averageRating.toFixed(1)} (${stats.totalCount} ${localize({ en: "reviews", ko: "리뷰", ja: "レビュー", zh: "评价" }, language)})`,
+        );
+      }
+
+      // Generate review token link
+      if (userId) {
+        const token = await this.deps.reviewTokenService.generate(userId, spotId);
+        const reviewUrl = `${this.deps.appUrl}/${language}/review/${token}`;
+        parts.push(
+          `\n${localize({
+            en: "Been here? Leave a review!",
+            ko: "다녀오셨나요? 리뷰를 남겨주세요!",
+            ja: "行ったことがありますか？レビューを書いてください！",
+            zh: "去过这里吗？留下评价吧！",
+          }, language)}\n${reviewUrl}`,
+        );
+      }
+    } catch (err) {
+      // Non-blocking — don't fail the place response if review features error
+      console.error("Failed to build review suffix:", err);
+    }
+
+    return parts.length > 0 ? `\n${parts.join("")}` : "";
   }
 
   private async handleHowToGet(

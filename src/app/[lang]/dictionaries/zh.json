@@ -63,6 +63,37 @@
     "relatedEvents": "这里的活动",
     "noUpcomingEvents": "暂无即将举行的活动",
     "nearbySpots": "附近景点",
-    "description": "介绍"
+    "description": "介绍",
+    "copied": "已复制!",
+    "copyName": "复制韩文名称",
+    "copyAddress": "复制韩文地址"
+  },
+  "review": {
+    "title": "写评价",
+    "rating": "评分",
+    "comment": "分享您的体验（可选）",
+    "addPhotos": "添加照片",
+    "maxPhotos": "最多3张",
+    "submit": "提交评价",
+    "submitting": "提交中...",
+    "success": "感谢您的评价!",
+    "expired": "此评价链接已过期",
+    "used": "此评价链接已被使用",
+    "invalid": "无效的评价链接",
+    "reviews": "评价",
+    "noReviews": "暂无评价",
+    "writeReview": "写评价",
+    "writeReviewVia": "通过聊天软件写评价",
+    "averageRating": "Via Busan评分",
+    "basedOn": "基于{count}条评价",
+    "photoUploading": "上传中...",
+    "dragOrClick": "拖放或点击上传"
+  },
+  "messenger": {
+    "banner": "通过聊天软件获取实时旅游资讯",
+    "bannerSub": "节日、本地推荐等信息，直接发送到您的聊天中",
+    "chatOnWhatsApp": "通过WhatsApp聊天",
+    "chatOnLine": "通过LINE聊天",
+    "askAboutPlace": "想了解更多？问问我们的聊天机器人"
   }
 }

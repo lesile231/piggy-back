@@ -63,6 +63,37 @@
     "relatedEvents": "Eventos aqui",
     "noUpcomingEvents": "No hay eventos proximos",
     "nearbySpots": "Lugares cercanos",
-    "description": "Sobre este lugar"
+    "description": "Sobre este lugar",
+    "copied": "Copiado!",
+    "copyName": "Copiar nombre en coreano",
+    "copyAddress": "Copiar direccion en coreano"
+  },
+  "review": {
+    "title": "Escribir una resena",
+    "rating": "Tu puntuacion",
+    "comment": "Comparte tu experiencia (opcional)",
+    "addPhotos": "Agregar fotos",
+    "maxPhotos": "Hasta 3 fotos",
+    "submit": "Enviar resena",
+    "submitting": "Enviando...",
+    "success": "Gracias por tu resena!",
+    "expired": "Este enlace de resena ha expirado",
+    "used": "Este enlace de resena ya fue utilizado",
+    "invalid": "Enlace de resena invalido",
+    "reviews": "Resenas",
+    "noReviews": "Aun no hay resenas",
+    "writeReview": "Escribir resena",
+    "writeReviewVia": "Escribir resena via messenger",
+    "averageRating": "Puntuacion Via Busan",
+    "basedOn": "basado en {count} resenas",
+    "photoUploading": "Subiendo...",
+    "dragOrClick": "Arrastra o haz clic para subir"
+  },
+  "messenger": {
+    "banner": "Recibe informacion turistica en tiempo real en tu messenger",
+    "bannerSub": "Festivales, recomendaciones locales y mas, directamente en tu chat",
+    "chatOnWhatsApp": "Chatea en WhatsApp",
+    "chatOnLine": "Chatea en LINE",
+    "askAboutPlace": "Quieres saber mas? Pregunta a nuestro chatbot"
   }
 }

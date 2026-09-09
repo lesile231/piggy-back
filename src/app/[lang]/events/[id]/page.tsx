@@ -7,6 +7,7 @@ import { getEnv } from "@/lib/env";
 import { EventRepository } from "@/services/tourism/event.repository";
 import { getDictionary } from "../../dictionaries";
 import { localize } from "@/types/common";
+import { MessengerCTA } from "@/components/user/MessengerCTA";
 
 export async function generateMetadata({
   params,
@@ -90,6 +91,9 @@ export default async function EventDetailPage({
           {dict.events.bookNow}
         </a>
       )}
+
+      {/* Messenger CTA */}
+      <MessengerCTA dict={dict.messenger} variant="inline" />
     </div>
   );
 }

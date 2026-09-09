@@ -8,6 +8,7 @@ import { SpotCard } from "@/components/user/SpotCard";
 import { EventCard } from "@/components/user/EventCard";
 import { DecodeBoard } from "@/components/user/decode-board";
 import { Button } from "@/components/ui/Button";
+import { MessengerCTA } from "@/components/user/MessengerCTA";
 
 export async function generateMetadata() {
   const dict = await getDictionary();
@@ -68,6 +69,9 @@ export default async function HomePage() {
           />
         </div>
       </section>
+
+      {/* Messenger CTA banner */}
+      <MessengerCTA dict={dict.messenger} variant="banner" />
 
       {/* Popular spots */}
       {spots.length > 0 && (

@@ -63,6 +63,37 @@
     "relatedEvents": "Events here",
     "noUpcomingEvents": "No upcoming events",
     "nearbySpots": "Also nearby",
-    "description": "About this place"
+    "description": "About this place",
+    "copied": "Copied!",
+    "copyName": "Copy Korean name",
+    "copyAddress": "Copy Korean address"
+  },
+  "review": {
+    "title": "Write a Review",
+    "rating": "Your rating",
+    "comment": "Share your experience (optional)",
+    "addPhotos": "Add photos",
+    "maxPhotos": "Up to 3 photos",
+    "submit": "Submit Review",
+    "submitting": "Submitting...",
+    "success": "Thank you for your review!",
+    "expired": "This review link has expired",
+    "used": "This review link has already been used",
+    "invalid": "Invalid review link",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet",
+    "writeReview": "Write a review",
+    "writeReviewVia": "Write a review via messenger",
+    "averageRating": "Via Busan rating",
+    "basedOn": "based on {count} reviews",
+    "photoUploading": "Uploading...",
+    "dragOrClick": "Drag & drop or click to upload"
+  },
+  "messenger": {
+    "banner": "Get real-time travel tips on your messenger",
+    "bannerSub": "Festivals, local recommendations, and more — delivered right to your chat",
+    "chatOnWhatsApp": "Chat on WhatsApp",
+    "chatOnLine": "Chat on LINE",
+    "askAboutPlace": "Want to know more? Ask our chatbot"
   }
 }

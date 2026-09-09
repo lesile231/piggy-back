@@ -17,6 +17,8 @@ import { IntentRouter } from "@/services/ai/intent-router";
 import { LocationResolver } from "@/services/ai/location-resolver";
 import { EventRepository } from "@/services/tourism/event.repository";
 import { SpotRepository } from "@/services/tourism/spot.repository";
+import { ReviewTokenService } from "@/services/review/review-token.service";
+import { ReviewRepository } from "@/services/review/review.repository";
 
 export const dynamic = "force-dynamic";
 
@@ -79,10 +81,14 @@ export async function POST(request: NextRequest): Promise<Response> {
   const locationResolver = new LocationResolver(db, router);
   const eventRepo = new EventRepository(db);
   const spotRepo = new SpotRepository(db);
+  const reviewTokenService = new ReviewTokenService(db);
+  const reviewRepo = new ReviewRepository(db);
   const intentRouter = new IntentRouter({
     locationResolver,
     eventRepo,
     spotRepo,
+    reviewTokenService,
+    reviewRepo,
     appUrl: env.NEXT_PUBLIC_APP_URL,
   });
   chatService.setIntentRouter(intentRouter);

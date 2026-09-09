@@ -63,6 +63,37 @@
     "relatedEvents": "Eventi qui",
     "noUpcomingEvents": "Nessun evento in programma",
     "nearbySpots": "Nelle vicinanze",
-    "description": "Informazioni su questo luogo"
+    "description": "Informazioni su questo luogo",
+    "copied": "Copiato!",
+    "copyName": "Copia nome in coreano",
+    "copyAddress": "Copia indirizzo in coreano"
+  },
+  "review": {
+    "title": "Scrivi una recensione",
+    "rating": "La tua valutazione",
+    "comment": "Condividi la tua esperienza (facoltativo)",
+    "addPhotos": "Aggiungi foto",
+    "maxPhotos": "Fino a 3 foto",
+    "submit": "Invia recensione",
+    "submitting": "Invio in corso...",
+    "success": "Grazie per la tua recensione!",
+    "expired": "Questo link per la recensione e scaduto",
+    "used": "Questo link per la recensione e gia stato usato",
+    "invalid": "Link per la recensione non valido",
+    "reviews": "Recensioni",
+    "noReviews": "Ancora nessuna recensione",
+    "writeReview": "Scrivi una recensione",
+    "writeReviewVia": "Scrivi una recensione via messenger",
+    "averageRating": "Valutazione Via Busan",
+    "basedOn": "basato su {count} recensioni",
+    "photoUploading": "Caricamento...",
+    "dragOrClick": "Trascina o clicca per caricare"
+  },
+  "messenger": {
+    "banner": "Ricevi info turistiche in tempo reale sul tuo messenger",
+    "bannerSub": "Festival, consigli locali e altro, direttamente nella tua chat",
+    "chatOnWhatsApp": "Chatta su WhatsApp",
+    "chatOnLine": "Chatta su LINE",
+    "askAboutPlace": "Vuoi saperne di piu? Chiedi al nostro chatbot"
   }
 }

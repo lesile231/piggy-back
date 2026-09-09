@@ -1,5 +1,5 @@
 import {
-  pgTable, uuid, varchar, text, boolean, integer,
+  pgTable, uuid, varchar, text, boolean, integer, smallint,
   timestamp, decimal, jsonb, uniqueIndex, index, primaryKey,
 } from "drizzle-orm/pg-core";
 
@@ -234,6 +234,36 @@ export const couponRedemptions = pgTable("coupon_redemptions", {
   userId: uuid("user_id").notNull().references(() => users.id),
   redeemedAt: timestamp("redeemed_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ── Reviews ──
+
+export const reviewTokens = pgTable("review_tokens", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").notNull().references(() => users.id),
+  spotId: uuid("spot_id").notNull().references(() => tourismSpots.id),
+  token: varchar("token", { length: 64 }).notNull().unique(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+  usedAt: timestamp("used_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [
+  index("idx_review_tokens_token").on(t.token),
+]);
+
+export const reviews = pgTable("reviews", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  spotId: uuid("spot_id").notNull().references(() => tourismSpots.id, { onDelete: "cascade" }),
+  userId: uuid("user_id").notNull().references(() => users.id),
+  tokenId: uuid("token_id").references(() => reviewTokens.id),
+  rating: smallint("rating").notNull(),
+  comment: text("comment"),
+  images: jsonb("images").notNull().default([]),
+  status: varchar("status", { length: 20 }).notNull().default("published"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [
+  uniqueIndex("uq_reviews_spot_user").on(t.spotId, t.userId),
+  index("idx_reviews_spot").on(t.spotId, t.createdAt),
+]);
 
 // ── Admin ──
 

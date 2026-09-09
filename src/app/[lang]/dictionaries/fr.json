@@ -63,6 +63,37 @@
     "relatedEvents": "Evenements ici",
     "noUpcomingEvents": "Aucun evenement a venir",
     "nearbySpots": "A proximite",
-    "description": "A propos de ce lieu"
+    "description": "A propos de ce lieu",
+    "copied": "Copie !",
+    "copyName": "Copier le nom en coreen",
+    "copyAddress": "Copier l'adresse en coreen"
+  },
+  "review": {
+    "title": "Ecrire un avis",
+    "rating": "Votre note",
+    "comment": "Partagez votre experience (facultatif)",
+    "addPhotos": "Ajouter des photos",
+    "maxPhotos": "Jusqu'a 3 photos",
+    "submit": "Envoyer l'avis",
+    "submitting": "Envoi en cours...",
+    "success": "Merci pour votre avis !",
+    "expired": "Ce lien d'avis a expire",
+    "used": "Ce lien d'avis a deja ete utilise",
+    "invalid": "Lien d'avis invalide",
+    "reviews": "Avis",
+    "noReviews": "Aucun avis pour le moment",
+    "writeReview": "Ecrire un avis",
+    "writeReviewVia": "Ecrire un avis via messagerie",
+    "averageRating": "Note Via Busan",
+    "basedOn": "base sur {count} avis",
+    "photoUploading": "Telechargement...",
+    "dragOrClick": "Glissez ou cliquez pour telecharger"
+  },
+  "messenger": {
+    "banner": "Recevez des infos touristiques en temps reel sur votre messagerie",
+    "bannerSub": "Festivals, recommandations locales et plus, directement dans votre chat",
+    "chatOnWhatsApp": "Discuter sur WhatsApp",
+    "chatOnLine": "Discuter sur LINE",
+    "askAboutPlace": "Envie d'en savoir plus ? Demandez a notre chatbot"
   }
 }

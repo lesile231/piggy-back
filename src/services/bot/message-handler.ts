@@ -57,13 +57,13 @@ export class MessageHandler {
     // 5. Route by session mode
     switch (session.mode) {
       case "menu":
-        await this.handleMenuMode(adapter, incoming, session.id, language);
+        await this.handleMenuMode(adapter, incoming, session.id, language, user.id);
         break;
       case "flow":
         await this.handleFlowMode(adapter, incoming, session, language);
         break;
       case "free_chat":
-        await this.handleFreeChatMode(adapter, incoming, language);
+        await this.handleFreeChatMode(adapter, incoming, language, user.id);
         break;
       default:
         // Unknown mode — reset to menu
@@ -78,6 +78,7 @@ export class MessageHandler {
     incoming: IncomingMessage,
     sessionId: string,
     language: string,
+    userId?: string,
   ): Promise<void> {
     const payload = incoming.buttonPayload ?? incoming.text ?? "";
 
@@ -102,6 +103,9 @@ export class MessageHandler {
       const response = await this.chatService.generateResponse(
         incoming.text ?? "Hello",
         language,
+        undefined,
+        undefined,
+        userId,
       );
       await this.sendMessages(adapter, incoming.chatId, response.messages);
       return;
@@ -178,6 +182,7 @@ export class MessageHandler {
     adapter: BotAdapter,
     incoming: IncomingMessage,
     language: string,
+    userId?: string,
   ): Promise<void> {
     await adapter.sendTypingIndicator(incoming.chatId);
 
@@ -186,6 +191,7 @@ export class MessageHandler {
       language,
       undefined,
       incoming.location,
+      userId,
     );
 
     await this.sendMessages(adapter, incoming.chatId, response.messages);

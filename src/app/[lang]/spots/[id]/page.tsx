@@ -10,6 +10,10 @@ import { getDictionary } from "../../dictionaries";
 import { localize } from "@/types/common";
 import { googleMapsUrl, naverMapUrl, kakaoMapUrl } from "@/lib/map-links";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { CopyButton } from "@/components/user/CopyButton";
+import { MessengerCTA } from "@/components/user/MessengerCTA";
+import { ReviewList } from "@/components/user/review/ReviewList";
+import { ReviewRepository } from "@/services/review/review.repository";
 
 export async function generateMetadata({
   params,
@@ -40,10 +44,15 @@ export default async function SpotDetailPage({
   const spot = await spotRepo.getById(id);
   if (!spot) notFound();
 
-  const upcomingEvents =
+  const reviewRepo = new ReviewRepository(db);
+
+  const [upcomingEvents, reviewRows, reviewStats] = await Promise.all([
     spot.latitude != null && spot.longitude != null
-      ? await eventRepo.getNearbyUpcomingEvents(spot.latitude, spot.longitude, 3)
-      : [];
+      ? eventRepo.getNearbyUpcomingEvents(spot.latitude, spot.longitude, 3)
+      : Promise.resolve([]),
+    reviewRepo.getBySpotId(id),
+    reviewRepo.getStats(id),
+  ]);
 
   const name = localize(spot.names, locale) || spot.nameKo;
   const description = localize(spot.description, locale);
@@ -68,12 +77,19 @@ export default async function SpotDetailPage({
       {/* Korean name — show to taxi driver */}
       {locale !== "ko" && (
         <div className="mt-2 rounded-lg border border-[rgba(0,119,182,0.15)] bg-[#EBF4FA] px-4 py-3">
-          <p
-            className="select-all text-2xl font-semibold tracking-wide sm:text-3xl"
-            lang="ko"
-          >
-            {spot.nameKo}
-          </p>
+          <div className="flex items-start justify-between gap-2">
+            <p
+              className="select-all text-2xl font-semibold tracking-wide sm:text-3xl"
+              lang="ko"
+            >
+              {spot.nameKo}
+            </p>
+            <CopyButton
+              text={spot.nameKo}
+              label={dict.place.copyName}
+              copiedLabel={dict.place.copied}
+            />
+          </div>
           <p className="mt-1 text-xs text-zinc-500">
             {dict.place.showToDriver}
           </p>
@@ -112,9 +128,16 @@ export default async function SpotDetailPage({
             </p>
           )}
           {spot.addressKo && locale !== "ko" && (
-            <p className="mt-1 select-all text-sm text-zinc-500" lang="ko">
-              {spot.addressKo}
-            </p>
+            <div className="mt-1 flex items-center gap-1">
+              <p className="select-all text-sm text-zinc-500" lang="ko">
+                {spot.addressKo}
+              </p>
+              <CopyButton
+                text={spot.addressKo}
+                label={dict.place.copyAddress}
+                copiedLabel={dict.place.copied}
+              />
+            </div>
           )}
 
           <div className="mt-3 flex flex-wrap gap-2">
@@ -219,6 +242,17 @@ export default async function SpotDetailPage({
           )}
         </dl>
       )}
+
+      {/* Reviews */}
+      <ReviewList
+        reviews={reviewRows}
+        stats={reviewStats}
+        locale={locale}
+        dict={dict.review}
+      />
+
+      {/* Messenger CTA */}
+      <MessengerCTA dict={dict.messenger} variant="inline" />
     </div>
   );
 }

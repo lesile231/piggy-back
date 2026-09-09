@@ -63,6 +63,37 @@
     "relatedEvents": "Acara di sini",
     "noUpcomingEvents": "Tidak ada acara mendatang",
     "nearbySpots": "Di sekitar sini",
-    "description": "Tentang tempat ini"
+    "description": "Tentang tempat ini",
+    "copied": "Tersalin!",
+    "copyName": "Salin nama Korea",
+    "copyAddress": "Salin alamat Korea"
+  },
+  "review": {
+    "title": "Tulis Ulasan",
+    "rating": "Penilaian Anda",
+    "comment": "Bagikan pengalaman Anda (opsional)",
+    "addPhotos": "Tambah foto",
+    "maxPhotos": "Maksimal 3 foto",
+    "submit": "Kirim Ulasan",
+    "submitting": "Mengirim...",
+    "success": "Terima kasih atas ulasan Anda!",
+    "expired": "Tautan ulasan ini sudah kedaluwarsa",
+    "used": "Tautan ulasan ini sudah digunakan",
+    "invalid": "Tautan ulasan tidak valid",
+    "reviews": "Ulasan",
+    "noReviews": "Belum ada ulasan",
+    "writeReview": "Tulis ulasan",
+    "writeReviewVia": "Tulis ulasan via messenger",
+    "averageRating": "Rating Via Busan",
+    "basedOn": "berdasarkan {count} ulasan",
+    "photoUploading": "Mengunggah...",
+    "dragOrClick": "Seret atau klik untuk mengunggah"
+  },
+  "messenger": {
+    "banner": "Dapatkan info wisata real-time di messenger Anda",
+    "bannerSub": "Festival, rekomendasi lokal, dan lainnya langsung ke chat Anda",
+    "chatOnWhatsApp": "Chat di WhatsApp",
+    "chatOnLine": "Chat di LINE",
+    "askAboutPlace": "Ingin tahu lebih banyak? Tanya chatbot kami"
   }
 }

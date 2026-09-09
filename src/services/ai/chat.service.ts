@@ -45,6 +45,7 @@ export class ChatService {
     language: string,
     history?: ChatMessage[],
     userLocation?: { latitude: number; longitude: number },
+    userId?: string,
   ): Promise<ChatResponse> {
     // Intent classification guard
     const classification = await this.classifier.classify(message, language, history);
@@ -70,6 +71,7 @@ export class ChatService {
         message,
         language,
         userLocation,
+        userId,
       );
       return { messages: msgs, tokensUsed: 0 };
     }

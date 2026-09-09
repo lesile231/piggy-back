@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { href: "/admin/events", label: "행사", icon: "🎪" },
   { href: "/admin/flows", label: "플로우", icon: "🔀" },
   { href: "/admin/aliases", label: "검색 사전", icon: "📖" },
+  { href: "/admin/reviews", label: "리뷰", icon: "⭐" },
   { href: "/admin/missed", label: "미매칭 검색", icon: "🔍" },
 ];
 

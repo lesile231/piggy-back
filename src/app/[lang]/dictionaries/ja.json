@@ -63,6 +63,37 @@
     "relatedEvents": "ここで開催されるイベント",
     "noUpcomingEvents": "予定されているイベントはありません",
     "nearbySpots": "周辺スポット",
-    "description": "紹介"
+    "description": "紹介",
+    "copied": "コピーしました!",
+    "copyName": "韓国語名をコピー",
+    "copyAddress": "韓国語住所をコピー"
+  },
+  "review": {
+    "title": "レビューを書く",
+    "rating": "評価",
+    "comment": "体験を共有してください（任意）",
+    "addPhotos": "写真を追加",
+    "maxPhotos": "最大3枚",
+    "submit": "レビューを送信",
+    "submitting": "送信中...",
+    "success": "レビューありがとうございます!",
+    "expired": "このレビューリンクは期限切れです",
+    "used": "このレビューリンクは使用済みです",
+    "invalid": "無効なレビューリンクです",
+    "reviews": "レビュー",
+    "noReviews": "まだレビューはありません",
+    "writeReview": "レビューを書く",
+    "writeReviewVia": "メッセンジャーでレビューを書く",
+    "averageRating": "Via Busan評価",
+    "basedOn": "{count}件のレビューに基づく",
+    "photoUploading": "アップロード中...",
+    "dragOrClick": "ドラッグまたはクリックでアップロード"
+  },
+  "messenger": {
+    "banner": "メッセンジャーでリアルタイム観光情報を受け取ろう",
+    "bannerSub": "お祭り、おすすめスポットなど、チャットでお届けします",
+    "chatOnWhatsApp": "WhatsAppでチャット",
+    "chatOnLine": "LINEでチャット",
+    "askAboutPlace": "もっと知りたいですか?チャットボットに聞いてみよう"
   }
 }
