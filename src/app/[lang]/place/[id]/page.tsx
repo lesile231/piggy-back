@@ -7,11 +7,13 @@ import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { SpotRepository } from "@/services/tourism/spot.repository";
 import { EventRepository } from "@/services/tourism/event.repository";
-import { getDictionary } from "../../dictionaries";
+import { getDictionary, LOCALES } from "../../dictionaries";
 import { localize } from "@/types/common";
 import { googleMapsUrl, naverMapUrl, kakaoMapUrl } from "@/lib/map-links";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Button } from "@/components/ui/Button";
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
 /**
  * ISR: revalidate every 24 hours per §8.
@@ -38,21 +40,29 @@ export async function generateMetadata({
   const description = localize(spot.description, locale) || "";
   const image = spot.images[0] ?? "/og-default.png";
 
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[l] = `${APP_URL}/${l}/place/${id}`;
+  }
+
   return {
-    title: `${name} | VIA BUSAN`,
+    title: name,
     description: description.slice(0, 160),
     openGraph: {
       title: `${name} — ${spot.nameKo}`,
       description: description.slice(0, 160),
       images: [{ url: image, width: 1200, height: 630, alt: name }],
       type: "article",
-      siteName: "VIA BUSAN",
     },
     twitter: {
       card: "summary_large_image",
       title: `${name} — ${spot.nameKo}`,
       description: description.slice(0, 160),
       images: [image],
+    },
+    alternates: {
+      canonical: `${APP_URL}/${locale}/place/${id}`,
+      languages,
     },
   };
 }

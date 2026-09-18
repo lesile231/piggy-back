@@ -169,7 +169,7 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
       {/* Popular chips (visible when idle) */}
       {!isActive && (
         <div className="mt-6 text-center">
-          <p className="text-xs text-[#6B8FA3]">
+          <p className="text-xs font-medium text-zinc-700 drop-shadow-[0_1px_2px_rgba(255,255,255,0.8)]">
             {dict.othersLookingFor}
           </p>
           <div className="mt-2 flex flex-wrap justify-center gap-2">
@@ -182,9 +182,9 @@ export function DecodeBoard({ locale, dict, popularChips }: DecodeBoardProps) {
                   setShowResult(false);
                   start(chip.label);
                 }}
-                className="rounded-full border border-[rgba(0,119,182,0.2)] px-3 py-1 text-sm
-                           text-[#5A8296] transition-colors hover:border-[#0077B6]
-                           hover:text-[#0077B6]"
+                className="rounded-full border border-white/60 bg-white/50 px-3 py-1 text-sm
+                           font-medium text-zinc-700 backdrop-blur-sm transition-colors
+                           hover:bg-white/80 hover:text-[#0077B6]"
               >
                 {chip.label}
               </button>

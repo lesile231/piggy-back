@@ -7,14 +7,19 @@
     "noResults": "No results found",
     "tryBot": "Try our chatbot for more help",
     "viewMore": "View More",
-    "back": "Back"
+    "back": "Back",
+    "deals": "Deals"
   },
   "home": {
     "title": "Discover Busan",
     "subtitle": "Your complete guide to Busan travel",
     "popularSpots": "Popular Spots",
     "upcomingEvents": "What's Happening",
-    "startChat": "Chat with Via Busan"
+    "startChat": "Chat with Via Busan",
+    "heroSubtitle": "YOUR BUSAN JOURNEY STARTS HERE",
+    "heroHeading": "Discover More in Busan",
+    "heroDescription": "Find the best places, experiences and deals in Busan, in your own language.",
+    "localFood": "Local Food"
   },
   "spots": {
     "title": "Tourism Spots",
@@ -88,6 +93,15 @@
     "basedOn": "based on {count} reviews",
     "photoUploading": "Uploading...",
     "dragOrClick": "Drag & drop or click to upload"
+  },
+  "deals": {
+    "title": "Deals & Discounts",
+    "discount": "Discount",
+    "provider": "Provided by",
+    "validUntil": "Valid until",
+    "getOffer": "Get Offer",
+    "expired": "Expired",
+    "noDeals": "No deals available right now"
   },
   "messenger": {
     "banner": "Get real-time travel tips on your messenger",

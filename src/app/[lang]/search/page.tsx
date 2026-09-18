@@ -19,7 +19,7 @@ const POPULAR_CHIPS: { label: string; query: string }[] = [
 
 export async function generateMetadata() {
   const dict = await getDictionary();
-  return { title: `${dict.search.title} | VIA BUSAN` };
+  return { title: dict.search.title };
 }
 
 export default async function SearchPage({

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 520" role="img" aria-labelledby="title desc">
+<title>VIA BUSAN dark logo</title><desc>White VIA BUSAN logo for dark backgrounds</desc>
+<defs>
+  <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/>
+  </linearGradient>
+  <linearGradient id="wing" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#FFFFFF"/>
+  </linearGradient>
+</defs>
+<!-- transparent background -->
+<g>
+  <!-- sun -->
+  <circle cx="895" cy="164" r="58" fill="#FFFFFF"/>
+  <!-- distant hills -->
+  <path d="M710 232 Q770 160 830 213 Q885 142 952 216 L952 253 L710 253Z" fill="#FFFFFF"/>
+  <!-- skyline -->
+  <path d="M880 248V198h24v50h15v-78h30v78h14v-112h20v112h18v-62h28v62h18v-92h24v92h24v18H880Z" fill="#FFFFFF"/>
+  <path d="M1017 156v-48m-9 10h18m-13-10h8l-2-12h-4Z" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <!-- bridge -->
+  <path d="M620 260 H1018 M648 260 Q718 182 790 260 Q864 182 938 260" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+  <path d="M648 260V208 M790 260V205 M938 260V207" stroke="#FFFFFF" stroke-width="9"/>
+  <g stroke="#FFFFFF" stroke-width="3">
+    <path d="M672 260v-28 M695 260v-45 M718 260v-59 M741 260v-46 M764 260v-29"/>
+    <path d="M814 260v-29 M838 260v-47 M862 260v-60 M886 260v-46 M912 260v-28"/>
+  </g>
+  <!-- waves -->
+  <path d="M88 293 Q220 204 356 286 Q492 366 624 276 Q540 385 390 365 Q245 344 92 390 Q183 314 88 293Z" fill="url(#sea)"/>
+  <path d="M104 342 Q224 277 348 340 Q463 399 584 338 Q478 430 350 401 Q221 372 105 421 Q164 365 104 342Z" fill="#FFFFFF" opacity=".72"/>
+  <path d="M66 319 Q39 279 75 263 Q108 283 109 321 Q88 304 66 319Z" fill="#FFFFFF"/>
+  <!-- seagull -->
+  <path d="M235 185 Q326 87 448 178 Q506 106 593 85 Q551 155 532 214 Q592 181 653 206 Q590 220 548 270 Q493 331 411 278 Q354 241 302 215 Q259 198 235 185Z" fill="#FFFFFF"/>
+  <path d="M235 185 Q340 103 448 178 Q371 136 298 151Z" fill="url(#wing)"/>
+  <path d="M448 178 Q508 107 593 85 Q551 151 532 214Z" fill="#FFFFFF"/>
+  <path d="M548 270 Q488 330 411 278 Q468 299 525 244Z" fill="#FFFFFF"/>
+  <circle cx="562" cy="211" r="7" fill="#FFFFFF"/>
+  <path d="M586 215 L632 228 L590 239Z" fill="#FFFFFF"/>
+  <!-- water reflections -->
+  <g fill="#FFFFFF" opacity=".55">
+    <ellipse cx="810" cy="291" rx="78" ry="7"/><ellipse cx="940" cy="310" rx="66" ry="6"/><ellipse cx="1030" cy="286" rx="43" ry="5"/>
+  </g>
+  <!-- wordmark -->
+  <text x="92" y="475" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="800" letter-spacing="-5" fill="#FFFFFF">VIA</text>
+  <text x="360" y="475" font-family="Arial, Helvetica, sans-serif" font-size="104" font-weight="800" letter-spacing="-4" fill="#FFFFFF">BUSAN</text>
+</g>
+</svg>

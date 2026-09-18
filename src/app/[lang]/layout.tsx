@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/user/Header";
 import { Footer } from "@/components/user/Footer";
-import { getDictionary, hasLocale } from "./dictionaries";
+import { getDictionary, hasLocale, LOCALES } from "./dictionaries";
 import { notFound } from "next/navigation";
 import "../globals.css";
 
@@ -12,10 +12,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "VIA BUSAN – Discover Busan",
-  description: "Your complete guide to Busan travel",
-};
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
+export async function generateMetadata({
+  params,
+}: LayoutProps<"/[lang]">): Promise<Metadata> {
+  const { lang: locale } = await params;
+
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[l] = `${APP_URL}/${l}`;
+  }
+
+  return {
+    metadataBase: new URL(APP_URL),
+    title: {
+      template: "%s | VIA BUSAN",
+      default: "VIA BUSAN – Discover Busan",
+    },
+    description: "Your complete guide to Busan travel",
+    openGraph: {
+      siteName: "VIA BUSAN",
+      locale,
+      type: "website",
+      images: [{ url: "/og-default.png", width: 1200, height: 630, alt: "VIA BUSAN" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+    alternates: {
+      canonical: `${APP_URL}/${locale}`,
+      languages,
+    },
+  };
+}
 
 export default async function LangLayout({
   children,

@@ -21,13 +21,12 @@ const POPULAR_CHIPS: { label: string; query: string }[] = [
 const SPOT_CATEGORIES = [
   { slug: "nature", label: "Nature" },
   { slug: "culture", label: "Culture" },
-  { slug: "food", label: "Food" },
   { slug: "shopping", label: "Shopping" },
 ];
 
 export async function generateMetadata() {
   const dict = await getDictionary();
-  return { title: `${dict.spots.title} | VIA BUSAN` };
+  return { title: dict.spots.title };
 }
 
 export default async function SpotsPage({

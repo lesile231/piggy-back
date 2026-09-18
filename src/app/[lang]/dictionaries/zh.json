@@ -7,14 +7,19 @@
     "noResults": "未找到结果",
     "tryBot": "尝试我们的聊天机器人",
     "viewMore": "查看更多",
-    "back": "返回"
+    "back": "返回",
+    "deals": "优惠"
   },
   "home": {
     "title": "探索釜山",
     "subtitle": "釜山旅游完整指南",
     "popularSpots": "热门景点",
     "upcomingEvents": "正在发生",
-    "startChat": "与Via Busan聊天"
+    "startChat": "与Via Busan聊天",
+    "heroSubtitle": "您的釜山之旅从这里开始",
+    "heroHeading": "发现釜山的更多精彩",
+    "heroDescription": "用您的语言找到釜山最好的景点、体验和优惠。",
+    "localFood": "美食"
   },
   "spots": {
     "title": "旅游景点",
@@ -88,6 +93,15 @@
     "basedOn": "基于{count}条评价",
     "photoUploading": "上传中...",
     "dragOrClick": "拖放或点击上传"
+  },
+  "deals": {
+    "title": "优惠与折扣",
+    "discount": "折扣",
+    "provider": "提供方",
+    "validUntil": "有效期至",
+    "getOffer": "获取优惠",
+    "expired": "已过期",
+    "noDeals": "目前没有可用的优惠"
   },
   "messenger": {
     "banner": "通过聊天软件获取实时旅游资讯",

@@ -104,6 +104,19 @@ export class EventRepository {
     }
   }
 
+  async listAllIds(): Promise<{ id: string; updatedAt: Date }[]> {
+    try {
+      const rows = await this.db
+        .select({ id: events.id, updatedAt: events.updatedAt })
+        .from(events)
+        .where(eq(events.isActive, true));
+
+      return rows.map((r) => ({ id: r.id, updatedAt: r.updatedAt }));
+    } catch {
+      return [];
+    }
+  }
+
   async getById(id: string): Promise<EventRecord | null> {
     try {
       const rows = await this.db

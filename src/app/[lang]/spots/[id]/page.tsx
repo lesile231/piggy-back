@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { lang } from "next/root-params";
 import Link from "next/link";
@@ -6,7 +7,7 @@ import { createDb } from "@/lib/db/client";
 import { getEnv } from "@/lib/env";
 import { SpotRepository } from "@/services/tourism/spot.repository";
 import { EventRepository } from "@/services/tourism/event.repository";
-import { getDictionary } from "../../dictionaries";
+import { getDictionary, LOCALES } from "../../dictionaries";
 import { localize } from "@/types/common";
 import { googleMapsUrl, naverMapUrl, kakaoMapUrl } from "@/lib/map-links";
 import { SectionLabel } from "@/components/ui/SectionLabel";
@@ -15,9 +16,11 @@ import { MessengerCTA } from "@/components/user/MessengerCTA";
 import { ReviewList } from "@/components/user/review/ReviewList";
 import { ReviewRepository } from "@/services/review/review.repository";
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+
 export async function generateMetadata({
   params,
-}: PageProps<"/[lang]/spots/[id]">) {
+}: PageProps<"/[lang]/spots/[id]">): Promise<Metadata> {
   const { id } = await params;
   const env = getEnv();
   const db = createDb(env.DATABASE_URL);
@@ -26,7 +29,34 @@ export async function generateMetadata({
 
   const locale = (await lang()) ?? "en";
   const name = localize(spot.names, locale) || spot.nameKo;
-  return { title: `${name} | VIA BUSAN` };
+  const description = localize(spot.description, locale) || "";
+  const image = spot.images[0] ?? "/og-default.png";
+
+  const languages: Record<string, string> = {};
+  for (const l of LOCALES) {
+    languages[l] = `${APP_URL}/${l}/spots/${id}`;
+  }
+
+  return {
+    title: name,
+    description: description.slice(0, 160),
+    openGraph: {
+      title: `${name} — ${spot.nameKo}`,
+      description: description.slice(0, 160),
+      images: [{ url: image, width: 1200, height: 630, alt: name }],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name} — ${spot.nameKo}`,
+      description: description.slice(0, 160),
+      images: [image],
+    },
+    alternates: {
+      canonical: `${APP_URL}/${locale}/spots/${id}`,
+      languages,
+    },
+  };
 }
 
 export default async function SpotDetailPage({
@@ -59,8 +89,48 @@ export default async function SpotDetailPage({
   const address = localize(spot.addresses, locale) || spot.addressKo;
   const hasCoords = spot.latitude != null && spot.longitude != null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristAttraction",
+    name,
+    description: description || undefined,
+    image: spot.images[0] || undefined,
+    address: spot.addressKo
+      ? {
+          "@type": "PostalAddress",
+          streetAddress: spot.addressKo,
+          addressLocality: "Busan",
+          addressCountry: "KR",
+        }
+      : undefined,
+    geo:
+      hasCoords
+        ? {
+            "@type": "GeoCoordinates",
+            latitude: spot.latitude,
+            longitude: spot.longitude,
+          }
+        : undefined,
+    telephone: spot.phone || undefined,
+    url: `${APP_URL}/${locale}/spots/${id}`,
+    ...(spot.rating
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: spot.rating,
+            bestRating: 5,
+          },
+        }
+      : {}),
+  };
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* Back navigation */}
       <Link
         href={`/${locale}/spots`}

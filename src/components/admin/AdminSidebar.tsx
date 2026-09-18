@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { href: "/admin/dashboard", label: "대시보드", icon: "📊" },
   { href: "/admin/spots", label: "관광지", icon: "🏖" },
   { href: "/admin/events", label: "행사", icon: "🎪" },
+  { href: "/admin/deals", label: "혜택", icon: "🎫" },
   { href: "/admin/flows", label: "플로우", icon: "🔀" },
   { href: "/admin/aliases", label: "검색 사전", icon: "📖" },
   { href: "/admin/reviews", label: "리뷰", icon: "⭐" },

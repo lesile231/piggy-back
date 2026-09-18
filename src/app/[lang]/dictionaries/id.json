@@ -7,14 +7,19 @@
     "noResults": "Tidak ada hasil ditemukan",
     "tryBot": "Coba chatbot kami untuk bantuan lebih lanjut",
     "viewMore": "Lihat Selengkapnya",
-    "back": "Kembali"
+    "back": "Kembali",
+    "deals": "Promo"
   },
   "home": {
     "title": "Jelajahi Busan",
     "subtitle": "Panduan lengkap perjalanan Anda ke Busan",
     "popularSpots": "Tempat Populer",
     "upcomingEvents": "Apa yang Terjadi",
-    "startChat": "Chat dengan Via Busan"
+    "startChat": "Chat dengan Via Busan",
+    "heroSubtitle": "PERJALANAN BUSAN ANDA DIMULAI DI SINI",
+    "heroHeading": "Temukan Lebih Banyak di Busan",
+    "heroDescription": "Temukan tempat, pengalaman, dan promo terbaik di Busan, dalam bahasa Anda.",
+    "localFood": "Kuliner Lokal"
   },
   "spots": {
     "title": "Tempat Wisata",
@@ -88,6 +93,15 @@
     "basedOn": "berdasarkan {count} ulasan",
     "photoUploading": "Mengunggah...",
     "dragOrClick": "Seret atau klik untuk mengunggah"
+  },
+  "deals": {
+    "title": "Promo dan Diskon",
+    "discount": "Diskon",
+    "provider": "Disediakan oleh",
+    "validUntil": "Berlaku hingga",
+    "getOffer": "Dapatkan Promo",
+    "expired": "Kedaluwarsa",
+    "noDeals": "Tidak ada promo yang tersedia saat ini"
   },
   "messenger": {
     "banner": "Dapatkan info wisata real-time di messenger Anda",

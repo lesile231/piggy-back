@@ -3,6 +3,7 @@ import {
   categories, tourismSpots, spotCategories, locationAliases,
   events, flows, flowSteps, flowOptions, resolutionLogs,
 } from "./schema";
+import { FOOD_SPOTS, FOOD_SPOT_CATEGORY_SLUGS, buildFoodAliases } from "./seed-food-data";
 import { sql } from "drizzle-orm";
 import { config } from "dotenv";
 config({ path: ".env.local" });
@@ -87,7 +88,7 @@ async function seed() {
       longitude: "129.0305",
       rating: "4.5",
       images: ["https://images.unsplash.com/photo-1703756292793-287f082d3a45?w=1200&h=630&fit=crop"],
-      tags: ["market", "seafood", "local-food"],
+      tags: ["market", "seafood", "local-food", "food"],
       source: "curated",
     },
     {
@@ -502,6 +503,8 @@ async function seed() {
       tags: ["entertainment", "outdoor", "family", "ocean-view"],
       source: "curated",
     },
+    // ── Local Food spots (indices 19–43) ──
+    ...FOOD_SPOTS,
   ]).returning();
 
   // ── Spot ↔ Category junction ──
@@ -548,6 +551,10 @@ async function seed() {
     sc(17, "resort"),
     // Skyline Luge Busan → entertainment
     sc(18, "entertainment"),
+    // ── Local Food spots (indices 19–43) ──
+    ...FOOD_SPOT_CATEGORY_SLUGS.flatMap((slugs, i) =>
+      slugs.map((slug) => sc(19 + i, slug)),
+    ),
   ];
   await db.insert(spotCategories).values(spotCatLinks);
 
@@ -1185,6 +1192,9 @@ async function seed() {
     a(18, "ลูจปูซาน", "th"),
     a(18, "สกายไลน์ลูจ", "th"),
     a(18, "สกายไลน์ลูจปูซาน", "th"),
+
+    // ── Local Food spot aliases (indices 19–43) ──
+    ...buildFoodAliases(19, a),
   ]).onConflictDoNothing();
 
   // ── Events (future dates to appear as active) ──

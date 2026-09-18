@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import logoImg from "../../../public/logo/via-busan-letter-logo-white.png";
 import { LangSwitcher } from "./LangSwitcher";
 import type { Dictionary } from "@/app/[lang]/dictionaries";
 
@@ -16,8 +18,13 @@ export function Header({ dict, locale }: HeaderProps) {
   return (
     <header className="relative border-b border-zinc-200 bg-white">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        <Link href={`/${locale}`} className="text-lg font-bold">
-          VIA BUSAN
+        <Link href={`/${locale}`} className="flex items-center">
+          <Image
+            src={logoImg}
+            alt="VIA BUSAN"
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -33,6 +40,12 @@ export function Header({ dict, locale }: HeaderProps) {
             className="text-sm text-zinc-600 hover:text-zinc-900"
           >
             {dict.common.events}
+          </Link>
+          <Link
+            href={`/${locale}/deals`}
+            className="text-sm text-zinc-600 hover:text-zinc-900"
+          >
+            {dict.common.deals}
           </Link>
           <Link
             href={`/${locale}/spots`}
@@ -138,6 +151,13 @@ export function Header({ dict, locale }: HeaderProps) {
               className="rounded px-2 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
             >
               {dict.common.events}
+            </Link>
+            <Link
+              href={`/${locale}/deals`}
+              onClick={() => setMenuOpen(false)}
+              className="rounded px-2 py-2 text-sm text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+            >
+              {dict.common.deals}
             </Link>
             <div className="px-2 py-2">
               <LangSwitcher currentLocale={locale} />

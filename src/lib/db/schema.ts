@@ -235,6 +235,30 @@ export const couponRedemptions = pgTable("coupon_redemptions", {
   redeemedAt: timestamp("redeemed_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// ── Deals ──
+
+export const deals = pgTable("deals", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  nameKo: varchar("name_ko", { length: 255 }).notNull(),
+  names: jsonb("names").notNull().default({}),
+  description: jsonb("description").notNull().default({}),
+  discount: jsonb("discount").notNull().default({}),
+  providerName: varchar("provider_name", { length: 255 }).notNull(),
+  locationName: jsonb("location_name").default({}),
+  addressKo: text("address_ko"),
+  imageUrl: varchar("image_url", { length: 500 }),
+  linkUrl: varchar("link_url", { length: 500 }),
+  category: varchar("category", { length: 50 }).notNull().default("general"),
+  validFrom: timestamp("valid_from", { withTimezone: true }),
+  validUntil: timestamp("valid_until", { withTimezone: true }),
+  source: varchar("source", { length: 20 }).notNull().default("curated"),
+  sourceUrl: varchar("source_url", { length: 500 }),
+  sortOrder: integer("sort_order").notNull().default(0),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // ── Reviews ──
 
 export const reviewTokens = pgTable("review_tokens", {

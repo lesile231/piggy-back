@@ -124,6 +124,19 @@ export class SpotRepository {
     }
   }
 
+  async listAllIds(): Promise<{ id: string; updatedAt: Date }[]> {
+    try {
+      const rows = await this.db
+        .select({ id: tourismSpots.id, updatedAt: tourismSpots.updatedAt })
+        .from(tourismSpots)
+        .where(eq(tourismSpots.isActive, true));
+
+      return rows.map((r) => ({ id: r.id, updatedAt: r.updatedAt }));
+    } catch {
+      return [];
+    }
+  }
+
   async upsertFromExternal(
     spot: TourismSpotExternal,
     source: string,

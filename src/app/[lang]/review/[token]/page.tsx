@@ -11,7 +11,8 @@ import Link from "next/link";
 export async function generateMetadata() {
   const dict = await getDictionary();
   return {
-    title: `${dict.review.title} | VIA BUSAN`,
+    title: dict.review.title,
+    robots: { index: false, follow: false },
   };
 }
 

@@ -7,14 +7,19 @@
     "noResults": "結果が見つかりません",
     "tryBot": "チャットボットをお試しください",
     "viewMore": "もっと見る",
-    "back": "戻る"
+    "back": "戻る",
+    "deals": "お得情報"
   },
   "home": {
     "title": "釜山を発見",
     "subtitle": "釜山旅行の完全ガイド",
     "popularSpots": "人気スポット",
     "upcomingEvents": "開催中のイベント",
-    "startChat": "Via Busanとチャット"
+    "startChat": "Via Busanとチャット",
+    "heroSubtitle": "あなたの釜山旅行はここから",
+    "heroHeading": "釜山をもっと発見しよう",
+    "heroDescription": "釜山のベストスポット、体験、お得情報をあなたの言語で見つけよう。",
+    "localFood": "グルメ"
   },
   "spots": {
     "title": "観光スポット",
@@ -88,6 +93,15 @@
     "basedOn": "{count}件のレビューに基づく",
     "photoUploading": "アップロード中...",
     "dragOrClick": "ドラッグまたはクリックでアップロード"
+  },
+  "deals": {
+    "title": "お得情報 & 割引",
+    "discount": "割引",
+    "provider": "提供元",
+    "validUntil": "有効期限",
+    "getOffer": "特典を見る",
+    "expired": "期限切れ",
+    "noDeals": "現在利用可能なお得情報はありません"
   },
   "messenger": {
     "banner": "メッセンジャーでリアルタイム観光情報を受け取ろう",
